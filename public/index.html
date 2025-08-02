@@ -231,41 +231,71 @@
             </div>
         </section>
         
-        <!-- Seção FAQ (Perguntas Frequentes) -->
+        <!-- Seção FAQ (Perguntas Frequentes) Otimizada -->
         <section id="faq" class="py-20 lg:py-32 bg-white">
             <div class="container mx-auto px-6 max-w-3xl">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Dúvidas Frequentes</h2>
-                    <p class="text-lg reveal" style="transition-delay: 200ms;">Esclareça suas principais perguntas sobre nossos tratamentos.</p>
+                    <p class="text-lg reveal" style="transition-delay: 200ms;">Respostas rápidas para as perguntas mais comuns. Para detalhes, agende sua avaliação.</p>
                 </div>
                 <div class="space-y-4 reveal" style="transition-delay: 400ms;">
-                    <div class="faq-item border-b border-gray-200 pb-4">
+                    
+                    <div class="faq-item border-b border-gray-200 py-4">
                         <div class="faq-question flex justify-between items-center text-xl font-semibold">
-                            <span>A harmonização facial é segura?</span>
+                            <span>Harmonização facial deixa o rosto artificial?</span>
                             <i class="fas fa-chevron-down transition-transform duration-300"></i>
                         </div>
                         <div class="faq-answer text-lazuli-dark/80 pt-4">
-                            <p>Sim, quando realizada por um profissional qualificado. Utilizamos apenas produtos aprovados pela ANVISA e seguimos protocolos de segurança rigorosos para garantir um procedimento tranquilo e com excelentes resultados.</p>
+                            <p>Pelo contrário. Nossa filosofia é <strong>realçar sua beleza com naturalidade</strong>. Usamos técnicas precisas para um resultado elegante e sutil, sem exageros.</p>
                         </div>
                     </div>
-                    <div class="faq-item border-b border-gray-200 pb-4">
+
+                    <div class="faq-item border-b border-gray-200 py-4">
                         <div class="faq-question flex justify-between items-center text-xl font-semibold">
-                            <span>Lentes de contato dental desgastam os dentes?</span>
+                            <span>Lentes de contato dental exigem muito desgaste dos dentes?</span>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-answer text-lazuli-dark/80 pt-4">
+                            <p>Não. Utilizamos uma técnica moderna e <strong>minimamente invasiva</strong>. Na maioria dos casos, o desgaste é mínimo ou até mesmo inexistente, preservando seus dentes naturais.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border-b border-gray-200 py-4">
+                        <div class="faq-question flex justify-between items-center text-xl font-semibold">
+                            <span>Os procedimentos são seguros?</span>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-answer text-lazuli-dark/80 pt-4">
+                            <p>Totalmente. A segurança é nossa prioridade. Usamos apenas produtos aprovados pela ANVISA e seguimos <strong>protocolos de segurança rigorosos</strong> para garantir sua total tranquilidade.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item border-b border-gray-200 py-4">
+                        <div class="faq-question flex justify-between items-center text-xl font-semibold">
+                            <span>Qual a durabilidade dos resultados?</span>
                              <i class="fas fa-chevron-down transition-transform duration-300"></i>
                         </div>
                         <div class="faq-answer text-lazuli-dark/80 pt-4">
-                            <p>A técnica moderna das lentes de contato exige um desgaste mínimo ou, em alguns casos, nenhum desgaste do esmalte dental. O planejamento digital nos permite ser extremamente conservadores e preservar a estrutura dental ao máximo.</p>
+                            <p>Varia por tratamento. O efeito do Botox® dura de 4 a 6 meses, enquanto preenchimentos podem durar mais de um ano. As lentes de contato, com os devidos cuidados, <strong>duram mais de 15 anos</strong>.</p>
                         </div>
                     </div>
-                    <div class="faq-item border-b border-gray-200 pb-4">
+
+                    <div class="faq-item border-b border-gray-200 py-4">
                         <div class="faq-question flex justify-between items-center text-xl font-semibold">
-                            <span>Quanto tempo dura o efeito do Botox®?</span>
-                             <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                            <span>Como sei qual o melhor tratamento para mim?</span>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
                         </div>
                         <div class="faq-answer text-lazuli-dark/80 pt-4">
-                            <p>O efeito da toxina botulínica geralmente dura de 4 a 6 meses. Esse tempo pode variar de acordo com o metabolismo de cada paciente, a área tratada e a dosagem utilizada.</p>
+                           <p>A <strong>avaliação personalizada</strong> é o primeiro passo. Nela, vamos entender seus desejos, analisar suas características e criar um plano de tratamento exclusivo para você.</p>
                         </div>
                     </div>
+
+                    <div class="text-center pt-10">
+                        <a href="#agendamento" class="bg-lazuli-gold text-white px-8 py-3 rounded-full hover:bg-lazuli-gold-dark transition-all duration-300 transform hover:scale-105 inline-block">
+                            Agendar uma Avaliação
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -352,25 +382,16 @@
         <i class="fab fa-whatsapp fa-2x"></i>
     </a>
 
+    <!-- Firebase Init -->
+    <script src="/__/firebase/init.js"></script>
+
     <!-- Firebase SDKs -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Sua configuração completa do Firebase.
-        const firebaseConfig = {
-            apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY",
-            authDomain: "lazuliclinica-ee588.firebaseapp.com",
-            projectId: "lazuliclinica-ee588",
-            storageBucket: "lazuliclinica-ee588.appspot.com",
-            messagingSenderId: "1001941309426",
-            appId: "1:1001941309426:web:d966dceb8f6c0425d5bd6b",
-            measurementId: "G-7HWTLTCGSN"
-        };
         
-        // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        // A inicialização agora é feita de forma segura e automática pelo script acima.
+        // Não há mais chaves de API no código.
+        const db = getFirestore();
 
         // --- LÓGICA GERAL DO SITE (EXISTENTE) ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -447,6 +468,7 @@
                 const icon = question.querySelector('i');
                 question.addEventListener('click', () => {
                     const isOpened = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+                    // Fecha todos os outros itens antes de abrir o novo (opcional, mas bom para UI)
                     faqItems.forEach(otherItem => {
                         if (otherItem !== item) {
                             otherItem.querySelector('.faq-answer').style.maxHeight = '0px';
@@ -496,31 +518,44 @@
                     const galleryTrack = document.querySelector('#gallery-slider .slider-track');
                     const gallerySnapshot = await getDocs(collection(db, "gallery"));
                     galleryTrack.innerHTML = ''; // Limpa placeholders
-                    gallerySnapshot.forEach(doc => {
-                        galleryTrack.innerHTML += `<div class="slider-item min-w-full"><img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full object-cover" loading="lazy" decoding="async"></div>`;
-                    });
+                    if (gallerySnapshot.empty) {
+                        galleryTrack.innerHTML = `<div class="slider-item min-w-full"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" class="w-full object-cover"></div>`;
+                    } else {
+                        gallerySnapshot.forEach(doc => {
+                            galleryTrack.innerHTML += `<div class="slider-item min-w-full"><img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full object-cover" loading="lazy" decoding="async"></div>`;
+                        });
+                    }
                     initializeSlider('gallery-slider', 5000);
 
                     // Carregar depoimentos
                     const testimonialTrack = document.querySelector('#testimonial-slider .slider-track');
                     const testimonialsSnapshot = await getDocs(collection(db, "testimonials"));
                     testimonialTrack.innerHTML = ''; // Limpa placeholders
-                    testimonialsSnapshot.forEach(doc => {
-                        const data = doc.data();
-                        testimonialTrack.innerHTML += `
+                    if (testimonialsSnapshot.empty) {
+                        testimonialTrack.innerHTML = `
                             <div class="slider-item min-w-full px-8">
                                 <div class="bg-white p-8 rounded-lg shadow-md">
-                                    <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                                    <p class="italic text-lg mb-6">"${data.text}"</p>
-                                    <p class="font-bold font-display text-xl">- ${data.name}</p>
+                                    <p class="italic text-lg mb-6">"Seja o primeiro a deixar um depoimento sobre sua experiência incrível na Clínica Lazuli!"</p>
+                                    <p class="font-bold font-display text-xl">- Equipe Lazuli</p>
                                 </div>
                             </div>`;
-                    });
+                    } else {
+                        testimonialsSnapshot.forEach(doc => {
+                            const data = doc.data();
+                            testimonialTrack.innerHTML += `
+                                <div class="slider-item min-w-full px-8">
+                                    <div class="bg-white p-8 rounded-lg shadow-md">
+                                        <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                        <p class="italic text-lg mb-6">"${data.text}"</p>
+                                        <p class="font-bold font-display text-xl">- ${data.name}</p>
+                                    </div>
+                                </div>`;
+                        });
+                    }
                     initializeSlider('testimonial-slider', 7000);
 
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
-                    // Opcional: informar o usuário sobre o erro
                 }
             }
 
