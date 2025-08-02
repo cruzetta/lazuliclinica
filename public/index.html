@@ -357,7 +357,7 @@
                         <h4 class="font-semibold text-white text-lg mb-4">Nossa Localização</h4>
                         <div class="overflow-hidden rounded-lg shadow-lg border border-gray-700">
                             <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.499696328602!2d-51.20875768488528!3d-30.02256498188981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951979b0c032a187%3A0x1e3e8784383d4e8e!2sR.%20Padre%20Chagas%2C%20415%20-%20Moinhos%20de%20Vento%2C%20Porto%20Alegre%20-%20RS%2C%2090570-080!5e0!3m2!1spt-BR!2sbr!4v1671234567890!5m2!1spt-BR!2sbr" 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.499696328602!2d-51.20875768488528!3d-30.02256498188981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951979b0c032a187%3A0x1e3e878438d4e8e!2sR.%20Padre%20Chagas%2C%20415%20-%20Moinhos%20de%20Vento%2C%20Porto%20Alegre%20-%20RS%2C%2090570-080!5e0!3m2!1spt-BR!2sbr!4v1671234567890!5m2!1spt-BR!2sbr" 
                                 class="w-full h-48 border-0" 
                                 allowfullscreen="" 
                                 loading="lazy" 
@@ -382,25 +382,16 @@
         <i class="fab fa-whatsapp fa-2x"></i>
     </a>
 
+    <!-- Firebase Init -->
+    <script src="/__/firebase/init.js"></script>
+
     <!-- Firebase SDKs -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // ATENÇÃO: Cole sua configuração do Firebase aqui para testar no seu computador.
-        const firebaseConfig = {
-            apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY",
-            authDomain: "lazuliclinica-ee588.firebaseapp.com",
-            projectId: "lazuliclinica-ee588",
-            storageBucket: "lazuliclinica-ee588.appspot.com",
-            messagingSenderId: "1001941309426",
-            appId: "1:1001941309426:web:d966dceb8f6c0425d5bd6b",
-            measurementId: "G-7HWTLTCGSN"
-        };
         
-        // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        // A inicialização agora é feita de forma segura e automática pelo script acima.
+        // Não há mais chaves de API no código.
+        const db = getFirestore();
 
         // --- LÓGICA GERAL DO SITE (EXISTENTE) ---
         document.addEventListener('DOMContentLoaded', () => {

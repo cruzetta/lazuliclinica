@@ -134,29 +134,19 @@
         </div>
     </div>
 
+    <!-- Firebase Init -->
+    <script src="/__/firebase/init.js"></script>
+
     <!-- Firebase SDKs -->
     <script type="module">
         // Importações do Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, collection, getDocs, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // ATENÇÃO: Cole sua configuração do Firebase aqui para testar no seu computador.
-        // Lembre-se de que o método mais seguro é usar a inicialização automática
-        // do Firebase Hosting, que não exige chaves no código.
-        const firebaseConfig = {
-            apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY",
-            authDomain: "lazuliclinica-ee588.firebaseapp.com",
-            projectId: "lazuliclinica-ee588",
-            storageBucket: "lazuliclinica-ee588.appspot.com",
-            messagingSenderId: "1001941309426",
-            appId: "1:1001941309426:web:d966dceb8f6c0425d5bd6b"
-        };
-
-        // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        // A inicialização agora é feita de forma segura e automática pelo script acima.
+        // Não há mais chaves de API no código.
+        const auth = getAuth();
+        const db = getFirestore();
 
         // Elementos da UI
         const authContainer = document.getElementById('auth-container');
