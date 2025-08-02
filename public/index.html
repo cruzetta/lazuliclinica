@@ -382,15 +382,19 @@
         <i class="fab fa-whatsapp fa-2x"></i>
     </a>
 
-    <!-- Firebase Init -->
+    <!-- Firebase SDK - Carregamento Corrigido -->
+    <!-- Estas bibliotecas precisam ser carregadas ANTES do script de inicialização -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    
+    <!-- Firebase Init - Este script agora encontrará as bibliotecas acima -->
     <script src="/__/firebase/init.js"></script>
 
-    <!-- Firebase SDKs -->
+    <!-- O seu código personalizado -->
     <script type="module">
-        import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // As importações foram movidas para os scripts acima para garantir a ordem de carregamento
+        const { getFirestore, doc, getDoc, collection, getDocs } = firebase.firestore;
         
-        // A inicialização agora é feita de forma segura e automática pelo script acima.
-        // Não há mais chaves de API no código.
         const db = getFirestore();
 
         // --- LÓGICA GERAL DO SITE (EXISTENTE) ---
@@ -468,7 +472,6 @@
                 const icon = question.querySelector('i');
                 question.addEventListener('click', () => {
                     const isOpened = answer.style.maxHeight && answer.style.maxHeight !== '0px';
-                    // Fecha todos os outros itens antes de abrir o novo (opcional, mas bom para UI)
                     faqItems.forEach(otherItem => {
                         if (otherItem !== item) {
                             otherItem.querySelector('.faq-answer').style.maxHeight = '0px';
