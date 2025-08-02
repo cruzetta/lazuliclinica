@@ -68,7 +68,7 @@
 
       /* COMENTÁRIO: MELHORIA DE CONTRASTE DO HEADER */
       /* Estado inicial (topo da página, sobre a imagem) */
-      #main-header .nav-link { color: white; }
+      #main-header .nav-link { color: white; position: relative; }
       #main-header .logo-main-text { color: white; }
       #main-header #mobile-menu-button { color: white; }
       .nav-link::after {
@@ -114,6 +114,8 @@
                 <a href="#sobre" class="nav-link transition-colors">Sobre</a>
                 <a href="#tratamentos" class="nav-link transition-colors">Tratamentos</a>
                 <a href="#galeria" class="nav-link transition-colors">Resultados</a>
+                <!-- COMENTÁRIO: Link de Depoimentos adicionado para consistência com o menu mobile. -->
+                <a href="#depoimentos" class="nav-link transition-colors">Depoimentos</a>
                 <a href="#faq" class="nav-link transition-colors">Dúvidas</a>
                 <a href="#agendamento" class="bg-lazuli-gold text-white px-5 py-2 rounded-full hover:bg-lazuli-gold-dark transition-colors text-sm font-semibold">Agendar Avaliação</a>
             </nav>
@@ -126,8 +128,8 @@
             <a href="#sobre" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Sobre</a>
             <a href="#tratamentos" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Tratamentos</a>
             <a href="#galeria" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Resultados</a>
-            <a href="#faq" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Dúvidas</a>
             <a href="#depoimentos" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Depoimentos</a>
+            <a href="#faq" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Dúvidas</a>
             <a href="#agendamento" class="block mt-4 bg-lazuli-gold text-white text-center px-5 py-2 rounded-full hover:bg-lazuli-gold-dark transition-colors">Agendar Avaliação</a>
         </div>
     </header>
@@ -150,7 +152,6 @@
             <div class="container mx-auto px-6">
                 <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                     <div class="lg:w-1/3 reveal">
-                        <!-- COMENTÁRIO: Imagem ATUALIZADA conforme solicitado. -->
                         <img src="https://firebasestorage.googleapis.com/v0/b/platamais.firebasestorage.app/o/clinica%20lazuli%2FWhatsApp%20Image%202025-08-01%20at%2019.43.15.jpeg?alt=media&token=07c1afb0-2100-4918-b5df-b597c7600894" alt="Foto profissional do Dr. Ítalo Rottoli" class="rounded-lg shadow-2xl object-cover w-full h-auto" loading="lazy" decoding="async">
                     </div>
                     <div class="lg:w-2/3 text-center lg:text-left reveal" style="transition-delay: 200ms;">
@@ -231,8 +232,9 @@
                         <div class="slider-item min-w-full"><img src="https://placehold.co/1200x800/F5EBE0/3A3A3A?text=Antes+e+Depois+1" alt="Resultado de harmonização facial" class="w-full object-cover" loading="lazy" decoding="async"></div>
                         <div class="slider-item min-w-full"><img src="https://placehold.co/1200x800/F0F8FF/3A3A3A?text=Antes+e+Depois+2" alt="Resultado de lentes de contato dental" class="w-full object-cover" loading="lazy" decoding="async"></div>
                     </div>
-                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition" aria-label="Slide anterior"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition" aria-label="Próximo slide"><i class="fas fa-chevron-right"></i></button>
+                    <!-- COMENTÁRIO: Botões do slider aumentados para melhor usabilidade mobile. -->
+                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-4 bg-white/70 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center transition" aria-label="Slide anterior"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-4 bg-white/70 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center transition" aria-label="Próximo slide"><i class="fas fa-chevron-right"></i></button>
                 </div>
                 <p class="text-sm text-gray-500 mt-4">*Imagens de pacientes reais com autorização de uso. Os resultados podem variar.</p>
             </div>
@@ -289,17 +291,18 @@
                                  <p class="italic text-lg mb-6">"O Dr. Ítalo superou todas as minhas expectativas. O resultado ficou incrivelmente natural e minha autoestima mudou completamente. Profissionalismo e cuidado impecáveis!"</p>
                                  <p class="font-bold font-display text-xl">- Mariana S.</p>
                              </div>
-                         </div>
+                       </div>
                         <div class="slider-item min-w-full px-8">
                              <div class="bg-white p-8 rounded-lg shadow-md">
                                  <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                                  <p class="italic text-lg mb-6">"Fiz minhas lentes de contato com o Dr. Ítalo e foi a melhor decisão. O processo foi tranquilo e o resultado é um sorriso de cinema. Recomendo de olhos fechados!"</p>
                                  <p class="font-bold font-display text-xl">- Ricardo L.</p>
                              </div>
-                        </div>
+                       </div>
                     </div>
-                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-0 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-0 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
+                    <!-- COMENTÁRIO: Botões do slider aumentados para melhor usabilidade mobile. -->
+                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 bg-white/70 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 bg-white/70 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </section>
@@ -310,7 +313,8 @@
                 <h2 class="text-3xl md:text-4xl font-display mb-4 text-lazuli-dark reveal">Sua transformação começa agora.</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Entre em contato e dê o primeiro passo para revelar a sua melhor versão.</p>
                 <div class="flex flex-col md:flex-row justify-center items-center gap-6 reveal" style="transition-delay: 400ms;">
-                    <a href="https://wa.me/5551000000000" target="_blank" class="w-full md:w-auto bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all duration-300 flex items-center justify-center gap-3 transform hover:scale-105">
+                    <!-- COMENTÁRIO: Número de WhatsApp ATUALIZADO. -->
+                    <a href="https://wa.me/555499041660" target="_blank" class="w-full md:w-auto bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all duration-300 flex items-center justify-center gap-3 transform hover:scale-105">
                         <i class="fab fa-whatsapp fa-lg"></i> Agendar pelo WhatsApp
                     </a>
                 </div>
@@ -330,7 +334,8 @@
                       <div class="flex justify-center md:justify-start space-x-4 mt-6">
                         <a href="#" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <!-- COMENTÁRIO: Número de WhatsApp ATUALIZADO. -->
+                        <a href="https://wa.me/555499041660" target="_blank" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
 
@@ -339,7 +344,8 @@
                         <h4 class="font-semibold text-white text-lg mb-4">Entre em Contato</h4>
                         <p class="mb-2"><strong>Endereço:</strong><br>Rua Padre Chagas, 415, Sala 506<br>Moinhos de Vento, Porto Alegre - RS</p>
                         <p class="mb-2"><strong>Email:</strong><br><a href="mailto:contato@clinicalazuli.com.br" class="hover:text-lazuli-gold">contato@clinicalazuli.com.br</a></p>
-                        <p><strong>Telefone:</strong><br><a href="tel:+5551900000000" class="hover:text-lazuli-gold">(51) 90000-0000</a></p>
+                        <!-- COMENTÁRIO: Número de telefone ATUALIZADO. -->
+                        <p><strong>Telefone:</strong><br><a href="tel:+555499041660" class="hover:text-lazuli-gold">(54) 9904-1660</a></p>
                     </div>
 
                     <div>
@@ -368,7 +374,8 @@
     </footer>
 
     <!-- Botão Flutuante do WhatsApp -->
-    <a href="https://wa.me/5551000000000" target="_blank" class="fixed bottom-5 right-5 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-50 transform hover:scale-110 transition-transform" aria-label="Fale conosco no WhatsApp">
+    <!-- COMENTÁRIO: Número de WhatsApp ATUALIZADO. -->
+    <a href="https://wa.me/555499041660" target="_blank" class="fixed bottom-5 right-5 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-50 transform hover:scale-110 transition-transform" aria-label="Fale conosco no WhatsApp">
         <i class="fab fa-whatsapp fa-2x"></i>
     </a>
 
@@ -449,12 +456,14 @@
             const icon = question.querySelector('i');
             question.addEventListener('click', () => {
                 const isOpened = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+                // Fecha todos os outros itens antes de abrir o atual
                 faqItems.forEach(otherItem => {
                     if (otherItem !== item) {
                         otherItem.querySelector('.faq-answer').style.maxHeight = '0px';
                         otherItem.querySelector('.faq-question i').classList.remove('rotate-180');
                     }
                 });
+                // Abre ou fecha o item clicado
                 if (isOpened) {
                     answer.style.maxHeight = '0px';
                     icon.classList.remove('rotate-180');
