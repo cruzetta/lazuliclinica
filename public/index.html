@@ -21,7 +21,6 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      // Script para configurar o Tailwind com as cores customizadas (simulando o tailwind.config.js)
       tailwind.config = {
         theme: {
           extend: {
@@ -47,12 +46,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-      /* Estilos para animações e ajustes finos */
+      /* COMENTÁRIO: Estilos gerais e para animações */
       .reveal {
         opacity: 0;
         transform: translateY(30px);
         transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        will-change: opacity, transform;
       }
       .reveal.visible {
         opacity: 1;
@@ -61,33 +59,75 @@
       .slider-track {
         transition: transform 0.5s ease-in-out;
       }
+      .faq-question { cursor: pointer; }
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
+      }
+
+      /* COMENTÁRIO: MELHORIA DE CONTRASTE DO HEADER */
+      /* Estado inicial (topo da página, sobre a imagem) */
+      #main-header .nav-link { color: white; }
+      #main-header .logo-main-text { color: white; }
+      #main-header #mobile-menu-button { color: white; }
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 1px;
+        display: block;
+        margin-top: 5px;
+        right: 50%;
+        background: white; /* Sublinhado branco no início */
+        transition: width 0.3s ease, right 0.3s ease;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+        right: 0;
+      }
+
+      /* Estado com scroll (fundo branco) */
+      #main-header.header-scrolled {
+        background-color: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        backdrop-filter: blur(8px);
+      }
+      #main-header.header-scrolled .nav-link { color: #3A3A3A; }
+      #main-header.header-scrolled .nav-link:hover { color: #B8860B; }
+      #main-header.header-scrolled .logo-main-text { color: #3A3A3A; }
+      #main-header.header-scrolled #mobile-menu-button { color: #3A3A3A; }
+      #main-header.header-scrolled .nav-link::after {
+        background: #B8860B; /* Sublinhado dourado com scroll */
+      }
     </style>
 </head>
-<body class="text-lazuli-dark bg-[#FEFEFE]">
+<body class="text-lazuli-dark bg-white font-sans">
 
-    <!-- Header -->
-    <header class="bg-white/90 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 shadow-sm transition-all duration-300">
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#home" class="text-2xl font-display font-bold text-lazuli-dark">
-                Clínica <span class="text-lazuli-gold">Lazuli</span>
+            <a href="#home" class="text-2xl font-display font-bold">
+                <!-- COMENTÁRIO: Adicionado span para controlar a cor do texto principal do logo. -->
+                <span class="logo-main-text">Clínica</span> <span class="text-lazuli-gold">Lazuli</span>
             </a>
             <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#sobre" class="hover:text-lazuli-gold transition-colors">Sobre</a>
-                <a href="#tratamentos" class="hover:text-lazuli-gold transition-colors">Tratamentos</a>
-                <a href="#galeria" class="hover:text-lazuli-gold transition-colors">Resultados</a>
-                <a href="#depoimentos" class="hover:text-lazuli-gold transition-colors">Depoimentos</a>
+                <a href="#sobre" class="nav-link transition-colors">Sobre</a>
+                <a href="#tratamentos" class="nav-link transition-colors">Tratamentos</a>
+                <a href="#galeria" class="nav-link transition-colors">Resultados</a>
+                <a href="#faq" class="nav-link transition-colors">Dúvidas</a>
                 <a href="#agendamento" class="bg-lazuli-gold text-white px-5 py-2 rounded-full hover:bg-lazuli-gold-dark transition-colors text-sm font-semibold">Agendar Avaliação</a>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden text-2xl" aria-label="Abrir menu de navegação">
+            <button id="mobile-menu-button" class="md:hidden text-2xl transition-colors" aria-label="Abrir menu de navegação">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
         <!-- Menu Mobile -->
         <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 border-t border-gray-200">
-            <a href="#sobre" class="block py-2 hover:text-lazuli-gold transition-colors">Sobre</a>
-            <a href="#tratamentos" class="block py-2 hover:text-lazuli-gold transition-colors">Tratamentos</a>
-            <a href="#galeria" class="block py-2 hover:text-lazuli-gold transition-colors">Resultados</a>
-            <a href="#depoimentos" class="block py-2 hover:text-lazuli-gold transition-colors">Depoimentos</a>
+            <a href="#sobre" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Sobre</a>
+            <a href="#tratamentos" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Tratamentos</a>
+            <a href="#galeria" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Resultados</a>
+            <a href="#faq" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Dúvidas</a>
+            <a href="#depoimentos" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Depoimentos</a>
             <a href="#agendamento" class="block mt-4 bg-lazuli-gold text-white text-center px-5 py-2 rounded-full hover:bg-lazuli-gold-dark transition-colors">Agendar Avaliação</a>
         </div>
     </header>
@@ -95,7 +135,7 @@
     <main>
         <!-- Seção Hero -->
         <section id="home" class="relative min-h-screen flex items-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3');">
-            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="absolute inset-0 bg-black/60"></div> <!-- COMENTÁRIO: Aumentei um pouco o overlay para melhorar o contraste do texto. -->
             <div class="container mx-auto px-6 text-center text-white relative z-10">
                 <h1 class="text-4xl md:text-6xl lg:text-7xl font-display font-medium leading-tight mb-4 reveal">Beleza em equilíbrio, sorriso em harmonia.</h1>
                 <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 reveal" style="transition-delay: 200ms;">Na Lazuli, unimos ciência e estética para realçar sua melhor versão.</p>
@@ -110,7 +150,8 @@
             <div class="container mx-auto px-6">
                 <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                     <div class="lg:w-1/3 reveal">
-                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Foto profissional do Dr. Ítalo Rottoli" class="rounded-lg shadow-2xl object-cover w-full h-auto">
+                        <!-- COMENTÁRIO: Imagem ATUALIZADA conforme solicitado. -->
+                        <img src="https://firebasestorage.googleapis.com/v0/b/platamais.firebasestorage.app/o/clinica%20lazuli%2FWhatsApp%20Image%202025-08-01%20at%2019.43.15.jpeg?alt=media&token=07c1afb0-2100-4918-b5df-b597c7600894" alt="Foto profissional do Dr. Ítalo Rottoli" class="rounded-lg shadow-2xl object-cover w-full h-auto" loading="lazy" decoding="async">
                     </div>
                     <div class="lg:w-2/3 text-center lg:text-left reveal" style="transition-delay: 200ms;">
                         <h2 class="text-3xl md:text-4xl font-display mb-4">Dr. Ítalo Rottoli</h2>
@@ -122,40 +163,58 @@
             </div>
         </section>
 
+        <!-- Seção Filosofia -->
+        <section id="filosofia" class="py-20 lg:py-24 bg-lazuli-light-blue">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-display mb-12 reveal">Nossos Pilares</h2>
+                <div class="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+                    <div class="flex flex-col items-center reveal" style="transition-delay: 200ms;">
+                        <div class="bg-white text-lazuli-gold p-5 rounded-full mb-4 shadow-md"><i class="fas fa-shield-alt fa-2x"></i></div>
+                        <h3 class="text-2xl font-display mb-2">Segurança</h3>
+                        <p>Protocolos rigorosos e produtos de ponta para sua total tranquilidade.</p>
+                    </div>
+                    <div class="flex flex-col items-center reveal" style="transition-delay: 400ms;">
+                        <div class="bg-white text-lazuli-gold p-5 rounded-full mb-4 shadow-md"><i class="fas fa-leaf fa-2x"></i></div>
+                        <h3 class="text-2xl font-display mb-2">Naturalidade</h3>
+                        <p>Resultados que realçam sua beleza única, sem exageros e com elegância.</p>
+                    </div>
+                    <div class="flex flex-col items-center reveal" style="transition-delay: 600ms;">
+                        <div class="bg-white text-lazuli-gold p-5 rounded-full mb-4 shadow-md"><i class="fas fa-microchip fa-2x"></i></div>
+                        <h3 class="text-2xl font-display mb-2">Tecnologia</h3>
+                        <p>Inovação a serviço da estética, com planejamento digital e técnicas avançadas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Seção Tratamentos -->
-        <section id="tratamentos" class="py-20 lg:py-32 bg-lazuli-light-blue">
+        <section id="tratamentos" class="py-20 lg:py-32 bg-white">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Tratamentos Exclusivos</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-16 reveal" style="transition-delay: 200ms;">Soluções personalizadas para uma aparência rejuvenescida e um sorriso radiante.</p>
                 <div class="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-                    <div class="bg-white p-8 rounded-lg shadow-lg text-left reveal transition-all duration-300 hover:shadow-2xl hover:-translate-y-2" style="transition-delay: 400ms;">
+                    <div class="bg-lazuli-light-blue/30 border border-gray-200 p-8 rounded-lg text-left reveal transition-all duration-300 hover:shadow-2xl hover:-translate-y-2" style="transition-delay: 400ms;">
                         <div class="flex items-center mb-4">
-                            <div class="bg-lazuli-nude text-lazuli-gold p-4 rounded-full mr-4">
-                                <i class="fas fa-user-check fa-2x"></i>
-                            </div>
+                            <div class="bg-lazuli-nude text-lazuli-gold p-4 rounded-full mr-4"><i class="fas fa-user-check fa-2x"></i></div>
                             <h3 class="text-2xl font-display">Harmonização Facial</h3>
                         </div>
                         <p class="mb-4">Procedimentos minimamente invasivos que equilibram os traços faciais, promovendo um rejuvenescimento sutil e natural.</p>
-                        <ul class="space-y-2">
+                        <ul class="space-y-2 text-lazuli-dark/80">
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Toxina Botulínica (Botox)</li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Preenchimento com Ácido Hialurônico</li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Bioestimuladores de Colágeno</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Bichectomia</li>
                         </ul>
                     </div>
-                    <div class="bg-white p-8 rounded-lg shadow-lg text-left reveal transition-all duration-300 hover:shadow-2xl hover:-translate-y-2" style="transition-delay: 600ms;">
+                    <div class="bg-lazuli-light-blue/30 border border-gray-200 p-8 rounded-lg text-left reveal transition-all duration-300 hover:shadow-2xl hover:-translate-y-2" style="transition-delay: 600ms;">
                         <div class="flex items-center mb-4">
-                             <div class="bg-lazuli-nude text-lazuli-gold p-4 rounded-full mr-4">
-                                <i class="fas fa-gem fa-2x"></i>
-                            </div>
+                            <div class="bg-lazuli-nude text-lazuli-gold p-4 rounded-full mr-4"><i class="fas fa-gem fa-2x"></i></div>
                             <h3 class="text-2xl font-display">Lentes de Contato Dental</h3>
                         </div>
                         <p class="mb-4">Lâminas de porcelana ultrafinas, aplicadas sobre os dentes para corrigir imperfeições de cor, formato e alinhamento.</p>
-                        <ul class="space-y-2">
+                        <ul class="space-y-2 text-lazuli-dark/80">
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Resultado Natural e Duradouro</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Mínimo Desgaste Dental</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Alta Resistência a Manchas</li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Planejamento Digital do Sorriso</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Alta Resistência a Manchas</li>
                         </ul>
                     </div>
                 </div>
@@ -163,20 +222,58 @@
         </section>
 
         <!-- Seção Galeria -->
-        <section id="galeria" class="py-20 lg:py-32 bg-white">
+        <section id="galeria" class="py-20 lg:py-32 bg-lazuli-light-blue">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Transformações Reais</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Resultados que refletem nossa dedicação à ética e à naturalidade.</p>
                 <div id="gallery-slider" class="relative slider-container max-w-4xl mx-auto rounded-lg shadow-xl overflow-hidden reveal" style="transition-delay: 400ms;">
                     <div class="slider-track flex">
-                        <div class="slider-item min-w-full"><img src="https://placehold.co/1200x800/F5EBE0/3A3A3A?text=Antes+e+Depois+1" alt="Resultado de harmonização facial" class="w-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/eeeeee/3A3A3A?text=Imagem+Indisponível';"></div>
-                        <div class="slider-item min-w-full"><img src="https://placehold.co/1200x800/F0F8FF/3A3A3A?text=Antes+e+Depois+2" alt="Resultado de lentes de contato dental" class="w-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/eeeeee/3A3A3A?text=Imagem+Indisponível';"></div>
-                        <div class="slider-item min-w-full"><img src="https://placehold.co/1200x800/E0E0E0/3A3A3A?text=Antes+e+Depois+3" alt="Resultado de preenchimento labial" class="w-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/eeeeee/3A3A3A?text=Imagem+Indisponível';"></div>
+                        <div class="slider-item min-w-full"><img src="https://placehold.co/1200x800/F5EBE0/3A3A3A?text=Antes+e+Depois+1" alt="Resultado de harmonização facial" class="w-full object-cover" loading="lazy" decoding="async"></div>
+                        <div class="slider-item min-w-full"><img src="https://placehold.co/1200x800/F0F8FF/3A3A3A?text=Antes+e+Depois+2" alt="Resultado de lentes de contato dental" class="w-full object-cover" loading="lazy" decoding="async"></div>
                     </div>
                     <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition" aria-label="Slide anterior"><i class="fas fa-chevron-left"></i></button>
                     <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition" aria-label="Próximo slide"><i class="fas fa-chevron-right"></i></button>
                 </div>
                 <p class="text-sm text-gray-500 mt-4">*Imagens de pacientes reais com autorização de uso. Os resultados podem variar.</p>
+            </div>
+        </section>
+        
+        <!-- Seção FAQ (Perguntas Frequentes) -->
+        <section id="faq" class="py-20 lg:py-32 bg-white">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Dúvidas Frequentes</h2>
+                    <p class="text-lg reveal" style="transition-delay: 200ms;">Esclareça suas principais perguntas sobre nossos tratamentos.</p>
+                </div>
+                <div class="space-y-4 reveal" style="transition-delay: 400ms;">
+                    <div class="faq-item border-b border-gray-200 pb-4">
+                        <div class="faq-question flex justify-between items-center text-xl font-semibold">
+                            <span>A harmonização facial é segura?</span>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-answer text-lazuli-dark/80 pt-4">
+                            <p>Sim, quando realizada por um profissional qualificado. Utilizamos apenas produtos aprovados pela ANVISA e seguimos protocolos de segurança rigorosos para garantir um procedimento tranquilo e com excelentes resultados.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item border-b border-gray-200 pb-4">
+                        <div class="faq-question flex justify-between items-center text-xl font-semibold">
+                            <span>Lentes de contato dental desgastam os dentes?</span>
+                             <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-answer text-lazuli-dark/80 pt-4">
+                            <p>A técnica moderna das lentes de contato exige um desgaste mínimo ou, em alguns casos, nenhum desgaste do esmalte dental. O planejamento digital nos permite ser extremamente conservadores e preservar a estrutura dental ao máximo.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item border-b border-gray-200 pb-4">
+                        <div class="faq-question flex justify-between items-center text-xl font-semibold">
+                            <span>Quanto tempo dura o efeito do Botox®?</span>
+                             <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </div>
+                        <div class="faq-answer text-lazuli-dark/80 pt-4">
+                            <p>O efeito da toxina botulínica geralmente dura de 4 a 6 meses. Esse tempo pode variar de acordo com o metabolismo de cada paciente, a área tratada e a dosagem utilizada.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -187,28 +284,20 @@
                 <div id="testimonial-slider" class="relative slider-container max-w-3xl mx-auto reveal" style="transition-delay: 200ms;">
                     <div class="slider-track flex">
                         <div class="slider-item min-w-full px-8">
-                            <div class="bg-white p-8 rounded-lg shadow-md">
-                                <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                                <p class="italic text-lg mb-6">"O Dr. Ítalo superou todas as minhas expectativas. O resultado ficou incrivelmente natural e minha autoestima mudou completamente. Profissionalismo e cuidado impecáveis!"</p>
-                                <p class="font-bold font-display text-xl">- Mariana S.</p>
-                            </div>
-                        </div>
+                             <div class="bg-white p-8 rounded-lg shadow-md">
+                                 <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                 <p class="italic text-lg mb-6">"O Dr. Ítalo superou todas as minhas expectativas. O resultado ficou incrivelmente natural e minha autoestima mudou completamente. Profissionalismo e cuidado impecáveis!"</p>
+                                 <p class="font-bold font-display text-xl">- Mariana S.</p>
+                             </div>
+                         </div>
                         <div class="slider-item min-w-full px-8">
-                            <div class="bg-white p-8 rounded-lg shadow-md">
-                                <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                                <p class="italic text-lg mb-6">"Fiz minhas lentes de contato com o Dr. Ítalo e foi a melhor decisão. O processo foi tranquilo e o resultado é um sorriso de cinema. Recomendo de olhos fechados!"</p>
-                                <p class="font-bold font-display text-xl">- Ricardo L.</p>
-                            </div>
-                        </div>
-                         <div class="slider-item min-w-full px-8">
-                            <div class="bg-white p-8 rounded-lg shadow-md">
-                                <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                                <p class="italic text-lg mb-6">"Atendimento excepcional, desde a recepção até o procedimento. O Dr. Ítalo é muito atencioso e explica tudo em detalhes. Me senti muito segura e amei o resultado."</p>
-                                <p class="font-bold font-display text-xl">- Fernanda C.</p>
-                            </div>
+                             <div class="bg-white p-8 rounded-lg shadow-md">
+                                 <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                 <p class="italic text-lg mb-6">"Fiz minhas lentes de contato com o Dr. Ítalo e foi a melhor decisão. O processo foi tranquilo e o resultado é um sorriso de cinema. Recomendo de olhos fechados!"</p>
+                                 <p class="font-bold font-display text-xl">- Ricardo L.</p>
+                             </div>
                         </div>
                     </div>
-                    <!-- CORREÇÃO: Setas reposicionadas para dentro do container -->
                     <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-0 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
                     <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-0 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
                 </div>
@@ -224,72 +313,64 @@
                     <a href="https://wa.me/5551000000000" target="_blank" class="w-full md:w-auto bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all duration-300 flex items-center justify-center gap-3 transform hover:scale-105">
                         <i class="fab fa-whatsapp fa-lg"></i> Agendar pelo WhatsApp
                     </a>
-                    <a href="https://instagram.com" target="_blank" class="w-full md:w-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-3 transform hover:scale-105">
-                        <i class="fab fa-instagram fa-lg"></i> Siga-nos no Instagram
-                    </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Rodapé com Mapa -->
+    <!-- Rodapé -->
     <footer class="bg-lazuli-dark text-white pt-16 pb-8">
         <div class="container mx-auto px-6">
-            <div class="text-center">
-                <a href="#home" class="text-3xl font-display font-bold text-white mb-12 inline-block">
-                    Clínica <span class="text-lazuli-gold">Lazuli</span>
-                </a>
-            </div>
-
-            <!-- Layout do Rodapé: Mapa à esquerda, Informações à direita -->
-            <div class="grid md:grid-cols-2 gap-10 mb-10 text-gray-300 text-center md:text-left">
-                <!-- Coluna do Mapa -->
-                <div class="w-full">
-                    <h4 class="font-semibold text-white text-lg mb-4">Nossa Localização</h4>
-                    <div class="overflow-hidden rounded-lg shadow-lg border border-gray-700">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.469949159901!2d-51.2093296848852!3d-30.02347398189164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951979b635d36a9b%3A0x5a46c31c7fde0b8c!2sR.%20Padre%20Chagas%20-%20Moinhos%20de%20Vento%2C%20Porto%20Alegre%20-%20RS!5e0!3m2!1spt-BR!2sbr!4v1662580000000!5m2!1spt-BR!2sbr" 
-                            class="w-full h-64 border-0" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade"
-                            title="Mapa da localização da Clínica Lazuli">
-                        </iframe>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-10 text-gray-300 text-center md:text-left">
+                <div class="lg:col-span-1">
+                     <a href="#home" class="text-3xl font-display font-bold text-white mb-4 inline-block">
+                         Clínica <span class="text-lazuli-gold">Lazuli</span>
+                     </a>
+                     <p class="text-gray-400">Ciência e arte para realçar a sua beleza com naturalidade e segurança em Porto Alegre.</p>
+                      <div class="flex justify-center md:justify-start space-x-4 mt-6">
+                        <a href="#" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
-                <!-- Coluna de Informações -->
-                <div class="flex flex-col justify-center">
+
+                <div class="lg:col-span-2 grid md:grid-cols-2 gap-10">
                     <div>
-                        <h4 class="font-semibold text-white text-lg mb-3">Endereço</h4>
-                        <p>Rua Padre Chagas, 415, Sala 506<br>Moinhos de Vento, Porto Alegre - RS</p>
+                        <h4 class="font-semibold text-white text-lg mb-4">Entre em Contato</h4>
+                        <p class="mb-2"><strong>Endereço:</strong><br>Rua Padre Chagas, 415, Sala 506<br>Moinhos de Vento, Porto Alegre - RS</p>
+                        <p class="mb-2"><strong>Email:</strong><br><a href="mailto:contato@clinicalazuli.com.br" class="hover:text-lazuli-gold">contato@clinicalazuli.com.br</a></p>
+                        <p><strong>Telefone:</strong><br><a href="tel:+5551900000000" class="hover:text-lazuli-gold">(51) 90000-0000</a></p>
                     </div>
-                    <div class="mt-6">
-                        <h4 class="font-semibold text-white text-lg mb-3">Contato</h4>
-                        <p>contato@clinicalazuli.com.br</p>
-                        <p>(51) 90000-0000</p>
-                    </div>
-                    <div class="mt-6">
-                        <h4 class="font-semibold text-white text-lg mb-3">Links Úteis</h4>
-                        <a href="#sobre" class="block hover:text-lazuli-gold transition-colors">Sobre o Dr. Ítalo</a>
-                        <a href="#tratamentos" class="block hover:text-lazuli-gold transition-colors">Tratamentos</a>
+
+                    <div>
+                        <h4 class="font-semibold text-white text-lg mb-4">Nossa Localização</h4>
+                        <div class="overflow-hidden rounded-lg shadow-lg border border-gray-700">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.499696328602!2d-51.20875768488528!3d-30.02256498188981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951979b0c032a187%3A0x1e3e8784383d4e8e!2sR.%20Padre%20Chagas%2C%20415%20-%20Moinhos%20de%20Vento%2C%20Porto%20Alegre%20-%20RS%2C%2090570-080!5e0!3m2!1spt-BR!2sbr!4v1671234567890!5m2!1spt-BR!2sbr" 
+                                class="w-full h-48 border-0" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="Mapa da localização da Clínica Lazuli">
+                            </iframe>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Seção final do rodapé -->
             <div class="text-center border-t border-gray-700 pt-8 mt-8">
-                <div class="flex justify-center space-x-6 mb-8">
-                    <a href="#" class="text-2xl hover:text-lazuli-gold transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-2xl hover:text-lazuli-gold transition-colors" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-2xl hover:text-lazuli-gold transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                </div>
                 <div class="text-sm text-gray-400">
-                    <p>&copy; <span id="current-year"></span> Clínica Lazuli. Todos os direitos reservados.</p>
-                    <p>Desenvolvido com &hearts; por IA.</p>
+                    <p>© <span id="current-year"></span> Clínica Lazuli. Todos os direitos reservados.</p>
+                    <p class="mt-1">CNPJ: 00.000.000/0001-00 | Responsável Técnico: Dr. Ítalo Rottoli (CRO/RS 00000)</p>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Botão Flutuante do WhatsApp -->
+    <a href="https://wa.me/5551000000000" target="_blank" class="fixed bottom-5 right-5 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-50 transform hover:scale-110 transition-transform" aria-label="Fale conosco no WhatsApp">
+        <i class="fab fa-whatsapp fa-2x"></i>
+    </a>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -306,15 +387,29 @@
             });
         });
 
+        // --- LÓGICA PARA HEADER DINÂMICO ---
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
         // --- LÓGICA GERAL PARA SLIDERS ---
-        function initializeSlider(containerId, autoSlideInterval = 5000) {
+        function initializeSlider(containerId, autoSlideInterval = 0) {
             const container = document.getElementById(containerId);
             if (!container) return;
             const track = container.querySelector('.slider-track');
             const items = container.querySelectorAll('.slider-item');
             const prevButton = container.querySelector('.slider-button.prev');
             const nextButton = container.querySelector('.slider-button.next');
-            if (!track || items.length === 0) return;
+            if (!track || items.length <= 1) {
+              if(prevButton) prevButton.style.display = 'none';
+              if(nextButton) nextButton.style.display = 'none';
+              return;
+            };
             const totalItems = items.length;
             let currentIndex = 0;
             let slideInterval;
@@ -324,17 +419,15 @@
             }
             function startAutoSlide() {
                 if (autoSlideInterval > 0 && totalItems > 1) {
-                   stopAutoSlide();
-                   slideInterval = setInterval(() => goToSlide(currentIndex + 1), autoSlideInterval);
+                    stopAutoSlide();
+                    slideInterval = setInterval(() => goToSlide(currentIndex + 1), autoSlideInterval);
                 }
             }
-            function stopAutoSlide() {
-                clearInterval(slideInterval);
-            }
+            function stopAutoSlide() { clearInterval(slideInterval); }
             if (prevButton && nextButton) {
                 prevButton.addEventListener('click', () => {
                     goToSlide(currentIndex - 1);
-                    startAutoSlide(); 
+                    startAutoSlide();
                 });
                 nextButton.addEventListener('click', () => {
                     goToSlide(currentIndex + 1);
@@ -347,6 +440,30 @@
         }
         initializeSlider('gallery-slider', 5000); 
         initializeSlider('testimonial-slider', 7000);
+
+        // --- LÓGICA PARA FAQ (ACCORDION) ---
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            const icon = question.querySelector('i');
+            question.addEventListener('click', () => {
+                const isOpened = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.querySelector('.faq-answer').style.maxHeight = '0px';
+                        otherItem.querySelector('.faq-question i').classList.remove('rotate-180');
+                    }
+                });
+                if (isOpened) {
+                    answer.style.maxHeight = '0px';
+                    icon.classList.remove('rotate-180');
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
 
         // --- ANIMAÇÃO DE SCROLL COM INTERSECTION OBSERVER ---
         const revealObserver = new IntersectionObserver((entries, observer) => {
