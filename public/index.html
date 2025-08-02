@@ -383,19 +383,16 @@
     </a>
 
     <!-- Firebase SDK - Carregamento Corrigido -->
-    <!-- Estas bibliotecas precisam ser carregadas ANTES do script de inicialização -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     
-    <!-- Firebase Init - Este script agora encontrará as bibliotecas acima -->
+    <!-- Firebase Init -->
     <script src="/__/firebase/init.js"></script>
 
     <!-- O seu código personalizado -->
-    <script type="module">
-        // As importações foram movidas para os scripts acima para garantir a ordem de carregamento
-        const { getFirestore, doc, getDoc, collection, getDocs } = firebase.firestore;
-        
-        const db = getFirestore();
+    <script>
+        // Acesso às funções do Firebase após o carregamento dos scripts
+        const db = firebase.firestore();
 
         // --- LÓGICA GERAL DO SITE (EXISTENTE) ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -511,15 +508,15 @@
             async function loadDynamicContent() {
                 try {
                     // Carregar foto da seção "Sobre"
-                    const aboutDocRef = doc(db, "siteContent", "sobre");
-                    const aboutDocSnap = await getDoc(aboutDocRef);
-                    if (aboutDocSnap.exists()) {
+                    const aboutDocRef = db.collection("siteContent").doc("sobre");
+                    const aboutDocSnap = await aboutDocRef.get();
+                    if (aboutDocSnap.exists) {
                         document.getElementById('about-dr-photo').src = aboutDocSnap.data().imageUrl;
                     }
 
                     // Carregar galeria
                     const galleryTrack = document.querySelector('#gallery-slider .slider-track');
-                    const gallerySnapshot = await getDocs(collection(db, "gallery"));
+                    const gallerySnapshot = await db.collection("gallery").get();
                     galleryTrack.innerHTML = ''; // Limpa placeholders
                     if (gallerySnapshot.empty) {
                         galleryTrack.innerHTML = `<div class="slider-item min-w-full"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" class="w-full object-cover"></div>`;
@@ -532,7 +529,7 @@
 
                     // Carregar depoimentos
                     const testimonialTrack = document.querySelector('#testimonial-slider .slider-track');
-                    const testimonialsSnapshot = await getDocs(collection(db, "testimonials"));
+                    const testimonialsSnapshot = await db.collection("testimonials").get();
                     testimonialTrack.innerHTML = ''; // Limpa placeholders
                     if (testimonialsSnapshot.empty) {
                         testimonialTrack.innerHTML = `

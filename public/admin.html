@@ -135,21 +135,17 @@
     </div>
 
     <!-- Firebase SDK - Carregamento Corrigido -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <!-- Firebase Init -->
     <script src="/__/firebase/init.js"></script>
 
     <!-- O seu código personalizado -->
-    <script type="module">
-        // As importações foram movidas para os scripts acima para garantir a ordem de carregamento
-        const { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } = firebase.auth;
-        const { getFirestore, doc, getDoc, setDoc, collection, getDocs, addDoc, deleteDoc } = firebase.firestore;
-
-        const auth = getAuth();
-        const db = getFirestore();
+    <script>
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
         // Elementos da UI
         const authContainer = document.getElementById('auth-container');
@@ -163,7 +159,7 @@
         const contentSections = document.getElementById('content-sections');
 
         // --- LÓGICA DE AUTENTICAÇÃO ---
-        onAuthStateChanged(auth, user => {
+        auth.onAuthStateChanged(user => {
             if (user) {
                 authContainer.classList.add('hidden');
                 adminPanel.classList.remove('hidden');
@@ -180,7 +176,7 @@
             const email = emailInput.value;
             const password = passwordInput.value;
             authError.textContent = '';
-            signInWithEmailAndPassword(auth, email, password)
+            auth.signInWithEmailAndPassword(email, password)
                 .catch(error => {
                     authError.textContent = 'Email ou senha inválidos.';
                     console.error("Erro de login:", error);
@@ -188,7 +184,7 @@
         });
 
         logoutButton.addEventListener('click', () => {
-            signOut(auth);
+            auth.signOut();
         });
 
         // --- FUNÇÕES DE CARREGAMENTO DE CONTEÚDO ---
@@ -209,9 +205,9 @@
         }
 
         async function loadAboutSection() {
-            const docRef = doc(db, "siteContent", "sobre");
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
+            const docRef = db.collection("siteContent").doc("sobre");
+            const docSnap = await docRef.get();
+            if (docSnap.exists) {
                 const data = docSnap.data();
                 document.getElementById('about-image-preview').src = data.imageUrl || 'https://placehold.co/400x400?text=Sem+Imagem';
                 document.getElementById('about-image-url').value = data.imageUrl || '';
@@ -221,7 +217,7 @@
         async function loadGallerySection() {
             const galleryContainer = document.getElementById('gallery-section');
             galleryContainer.innerHTML = '';
-            const querySnapshot = await getDocs(collection(db, "gallery"));
+            const querySnapshot = await db.collection("gallery").get();
             if(querySnapshot.empty) {
                 galleryContainer.innerHTML = '<p class="col-span-full">Nenhuma imagem na galeria ainda.</p>';
             } else {
@@ -243,7 +239,7 @@
         async function loadTestimonialsSection() {
             const testimonialsContainer = document.getElementById('testimonials-section');
             testimonialsContainer.innerHTML = '';
-            const querySnapshot = await getDocs(collection(db, "testimonials"));
+            const querySnapshot = await db.collection("testimonials").get();
              if(querySnapshot.empty) {
                 testimonialsContainer.innerHTML = '<p>Nenhum depoimento adicionado.</p>';
             } else {
@@ -271,7 +267,7 @@
                 return;
             }
             try {
-                await setDoc(doc(db, "siteContent", "sobre"), { imageUrl });
+                await db.collection("siteContent").doc("sobre").set({ imageUrl });
                 alert("Seção 'Sobre' atualizada com sucesso!");
                 loadAboutSection();
             } catch (error) {
@@ -287,7 +283,7 @@
                 return;
             }
             try {
-                await addDoc(collection(db, "gallery"), { url });
+                await db.collection("gallery").add({ url });
                 alert("Imagem adicionada à galeria!");
                 loadGallerySection();
                 document.getElementById('gallery-image-url').value = '';
@@ -305,7 +301,7 @@
                 return;
             }
             try {
-                await addDoc(collection(db, "testimonials"), { name, text });
+                await db.collection("testimonials").add({ name, text });
                 alert("Depoimento adicionado com sucesso!");
                 loadTestimonialsSection();
                 document.getElementById('testimonial-name').value = '';
@@ -322,7 +318,7 @@
                 if (!confirm("Tem certeza que deseja remover esta imagem da galeria?\n\n(A imagem original não será apagada do seu outro site).")) return;
                 const docId = e.target.dataset.id;
                 try {
-                    await deleteDoc(doc(db, "gallery", docId));
+                    await db.collection("gallery").doc(docId).delete();
                     alert("Imagem removida da galeria!");
                     loadGallerySection();
                 } catch (error) {
@@ -334,7 +330,7 @@
                  if (!confirm("Tem certeza que deseja excluir este depoimento?")) return;
                  const docId = e.target.dataset.id;
                  try {
-                    await deleteDoc(doc(db, "testimonials", docId));
+                    await db.collection("testimonials").doc(docId).delete();
                     alert("Depoimento excluído com sucesso!");
                     loadTestimonialsSection();
                  } catch (error) {
