@@ -46,7 +46,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-      /* COMENTÁRIO: Estilos gerais e para animações */
       .reveal {
         opacity: 0;
         transform: translateY(30px);
@@ -65,9 +64,6 @@
         overflow: hidden;
         transition: max-height 0.5s ease-in-out;
       }
-
-      /* COMENTÁRIO: MELHORIA DE CONTRASTE DO HEADER */
-      /* Estado inicial (topo da página, sobre a imagem) */
       #main-header .nav-link { color: white; position: relative; }
       #main-header .logo-main-text { color: white; }
       #main-header #mobile-menu-button { color: white; }
@@ -79,15 +75,13 @@
         display: block;
         margin-top: 5px;
         right: 50%;
-        background: white; /* Sublinhado branco no início */
+        background: white;
         transition: width 0.3s ease, right 0.3s ease;
       }
       .nav-link:hover::after {
         width: 100%;
         right: 0;
       }
-
-      /* Estado com scroll (fundo branco) */
       #main-header.header-scrolled {
         background-color: rgba(255, 255, 255, 0.98);
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -98,7 +92,7 @@
       #main-header.header-scrolled .logo-main-text { color: #3A3A3A; }
       #main-header.header-scrolled #mobile-menu-button { color: #3A3A3A; }
       #main-header.header-scrolled .nav-link::after {
-        background: #B8860B; /* Sublinhado dourado com scroll */
+        background: #B8860B;
       }
     </style>
 </head>
@@ -107,14 +101,12 @@
     <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#home" class="text-2xl font-display font-bold">
-                <!-- COMENTÁRIO: Adicionado span para controlar a cor do texto principal do logo. -->
                 <span class="logo-main-text">Clínica</span> <span class="text-lazuli-gold">Lazuli</span>
             </a>
             <nav class="hidden md:flex space-x-8 items-center">
                 <a href="#sobre" class="nav-link transition-colors">Sobre</a>
                 <a href="#tratamentos" class="nav-link transition-colors">Tratamentos</a>
                 <a href="#galeria" class="nav-link transition-colors">Resultados</a>
-                <!-- COMENTÁRIO: Link de Depoimentos adicionado para consistência com o menu mobile. -->
                 <a href="#depoimentos" class="nav-link transition-colors">Depoimentos</a>
                 <a href="#faq" class="nav-link transition-colors">Dúvidas</a>
                 <a href="#agendamento" class="bg-lazuli-gold text-white px-5 py-2 rounded-full hover:bg-lazuli-gold-dark transition-colors text-sm font-semibold">Agendar Avaliação</a>
@@ -123,7 +115,6 @@
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        <!-- Menu Mobile -->
         <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 border-t border-gray-200">
             <a href="#sobre" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Sobre</a>
             <a href="#tratamentos" class="block py-2 text-lazuli-dark hover:text-lazuli-gold transition-colors">Tratamentos</a>
@@ -137,7 +128,7 @@
     <main>
         <!-- Seção Hero -->
         <section id="home" class="relative min-h-screen flex items-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3');">
-            <div class="absolute inset-0 bg-black/60"></div> <!-- COMENTÁRIO: Aumentei um pouco o overlay para melhorar o contraste do texto. -->
+            <div class="absolute inset-0 bg-black/60"></div>
             <div class="container mx-auto px-6 text-center text-white relative z-10">
                 <h1 class="text-4xl md:text-6xl lg:text-7xl font-display font-medium leading-tight mb-4 reveal">Beleza em equilíbrio, sorriso em harmonia.</h1>
                 <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 reveal" style="transition-delay: 200ms;">Na Lazuli, unimos ciência e estética para realçar sua melhor versão.</p>
@@ -152,7 +143,8 @@
             <div class="container mx-auto px-6">
                 <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                     <div class="lg:w-1/3 reveal">
-                        <img src="https://firebasestorage.googleapis.com/v0/b/platamais.firebasestorage.app/o/clinica%20lazuli%2FWhatsApp%20Image%202025-08-01%20at%2019.43.15.jpeg?alt=media&token=07c1afb0-2100-4918-b5df-b597c7600894" alt="Foto profissional do Dr. Ítalo Rottoli" class="rounded-lg shadow-2xl object-cover w-full h-auto" loading="lazy" decoding="async">
+                        <!-- IMAGEM DINÂMICA -->
+                        <img id="about-dr-photo" src="https://placehold.co/600x800/F5EBE0/3A3A3A?text=Carregando..." alt="Foto profissional do Dr. Ítalo Rottoli" class="rounded-lg shadow-2xl object-cover w-full h-auto" loading="lazy" decoding="async">
                     </div>
                     <div class="lg:w-2/3 text-center lg:text-left reveal" style="transition-delay: 200ms;">
                         <h2 class="text-3xl md:text-4xl font-display mb-4">Dr. Ítalo Rottoli</h2>
@@ -228,11 +220,10 @@
                 <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Transformações Reais</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Resultados que refletem nossa dedicação à ética e à naturalidade.</p>
                 <div id="gallery-slider" class="relative slider-container max-w-4xl mx-auto rounded-lg shadow-xl overflow-hidden reveal" style="transition-delay: 400ms;">
+                    <!-- CONTEÚDO DINÂMICO DA GALERIA -->
                     <div class="slider-track flex">
-                        <div class="slider-item min-w-full"><img src="https://placehold.co/1200x800/F5EBE0/3A3A3A?text=Antes+e+Depois+1" alt="Resultado de harmonização facial" class="w-full object-cover" loading="lazy" decoding="async"></div>
-                        <div class="slider-item min-w-full"><img src="https://placehold.co/1200x800/F0F8FF/3A3A3A?text=Antes+e+Depois+2" alt="Resultado de lentes de contato dental" class="w-full object-cover" loading="lazy" decoding="async"></div>
+                        <!-- As imagens da galeria serão inseridas aqui pelo JavaScript -->
                     </div>
-                    <!-- COMENTÁRIO: Botões do slider aumentados para melhor usabilidade mobile. -->
                     <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-4 bg-white/70 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center transition" aria-label="Slide anterior"><i class="fas fa-chevron-left"></i></button>
                     <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-4 bg-white/70 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center transition" aria-label="Próximo slide"><i class="fas fa-chevron-right"></i></button>
                 </div>
@@ -284,23 +275,10 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-display mb-12 reveal">Confiança que Inspira</h2>
                 <div id="testimonial-slider" class="relative slider-container max-w-3xl mx-auto reveal" style="transition-delay: 200ms;">
+                    <!-- CONTEÚDO DINÂMICO DOS DEPOIMENTOS -->
                     <div class="slider-track flex">
-                        <div class="slider-item min-w-full px-8">
-                             <div class="bg-white p-8 rounded-lg shadow-md">
-                                 <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                                 <p class="italic text-lg mb-6">"O Dr. Ítalo superou todas as minhas expectativas. O resultado ficou incrivelmente natural e minha autoestima mudou completamente. Profissionalismo e cuidado impecáveis!"</p>
-                                 <p class="font-bold font-display text-xl">- Mariana S.</p>
-                             </div>
-                       </div>
-                        <div class="slider-item min-w-full px-8">
-                             <div class="bg-white p-8 rounded-lg shadow-md">
-                                 <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                                 <p class="italic text-lg mb-6">"Fiz minhas lentes de contato com o Dr. Ítalo e foi a melhor decisão. O processo foi tranquilo e o resultado é um sorriso de cinema. Recomendo de olhos fechados!"</p>
-                                 <p class="font-bold font-display text-xl">- Ricardo L.</p>
-                             </div>
-                       </div>
+                       <!-- Os depoimentos serão inseridos aqui pelo JavaScript -->
                     </div>
-                    <!-- COMENTÁRIO: Botões do slider aumentados para melhor usabilidade mobile. -->
                     <button class="slider-button prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 bg-white/70 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
                     <button class="slider-button next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 bg-white/70 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
                 </div>
@@ -313,7 +291,6 @@
                 <h2 class="text-3xl md:text-4xl font-display mb-4 text-lazuli-dark reveal">Sua transformação começa agora.</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Entre em contato e dê o primeiro passo para revelar a sua melhor versão.</p>
                 <div class="flex flex-col md:flex-row justify-center items-center gap-6 reveal" style="transition-delay: 400ms;">
-                    <!-- COMENTÁRIO: Número de WhatsApp ATUALIZADO. -->
                     <a href="https://wa.me/555499041660" target="_blank" class="w-full md:w-auto bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all duration-300 flex items-center justify-center gap-3 transform hover:scale-105">
                         <i class="fab fa-whatsapp fa-lg"></i> Agendar pelo WhatsApp
                     </a>
@@ -334,7 +311,6 @@
                       <div class="flex justify-center md:justify-start space-x-4 mt-6">
                         <a href="#" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <!-- COMENTÁRIO: Número de WhatsApp ATUALIZADO. -->
                         <a href="https://wa.me/555499041660" target="_blank" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
@@ -344,7 +320,6 @@
                         <h4 class="font-semibold text-white text-lg mb-4">Entre em Contato</h4>
                         <p class="mb-2"><strong>Endereço:</strong><br>Rua Padre Chagas, 415, Sala 506<br>Moinhos de Vento, Porto Alegre - RS</p>
                         <p class="mb-2"><strong>Email:</strong><br><a href="mailto:contato@clinicalazuli.com.br" class="hover:text-lazuli-gold">contato@clinicalazuli.com.br</a></p>
-                        <!-- COMENTÁRIO: Número de telefone ATUALIZADO. -->
                         <p><strong>Telefone:</strong><br><a href="tel:+555499041660" class="hover:text-lazuli-gold">(54) 9904-1660</a></p>
                     </div>
 
@@ -373,126 +348,184 @@
         </div>
     </footer>
 
-    <!-- Botão Flutuante do WhatsApp -->
-    <!-- COMENTÁRIO: Número de WhatsApp ATUALIZADO. -->
     <a href="https://wa.me/555499041660" target="_blank" class="fixed bottom-5 right-5 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-50 transform hover:scale-110 transition-transform" aria-label="Fale conosco no WhatsApp">
         <i class="fab fa-whatsapp fa-2x"></i>
     </a>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- LÓGICA DO MENU MOBILE ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = mobileMenu.querySelectorAll('a');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Sua configuração completa do Firebase.
+        const firebaseConfig = {
+            apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY",
+            authDomain: "lazuliclinica-ee588.firebaseapp.com",
+            projectId: "lazuliclinica-ee588",
+            storageBucket: "lazuliclinica-ee588.appspot.com",
+            messagingSenderId: "1001941309426",
+            appId: "1:1001941309426:web:d966dceb8f6c0425d5bd6b",
+            measurementId: "G-7HWTLTCGSN"
+        };
+        
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- LÓGICA GERAL DO SITE (EXISTENTE) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGICA DO MENU MOBILE ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
-        });
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
 
-        // --- LÓGICA PARA HEADER DINÂMICO ---
-        const header = document.getElementById('main-header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('header-scrolled');
-            } else {
-                header.classList.remove('header-scrolled');
-            }
-        });
-
-        // --- LÓGICA GERAL PARA SLIDERS ---
-        function initializeSlider(containerId, autoSlideInterval = 0) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            const track = container.querySelector('.slider-track');
-            const items = container.querySelectorAll('.slider-item');
-            const prevButton = container.querySelector('.slider-button.prev');
-            const nextButton = container.querySelector('.slider-button.next');
-            if (!track || items.length <= 1) {
-              if(prevButton) prevButton.style.display = 'none';
-              if(nextButton) nextButton.style.display = 'none';
-              return;
-            };
-            const totalItems = items.length;
-            let currentIndex = 0;
-            let slideInterval;
-            function goToSlide(index) {
-                currentIndex = (index + totalItems) % totalItems; 
-                track.style.transform = `translateX(-${currentIndex * 100}%)`;
-            }
-            function startAutoSlide() {
-                if (autoSlideInterval > 0 && totalItems > 1) {
-                    stopAutoSlide();
-                    slideInterval = setInterval(() => goToSlide(currentIndex + 1), autoSlideInterval);
+            // --- LÓGICA PARA HEADER DINÂMICO ---
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('header-scrolled');
+                } else {
+                    header.classList.remove('header-scrolled');
                 }
-            }
-            function stopAutoSlide() { clearInterval(slideInterval); }
-            if (prevButton && nextButton) {
-                prevButton.addEventListener('click', () => {
-                    goToSlide(currentIndex - 1);
-                    startAutoSlide();
-                });
-                nextButton.addEventListener('click', () => {
-                    goToSlide(currentIndex + 1);
-                    startAutoSlide();
-                });
-            }
-            container.addEventListener('mouseenter', stopAutoSlide);
-            container.addEventListener('mouseleave', startAutoSlide);
-            startAutoSlide();
-        }
-        initializeSlider('gallery-slider', 5000); 
-        initializeSlider('testimonial-slider', 7000);
+            });
 
-        // --- LÓGICA PARA FAQ (ACCORDION) ---
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            const answer = item.querySelector('.faq-answer');
-            const icon = question.querySelector('i');
-            question.addEventListener('click', () => {
-                const isOpened = answer.style.maxHeight && answer.style.maxHeight !== '0px';
-                // Fecha todos os outros itens antes de abrir o atual
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.querySelector('.faq-answer').style.maxHeight = '0px';
-                        otherItem.querySelector('.faq-question i').classList.remove('rotate-180');
+            // --- LÓGICA GERAL PARA SLIDERS ---
+            function initializeSlider(containerId, autoSlideInterval = 0) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                const track = container.querySelector('.slider-track');
+                const items = container.querySelectorAll('.slider-item');
+                const prevButton = container.querySelector('.slider-button.prev');
+                const nextButton = container.querySelector('.slider-button.next');
+                if (!track || items.length <= 1) {
+                  if(prevButton) prevButton.style.display = 'none';
+                  if(nextButton) nextButton.style.display = 'none';
+                  return;
+                };
+                const totalItems = items.length;
+                let currentIndex = 0;
+                let slideInterval;
+                function goToSlide(index) {
+                    currentIndex = (index + totalItems) % totalItems; 
+                    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                }
+                function startAutoSlide() {
+                    if (autoSlideInterval > 0 && totalItems > 1) {
+                        stopAutoSlide();
+                        slideInterval = setInterval(() => goToSlide(currentIndex + 1), autoSlideInterval);
+                    }
+                }
+                function stopAutoSlide() { clearInterval(slideInterval); }
+                if (prevButton && nextButton) {
+                    prevButton.addEventListener('click', () => {
+                        goToSlide(currentIndex - 1);
+                        startAutoSlide();
+                    });
+                    nextButton.addEventListener('click', () => {
+                        goToSlide(currentIndex + 1);
+                        startAutoSlide();
+                    });
+                }
+                container.addEventListener('mouseenter', stopAutoSlide);
+                container.addEventListener('mouseleave', startAutoSlide);
+                startAutoSlide();
+            }
+
+            // --- LÓGICA PARA FAQ (ACCORDION) ---
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const icon = question.querySelector('i');
+                question.addEventListener('click', () => {
+                    const isOpened = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.querySelector('.faq-answer').style.maxHeight = '0px';
+                            otherItem.querySelector('.faq-question i').classList.remove('rotate-180');
+                        }
+                    });
+                    if (isOpened) {
+                        answer.style.maxHeight = '0px';
+                        icon.classList.remove('rotate-180');
+                    } else {
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        icon.classList.add('rotate-180');
                     }
                 });
-                // Abre ou fecha o item clicado
-                if (isOpened) {
-                    answer.style.maxHeight = '0px';
-                    icon.classList.remove('rotate-180');
-                } else {
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                    icon.classList.add('rotate-180');
-                }
             });
-        });
 
-        // --- ANIMAÇÃO DE SCROLL COM INTERSECTION OBSERVER ---
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); 
-                }
+            // --- ANIMAÇÃO DE SCROLL ---
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, { root: null, threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.reveal').forEach(el => {
+                revealObserver.observe(el);
             });
-        }, { root: null, threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => {
-            revealObserver.observe(el);
+            
+            // --- ATUALIZA O ANO DO RODAPÉ ---
+            const yearSpan = document.getElementById('current-year');
+            if(yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+
+            // --- CARREGAMENTO DE CONTEÚDO DINÂMICO DO FIREBASE ---
+            async function loadDynamicContent() {
+                try {
+                    // Carregar foto da seção "Sobre"
+                    const aboutDocRef = doc(db, "siteContent", "sobre");
+                    const aboutDocSnap = await getDoc(aboutDocRef);
+                    if (aboutDocSnap.exists()) {
+                        document.getElementById('about-dr-photo').src = aboutDocSnap.data().imageUrl;
+                    }
+
+                    // Carregar galeria
+                    const galleryTrack = document.querySelector('#gallery-slider .slider-track');
+                    const gallerySnapshot = await getDocs(collection(db, "gallery"));
+                    galleryTrack.innerHTML = ''; // Limpa placeholders
+                    gallerySnapshot.forEach(doc => {
+                        galleryTrack.innerHTML += `<div class="slider-item min-w-full"><img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full object-cover" loading="lazy" decoding="async"></div>`;
+                    });
+                    initializeSlider('gallery-slider', 5000);
+
+                    // Carregar depoimentos
+                    const testimonialTrack = document.querySelector('#testimonial-slider .slider-track');
+                    const testimonialsSnapshot = await getDocs(collection(db, "testimonials"));
+                    testimonialTrack.innerHTML = ''; // Limpa placeholders
+                    testimonialsSnapshot.forEach(doc => {
+                        const data = doc.data();
+                        testimonialTrack.innerHTML += `
+                            <div class="slider-item min-w-full px-8">
+                                <div class="bg-white p-8 rounded-lg shadow-md">
+                                    <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                    <p class="italic text-lg mb-6">"${data.text}"</p>
+                                    <p class="font-bold font-display text-xl">- ${data.name}</p>
+                                </div>
+                            </div>`;
+                    });
+                    initializeSlider('testimonial-slider', 7000);
+
+                } catch (error) {
+                    console.error("Erro ao carregar conteúdo do Firebase: ", error);
+                    // Opcional: informar o usuário sobre o erro
+                }
+            }
+
+            loadDynamicContent();
         });
-        
-        // --- ATUALIZA O ANO DO RODAPÉ ---
-        const yearSpan = document.getElementById('current-year');
-        if(yearSpan) {
-            yearSpan.textContent = new Date().getFullYear();
-        }
-    });
     </script>
 </body>
 </html>
