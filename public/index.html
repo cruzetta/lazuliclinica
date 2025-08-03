@@ -1,13 +1,14 @@
 <!-- 
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
-  Atualizações Críticas (Correção Layout dos Depoimentos):
+  Atualizações Críticas (Novo Layout de Depoimentos):
+  - [FEAT] Novo Design de Card de Depoimento: Replicado o estilo visual do exemplo, com inicial do autor em um círculo colorido, texto e nome.
+  - [FEAT] Layout Híbrido (Grid/Carrossel): Em telas grandes, os depoimentos são exibidos em uma grade. Em telas pequenas, o layout se converte em um carrossel de um item por vez, com setas e swipe.
+  - [STYLE] Cores Dinâmicas para Iniciais: As cores dos círculos são aplicadas dinamicamente para criar um visual mais variado e atraente.
   - [BUGFIX] Layout dos Cards Reestruturado: A estrutura interna dos cards de depoimento foi refeita com flexbox `justify-between` para alinhar o texto ao topo e o nome do autor à base, eliminando a aparência "bagunçada".
-  - [FEAT] Design Robusto: A nova estrutura garante que os cards mantenham um layout consistente e profissional, independentemente do comprimento do texto do depoimento.
-  - [STYLE] Alinhamento do nome do autor ajustado para a direita (`text-right`) para um acabamento mais limpo.
   - [BUGFIX] Quebra de Linha no Texto do Depoimento: Adicionada a classe `whitespace-normal` ao parágrafo do depoimento para forçar a quebra de linha e corrigir o overflow que causava a rolagem horizontal.
   - [BUGFIX] Rolagem Horizontal Eliminada: Corrigido o posicionamento dos botões do slider de depoimentos que causavam overflow na página. Adicionada regra de `overflow-x: hidden` ao body como salvaguarda.
-  - [BUGFIX] Botão do WhatsApp Sempre Visível: Aumentado o z-index do botão flutuante do WhatsApp para z-40, garantindo que ele fique acima de outros elementos na página desde o carregamento inicial.
+  - [BUGFIX] Botão do WhatsApp Sempre Visível: Aumentado o z-index do botão flutuante do WhatsApp para z-40.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -347,13 +348,24 @@
         <section id="depoimentos" class="py-16 md:py-20 lg:py-32 bg-lazuli-nude">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-display mb-12 reveal">Confiança que Inspira</h2>
-                <div id="testimonial-slider" class="relative slider-container max-w-3xl mx-auto reveal cursor-grab active:cursor-grabbing" style="transition-delay: 200ms;">
-                    <div class="slider-track flex">
-                       <!-- Os depoimentos serão inseridos aqui pelo JavaScript -->
+                
+                <!-- Container para o Layout Híbrido -->
+                <div id="testimonial-container" class="relative reveal" style="transition-delay: 200ms;">
+                    <!-- Layout em Grade para Telas Maiores -->
+                    <div id="testimonial-grid" class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <!-- Os cards da grade serão inseridos aqui -->
                     </div>
-                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-0 md:left-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-0 md:right-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
+
+                    <!-- Layout em Carrossel para Telas Pequenas -->
+                    <div id="testimonial-slider" class="md:hidden relative slider-container max-w-3xl mx-auto cursor-grab active:cursor-grabbing">
+                        <div class="slider-track flex">
+                           <!-- Os cards do carrossel serão inseridos aqui -->
+                        </div>
+                        <button class="slider-button prev absolute top-1/2 -translate-y-1/2 -left-2 bg-white/80 hover:bg-white shadow-md rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
+                        <button class="slider-button next absolute top-1/2 -translate-y-1/2 -right-2 bg-white/80 hover:bg-white shadow-md rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
+                    </div>
                 </div>
+
                 <div class="mt-12 reveal">
                      <a href="https://www.google.com/maps/place/Cl%C3%ADnica+Laz%C3%BAli+-+Medicina+e+Odontologia+Est%C3%A9tica/@-29.9239435,-51.1797007,17z/data=!4m8!3m7!1s0x951979270c715a7b:0x27a1151fc0641ef!8m2!3d-29.9239482!4d-51.1771258!9m1!1b1!16s%2Fg%2F11tbz8p_78?hl=pt-BR&entry=ttu" target="_blank" class="bg-transparent border-2 border-lazuli-gold text-lazuli-gold px-8 py-3 rounded-full hover:bg-lazuli-gold hover:text-white transition-all duration-300 inline-block active:scale-95">
                         Ver mais avaliações no Google
@@ -635,26 +647,6 @@
                 yearSpan.textContent = new Date().getFullYear();
             }
 
-            // --- FUNÇÃO PARA RENDERIZAR ESTRELAS ---
-            function renderStars(rating) {
-                let starsHTML = '';
-                const totalStars = 5;
-                const fullStars = Math.floor(rating);
-                const halfStar = rating % 1 !== 0;
-                
-                for (let i = 0; i < fullStars; i++) {
-                    starsHTML += '<i class="fas fa-star"></i>';
-                }
-                if (halfStar) {
-                    starsHTML += '<i class="fas fa-star-half-alt"></i>';
-                }
-                const emptyStars = totalStars - Math.ceil(rating);
-                for (let i = 0; i < emptyStars; i++) {
-                    starsHTML += '<i class="far fa-star"></i>';
-                }
-                return starsHTML;
-            }
-
             // --- DEPOIMENTOS PADRÃO ---
             const defaultTestimonials = [
                 { name: "Jady Muller J.", text: "Clínica maravilhosa! Ambiente perfeito, material de uma qualidade excelente, sem contar os profissionais 100% atenciosos e delicados, meu procedimento ficou maravilhoso, sem dúvidas virei cliente fiel!", rating: 5 },
@@ -692,35 +684,55 @@
                     initializeSlider('gallery-slider', 5000);
 
                     // Carregar depoimentos
-                    const testimonialTrack = document.querySelector('#testimonial-slider .slider-track');
+                    const testimonialSliderTrack = document.querySelector('#testimonial-slider .slider-track');
+                    const testimonialGrid = document.getElementById('testimonial-grid');
                     const testimonialsSnapshot = await db.collection("testimonials").get();
-                    testimonialTrack.innerHTML = '';
+                    
+                    testimonialSliderTrack.innerHTML = '';
+                    testimonialGrid.innerHTML = '';
 
                     const testimonialsToRender = testimonialsSnapshot.empty ? defaultTestimonials : testimonialsSnapshot.docs.map(doc => doc.data());
 
-                    if (testimonialsToRender.length === 0) {
-                         testimonialTrack.innerHTML = `
-                            <div class="slider-item min-w-full flex-shrink-0 px-4">
-                                <div class="bg-white p-6 md:p-8 rounded-lg shadow-md flex flex-col justify-between min-h-[280px] md:min-h-[260px]">
-                                    <p class="italic text-lg text-lazuli-dark/90 whitespace-normal">"Seja o primeiro a deixar um depoimento sobre sua experiência incrível na Clínica Lazúli!"</p>
-                                    <p class="font-bold font-display text-xl text-right mt-4">- Equipe Lazúli</p>
-                                </div>
-                            </div>`;
-                    } else {
-                        testimonialsToRender.forEach(data => {
-                            const starsHTML = data.rating ? renderStars(data.rating) : renderStars(5);
-                            testimonialTrack.innerHTML += `
-                                <div class="slider-item min-w-full flex-shrink-0 px-4">
-                                    <div class="bg-white p-6 md:p-8 rounded-lg shadow-md flex flex-col justify-between min-h-[280px] md:min-h-[260px]">
-                                        <div>
-                                            <div class="text-lazuli-gold mb-4 text-xl">${starsHTML}</div>
-                                            <p class="italic text-lg text-lazuli-dark/90 whitespace-normal">"${data.text}"</p>
-                                        </div>
-                                        <p class="font-bold font-display text-xl text-right mt-4">- ${data.name}</p>
+                    // Cores para os círculos das iniciais
+                    const bgColors = ['bg-blue-400', 'bg-green-400', 'bg-indigo-400', 'bg-pink-400', 'bg-yellow-500'];
+
+                    function createTestimonialCard(data, index) {
+                        const initial = data.name.charAt(0).toUpperCase();
+                        const colorClass = bgColors[index % bgColors.length];
+                        
+                        return `
+                            <div class="bg-white p-6 rounded-lg shadow-md flex flex-col text-left h-full">
+                                <div class="flex-grow">
+                                    <div class="w-16 h-16 ${colorClass} rounded-full flex items-center justify-center text-white text-3xl font-display mb-5">
+                                        ${initial}
                                     </div>
-                                </div>`;
+                                    <p class="italic text-lazuli-dark/80 whitespace-normal mb-4">"${data.text}"</p>
+                                </div>
+                                <p class="font-bold text-lazuli-dark mt-4">- ${data.name}</p>
+                            </div>
+                        `;
+                    }
+
+                    if (testimonialsToRender.length === 0) {
+                        const emptyCardHTML = `
+                            <div class="bg-white p-6 rounded-lg shadow-md flex flex-col text-left h-full">
+                                <p class="italic text-lazuli-dark/80 whitespace-normal">"Seja o primeiro a deixar um depoimento!"</p>
+                                <p class="font-bold mt-4">- Equipe Lazúli</p>
+                            </div>
+                        `;
+                        testimonialGrid.innerHTML = emptyCardHTML;
+                        testimonialSliderTrack.innerHTML = `<div class="slider-item min-w-full flex-shrink-0 px-4">${emptyCardHTML}</div>`;
+
+                    } else {
+                        testimonialsToRender.forEach((data, index) => {
+                            const cardHTML = createTestimonialCard(data, index);
+                            // Adiciona ao grid
+                            testimonialGrid.innerHTML += cardHTML;
+                            // Adiciona ao slider
+                            testimonialSliderTrack.innerHTML += `<div class="slider-item min-w-full flex-shrink-0 px-4">${cardHTML}</div>`;
                         });
                     }
+                    
                     initializeSlider('testimonial-slider', 7000);
 
                 } catch (error) {
