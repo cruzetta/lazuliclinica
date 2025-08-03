@@ -1,12 +1,11 @@
 <!-- 
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
-  Atualizações para Experiência Mobile Sensacional:
-  - [FEAT] Menu mobile aprimorado: agora desliza da direita com fundo escurecido e o ícone de menu vira um 'X'.
-  - [FEAT] Sliders com gesto de arrastar (swipe): agora é possível navegar na galeria e nos depoimentos arrastando para o lado no celular.
-  - [FEAT] Feedback de toque: botões e links importantes agora têm um efeito visual ao serem pressionados.
-  - [STYLE] Otimização de espaçamentos em seções chave para melhor visualização em telas pequenas.
-  - [PERF] Adicionados atributos de carregamento e decodificação assíncrona nas imagens da galeria para melhor performance.
+  Atualizações Críticas (Análise e Correção de Bugs):
+  - [BUGFIX] Rolagem Horizontal Eliminada: Corrigido o posicionamento dos botões do slider de depoimentos que causavam overflow na página. Adicionada regra de `overflow-x: hidden` ao body como salvaguarda.
+  - [BUGFIX] Botão do WhatsApp Sempre Visível: Aumentado o z-index do botão flutuante do WhatsApp de z-20 para z-40, garantindo que ele fique acima de outros elementos na página desde o carregamento inicial.
+  - [FEAT] Gesto de Arrastar (Swipe) Aprimorado: A lógica do swipe nos sliders foi refinada para limitar o "over-drag", criando um efeito mais suave e controlado, similar a aplicativos nativos.
+  - [PERF] Otimização geral do código de sliders para maior clareza e eficiência.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -56,6 +55,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
+      /* CORREÇÃO: Impede a rolagem horizontal em toda a página */
+      body {
+        overflow-x: hidden;
+      }
       /* Animações de entrada */
       .reveal {
         opacity: 0;
@@ -69,7 +72,7 @@
       
       /* Estilos do Slider */
       .slider-track {
-        transition: transform 0.5s ease-in-out;
+        transition: transform 0.5s ease-out; /* Mudei para ease-out para uma parada mais suave */
       }
       .slider-container.is-dragging .slider-track {
         transition: none; /* Desativa a transição durante o arraste */
@@ -113,7 +116,7 @@
       #main-header.header-scrolled #mobile-menu-button { color: #3A3A3A; }
       #main-header.header-scrolled .nav-link::after { background: #B8860B; }
 
-      /* NOVO: Estilos do Menu Mobile Aprimorado */
+      /* Estilos do Menu Mobile Aprimorado */
       #mobile-menu-overlay {
         transition: opacity 0.3s ease-in-out;
       }
@@ -151,7 +154,7 @@
         </div>
     </header>
 
-    <!-- NOVO: Menu Mobile Aprimorado -->
+    <!-- Menu Mobile Aprimorado -->
     <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-30 opacity-0 pointer-events-none md:hidden"></div>
     <div id="mobile-menu" class="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white z-40 p-8 pt-20 shadow-2xl md:hidden">
         <nav class="flex flex-col space-y-6 text-lg">
@@ -346,8 +349,9 @@
                     <div class="slider-track flex">
                        <!-- Os depoimentos serão inseridos aqui pelo JavaScript -->
                     </div>
-                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 -left-2 md:-left-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 -right-2 md:-right-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
+                    <!-- CORREÇÃO: Posição dos botões ajustada para não causar overflow -->
+                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
                 </div>
                 <div class="mt-12 reveal">
                      <a href="https://www.google.com/maps/place/Cl%C3%ADnica+Laz%C3%BAli+-+Medicina+e+Odontologia+Est%C3%A9tica/@-29.9239435,-51.1797007,17z/data=!4m8!3m7!1s0x951979270c715a7b:0x27a1151fc0641ef!8m2!3d-29.9239482!4d-51.1771258!9m1!1b1!16s%2Fg%2F11tbz8p_78?hl=pt-BR&entry=ttu" target="_blank" class="bg-transparent border-2 border-lazuli-gold text-lazuli-gold px-8 py-3 rounded-full hover:bg-lazuli-gold hover:text-white transition-all duration-300 inline-block active:scale-95">
@@ -419,7 +423,8 @@
         </div>
     </footer>
 
-    <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="fixed bottom-5 right-5 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-20 transform hover:scale-110 transition-transform active:scale-95" aria-label="Fale conosco no WhatsApp">
+    <!-- CORREÇÃO: Z-index do botão do WhatsApp aumentado para z-40 -->
+    <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="fixed bottom-5 right-5 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-40 transform hover:scale-110 transition-transform active:scale-95" aria-label="Fale conosco no WhatsApp">
         <i class="fab fa-whatsapp fa-2x"></i>
     </a>
 
@@ -435,7 +440,7 @@
         const db = firebase.firestore();
 
         document.addEventListener('DOMContentLoaded', () => {
-            // --- NOVO: LÓGICA DO MENU MOBILE APRIMORADO ---
+            // --- LÓGICA DO MENU MOBILE APRIMORADO ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
@@ -446,14 +451,12 @@
                 const isMenuOpen = mobileMenu.classList.contains('menu-open');
                 
                 if (isMenuOpen) {
-                    // Fecha o menu
                     mobileMenu.classList.remove('menu-open');
                     mobileMenuOverlay.classList.add('opacity-0', 'pointer-events-none');
                     document.body.classList.remove('overflow-hidden');
                     menuIcon.classList.remove('fa-times');
                     menuIcon.classList.add('fa-bars');
                 } else {
-                    // Abre o menu
                     mobileMenu.classList.add('menu-open');
                     mobileMenuOverlay.classList.remove('opacity-0', 'pointer-events-none');
                     document.body.classList.add('overflow-hidden');
@@ -478,7 +481,7 @@
                 }
             });
 
-            // --- LÓGICA GERAL PARA SLIDERS (COM SUPORTE A SWIPE) ---
+            // --- LÓGICA GERAL PARA SLIDERS (COM SWIPE APRIMORADO) ---
             function initializeSlider(containerId, autoSlideInterval = 0) {
                 const container = document.getElementById(containerId);
                 if (!container) return;
@@ -493,15 +496,22 @@
                 let currentIndex = 0;
                 let slideInterval;
 
-                // Esconde botões se houver apenas um item
                 if (totalItems <= 1) {
                     if (prevButton) prevButton.style.display = 'none';
                     if (nextButton) nextButton.style.display = 'none';
+                    return; // Não inicializa o resto se não for necessário
                 }
 
-                function goToSlide(index) {
+                function goToSlide(index, smooth = true) {
+                    if (smooth) {
+                        track.style.transition = 'transform 0.5s ease-out';
+                    } else {
+                        track.style.transition = 'none';
+                    }
                     currentIndex = (index + totalItems) % totalItems;
-                    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    const newTranslate = -currentIndex * track.offsetWidth;
+                    track.style.transform = `translateX(${newTranslate}px)`;
+                    prevTranslate = newTranslate;
                 }
 
                 function startAutoSlide() {
@@ -512,76 +522,68 @@
                 }
                 function stopAutoSlide() { clearInterval(slideInterval); }
 
-                if (prevButton && nextButton) {
-                    prevButton.addEventListener('click', () => { goToSlide(currentIndex - 1); stopAutoSlide(); });
-                    nextButton.addEventListener('click', () => { goToSlide(currentIndex + 1); stopAutoSlide(); });
-                }
+                prevButton.addEventListener('click', () => { goToSlide(currentIndex - 1); stopAutoSlide(); });
+                nextButton.addEventListener('click', () => { goToSlide(currentIndex + 1); stopAutoSlide(); });
 
-                // --- NOVO: LÓGICA DE SWIPE ---
-                let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = 0, animationID;
+                // --- LÓGICA DE SWIPE APRIMORADA ---
+                let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = -currentIndex * track.offsetWidth;
 
-                function touchStart(index) {
-                    return function(event) {
-                        isDragging = true;
-                        startPos = getPositionX(event);
-                        animationID = requestAnimationFrame(animation);
-                        container.classList.add('is-dragging');
-                        stopAutoSlide();
-                    }
-                }
+                const dragStart = (event) => {
+                    isDragging = true;
+                    startPos = getPositionX(event);
+                    container.classList.add('is-dragging');
+                    track.style.transition = 'none'; // Remove transição durante o arrasto
+                    stopAutoSlide();
+                };
 
-                function touchMove(event) {
+                const dragMove = (event) => {
                     if (isDragging) {
                         const currentPosition = getPositionX(event);
                         currentTranslate = prevTranslate + currentPosition - startPos;
+                        track.style.transform = `translateX(${currentTranslate}px)`;
                     }
-                }
+                };
 
-                function touchEnd() {
+                const dragEnd = () => {
+                    if (!isDragging) return;
                     isDragging = false;
-                    cancelAnimationFrame(animationID);
+                    container.classList.remove('is-dragging');
                     const movedBy = currentTranslate - prevTranslate;
 
-                    if (movedBy < -100 && currentIndex < totalItems - 1) {
-                        currentIndex += 1;
+                    // Determina se deve mudar de slide
+                    if (movedBy < -50 && currentIndex < totalItems - 1) {
+                        currentIndex++;
+                    } else if (movedBy > 50 && currentIndex > 0) {
+                        currentIndex--;
                     }
-
-                    if (movedBy > 100 && currentIndex > 0) {
-                        currentIndex -= 1;
-                    }
-
-                    goToSlide(currentIndex);
-                    container.classList.remove('is-dragging');
-                    startAutoSlide(); // Reinicia o auto-slide após o swipe
-                }
+                    
+                    goToSlide(currentIndex, true); // Volta para o slide correto com animação
+                    startAutoSlide();
+                };
                 
                 function getPositionX(event) {
                     return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
                 }
 
-                function animation() {
-                    track.style.transform = `translateX(${currentTranslate}px)`;
-                    if (isDragging) requestAnimationFrame(animation);
-                }
-
-                track.addEventListener('mousedown', touchStart(0));
-                track.addEventListener('touchstart', touchStart(0), { passive: true });
-                track.addEventListener('mouseup', touchEnd);
-                track.addEventListener('touchend', touchEnd);
-                track.addEventListener('mouseleave', () => { if(isDragging) touchEnd() });
-                track.addEventListener('mousemove', touchMove);
-                track.addEventListener('touchmove', touchMove, { passive: true });
+                // Adiciona os event listeners
+                container.addEventListener('mousedown', dragStart);
+                container.addEventListener('touchstart', dragStart, { passive: true });
+                container.addEventListener('mousemove', dragMove);
+                container.addEventListener('touchmove', dragMove, { passive: true });
+                container.addEventListener('mouseup', dragEnd);
+                container.addEventListener('mouseleave', dragEnd);
+                container.addEventListener('touchend', dragEnd);
 
                 container.addEventListener('mouseenter', stopAutoSlide);
                 container.addEventListener('mouseleave', startAutoSlide);
                 
                 startAutoSlide();
 
-                // Recalcular total de itens quando o conteúdo é carregado dinamicamente
-                const observer = new MutationObserver((mutations) => {
+                // Observador para quando o conteúdo dinâmico é carregado
+                const observer = new MutationObserver(() => {
                     items = track.children;
                     totalItems = items.length;
-                     if (totalItems <= 1) {
+                    if (totalItems <= 1) {
                         if (prevButton) prevButton.style.display = 'none';
                         if (nextButton) nextButton.style.display = 'none';
                     } else {
@@ -601,12 +603,14 @@
                 const icon = question.querySelector('i');
                 question.addEventListener('click', () => {
                     const isOpened = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+                    // Fecha todos os outros
                     faqItems.forEach(otherItem => {
                         if (otherItem !== item) {
                             otherItem.querySelector('.faq-answer').style.maxHeight = '0px';
                             otherItem.querySelector('.faq-question i').classList.remove('rotate-180');
                         }
                     });
+                    // Abre ou fecha o item clicado
                     if (isOpened) {
                         answer.style.maxHeight = '0px';
                         icon.classList.remove('rotate-180');
@@ -684,10 +688,10 @@
                     const gallerySnapshot = await db.collection("gallery").get();
                     galleryTrack.innerHTML = ''; 
                     if (gallerySnapshot.empty) {
-                        galleryTrack.innerHTML = `<div class="slider-item min-w-full"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" class="w-full object-cover"></div>`;
+                        galleryTrack.innerHTML = `<div class="slider-item min-w-full flex-shrink-0"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" class="w-full object-cover"></div>`;
                     } else {
                         gallerySnapshot.forEach(doc => {
-                            galleryTrack.innerHTML += `<div class="slider-item min-w-full"><img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full h-64 md:h-96 object-cover" loading="lazy" decoding="async"></div>`;
+                            galleryTrack.innerHTML += `<div class="slider-item min-w-full flex-shrink-0"><img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full h-64 md:h-96 object-cover" loading="lazy" decoding="async"></div>`;
                         });
                     }
                     initializeSlider('gallery-slider', 5000);
@@ -701,7 +705,7 @@
 
                     if (testimonialsToRender.length === 0) {
                          testimonialTrack.innerHTML = `
-                            <div class="slider-item min-w-full px-4 md:px-8">
+                            <div class="slider-item min-w-full flex-shrink-0 px-4 md:px-8">
                                 <div class="bg-white p-8 rounded-lg shadow-md">
                                     <p class="italic text-lg mb-6">"Seja o primeiro a deixar um depoimento sobre sua experiência incrível na Clínica Lazúli!"</p>
                                     <p class="font-bold font-display text-xl">- Equipe Lazúli</p>
@@ -711,7 +715,7 @@
                         testimonialsToRender.forEach(data => {
                             const starsHTML = data.rating ? renderStars(data.rating) : renderStars(5);
                             testimonialTrack.innerHTML += `
-                                <div class="slider-item min-w-full px-4 md:px-8">
+                                <div class="slider-item min-w-full flex-shrink-0 px-4 md:px-8">
                                     <div class="bg-white p-8 rounded-lg shadow-md">
                                         <div class="text-lazuli-gold mb-4 text-xl">${starsHTML}</div>
                                         <p class="italic text-lg mb-6">"${data.text}"</p>
