@@ -1,11 +1,12 @@
 <!-- 
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
-  Atualizações Críticas (Análise e Correção de Bugs):
+  Atualizações Críticas (Análise e Correção de Bugs Finais):
+  - [BUGFIX] Quebra de Linha no Texto do Depoimento: Adicionada a classe `whitespace-normal` ao parágrafo do depoimento para forçar a quebra de linha e corrigir o overflow que causava a rolagem horizontal.
+  - [FEAT] Layout dos Depoimentos Aprimorado: Ajustado o padding dos cards para `p-6 md:p-8` e adicionada uma altura mínima (`min-h-[280px]`) para manter a consistência visual entre slides de diferentes tamanhos.
   - [BUGFIX] Rolagem Horizontal Eliminada: Corrigido o posicionamento dos botões do slider de depoimentos que causavam overflow na página. Adicionada regra de `overflow-x: hidden` ao body como salvaguarda.
-  - [BUGFIX] Botão do WhatsApp Sempre Visível: Aumentado o z-index do botão flutuante do WhatsApp de z-20 para z-40, garantindo que ele fique acima de outros elementos na página desde o carregamento inicial.
-  - [FEAT] Gesto de Arrastar (Swipe) Aprimorado: A lógica do swipe nos sliders foi refinada para limitar o "over-drag", criando um efeito mais suave e controlado, similar a aplicativos nativos.
-  - [PERF] Otimização geral do código de sliders para maior clareza e eficiência.
+  - [BUGFIX] Botão do WhatsApp Sempre Visível: Aumentado o z-index do botão flutuante do WhatsApp para z-40, garantindo que ele fique acima de outros elementos na página desde o carregamento inicial.
+  - [FEAT] Gesto de Arrastar (Swipe) Aprimorado: A lógica do swipe nos sliders foi refinada para limitar o "over-drag", criando um efeito mais suave e controlado.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -72,10 +73,10 @@
       
       /* Estilos do Slider */
       .slider-track {
-        transition: transform 0.5s ease-out; /* Mudei para ease-out para uma parada mais suave */
+        transition: transform 0.5s ease-out;
       }
       .slider-container.is-dragging .slider-track {
-        transition: none; /* Desativa a transição durante o arraste */
+        transition: none;
       }
 
       /* Estilos do FAQ */
@@ -349,9 +350,8 @@
                     <div class="slider-track flex">
                        <!-- Os depoimentos serão inseridos aqui pelo JavaScript -->
                     </div>
-                    <!-- CORREÇÃO: Posição dos botões ajustada para não causar overflow -->
-                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
+                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-0 md:left-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-0 md:right-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
                 </div>
                 <div class="mt-12 reveal">
                      <a href="https://www.google.com/maps/place/Cl%C3%ADnica+Laz%C3%BAli+-+Medicina+e+Odontologia+Est%C3%A9tica/@-29.9239435,-51.1797007,17z/data=!4m8!3m7!1s0x951979270c715a7b:0x27a1151fc0641ef!8m2!3d-29.9239482!4d-51.1771258!9m1!1b1!16s%2Fg%2F11tbz8p_78?hl=pt-BR&entry=ttu" target="_blank" class="bg-transparent border-2 border-lazuli-gold text-lazuli-gold px-8 py-3 rounded-full hover:bg-lazuli-gold hover:text-white transition-all duration-300 inline-block active:scale-95">
@@ -499,7 +499,7 @@
                 if (totalItems <= 1) {
                     if (prevButton) prevButton.style.display = 'none';
                     if (nextButton) nextButton.style.display = 'none';
-                    return; // Não inicializa o resto se não for necessário
+                    return;
                 }
 
                 function goToSlide(index, smooth = true) {
@@ -525,14 +525,13 @@
                 prevButton.addEventListener('click', () => { goToSlide(currentIndex - 1); stopAutoSlide(); });
                 nextButton.addEventListener('click', () => { goToSlide(currentIndex + 1); stopAutoSlide(); });
 
-                // --- LÓGICA DE SWIPE APRIMORADA ---
                 let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = -currentIndex * track.offsetWidth;
 
                 const dragStart = (event) => {
                     isDragging = true;
                     startPos = getPositionX(event);
                     container.classList.add('is-dragging');
-                    track.style.transition = 'none'; // Remove transição durante o arrasto
+                    track.style.transition = 'none';
                     stopAutoSlide();
                 };
 
@@ -550,14 +549,13 @@
                     container.classList.remove('is-dragging');
                     const movedBy = currentTranslate - prevTranslate;
 
-                    // Determina se deve mudar de slide
                     if (movedBy < -50 && currentIndex < totalItems - 1) {
                         currentIndex++;
                     } else if (movedBy > 50 && currentIndex > 0) {
                         currentIndex--;
                     }
                     
-                    goToSlide(currentIndex, true); // Volta para o slide correto com animação
+                    goToSlide(currentIndex, true);
                     startAutoSlide();
                 };
                 
@@ -565,7 +563,6 @@
                     return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
                 }
 
-                // Adiciona os event listeners
                 container.addEventListener('mousedown', dragStart);
                 container.addEventListener('touchstart', dragStart, { passive: true });
                 container.addEventListener('mousemove', dragMove);
@@ -579,7 +576,6 @@
                 
                 startAutoSlide();
 
-                // Observador para quando o conteúdo dinâmico é carregado
                 const observer = new MutationObserver(() => {
                     items = track.children;
                     totalItems = items.length;
@@ -603,14 +599,12 @@
                 const icon = question.querySelector('i');
                 question.addEventListener('click', () => {
                     const isOpened = answer.style.maxHeight && answer.style.maxHeight !== '0px';
-                    // Fecha todos os outros
                     faqItems.forEach(otherItem => {
                         if (otherItem !== item) {
                             otherItem.querySelector('.faq-answer').style.maxHeight = '0px';
                             otherItem.querySelector('.faq-question i').classList.remove('rotate-180');
                         }
                     });
-                    // Abre ou fecha o item clicado
                     if (isOpened) {
                         answer.style.maxHeight = '0px';
                         icon.classList.remove('rotate-180');
@@ -705,9 +699,9 @@
 
                     if (testimonialsToRender.length === 0) {
                          testimonialTrack.innerHTML = `
-                            <div class="slider-item min-w-full flex-shrink-0 px-4 md:px-8">
-                                <div class="bg-white p-8 rounded-lg shadow-md">
-                                    <p class="italic text-lg mb-6">"Seja o primeiro a deixar um depoimento sobre sua experiência incrível na Clínica Lazúli!"</p>
+                            <div class="slider-item min-w-full flex-shrink-0 px-4">
+                                <div class="bg-white p-6 md:p-8 rounded-lg shadow-md flex flex-col justify-center min-h-[280px]">
+                                    <p class="italic text-lg mb-6 whitespace-normal">"Seja o primeiro a deixar um depoimento sobre sua experiência incrível na Clínica Lazúli!"</p>
                                     <p class="font-bold font-display text-xl">- Equipe Lazúli</p>
                                 </div>
                             </div>`;
@@ -715,11 +709,11 @@
                         testimonialsToRender.forEach(data => {
                             const starsHTML = data.rating ? renderStars(data.rating) : renderStars(5);
                             testimonialTrack.innerHTML += `
-                                <div class="slider-item min-w-full flex-shrink-0 px-4 md:px-8">
-                                    <div class="bg-white p-8 rounded-lg shadow-md">
+                                <div class="slider-item min-w-full flex-shrink-0 px-4">
+                                    <div class="bg-white p-6 md:p-8 rounded-lg shadow-md flex flex-col justify-center min-h-[280px]">
                                         <div class="text-lazuli-gold mb-4 text-xl">${starsHTML}</div>
-                                        <p class="italic text-lg mb-6">"${data.text}"</p>
-                                        <p class="font-bold font-display text-xl">- ${data.name}</p>
+                                        <p class="italic text-lg mb-6 whitespace-normal">"${data.text}"</p>
+                                        <p class="font-bold font-display text-xl self-end">- ${data.name}</p>
                                     </div>
                                 </div>`;
                         });
