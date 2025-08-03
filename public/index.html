@@ -1,3 +1,10 @@
+<!-- 
+  Arquivo: public/index.html 
+  Descrição: Página principal do site da Clínica Lazúli.
+  Atualizações:
+  - Adicionados depoimentos padrão (hardcoded) como fallback caso o banco de dados esteja vazio.
+  - A lógica agora carrega os depoimentos do banco de dados e, se não houver nenhum, exibe a lista padrão.
+-->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
@@ -14,7 +21,7 @@
     <link rel="icon" href="https://img.icons8.com/ios/50/D4AF37/l.png" type="image/png">
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https="fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -313,7 +320,7 @@
                     <button class="slider-button next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 bg-white/70 hover:bg-white rounded-full w-12 h-12 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
                 </div>
                 <div class="mt-12 reveal">
-                     <a href="https://www.google.com/search?q=cl%C3%ADnica+laz%C3%BAli+canoas+avalia%C3%A7%C3%B5es" target="_blank" class="bg-transparent border-2 border-lazuli-gold text-lazuli-gold px-8 py-3 rounded-full hover:bg-lazuli-gold hover:text-white transition-all duration-300 inline-block">
+                     <a href="https://www.google.com/maps/place/Cl%C3%ADnica+Laz%C3%BAli+-+Medicina+e+Odontologia+Est%C3%A9tica/@-29.9239435,-51.1797007,17z/data=!4m8!3m7!1s0x951979270c715a7b:0x27a1151fc0641ef!8m2!3d-29.9239482!4d-51.1771258!9m1!1b1!16s%2Fg%2F11tbz8p_78?hl=pt-BR&entry=ttu" target="_blank" class="bg-transparent border-2 border-lazuli-gold text-lazuli-gold px-8 py-3 rounded-full hover:bg-lazuli-gold hover:text-white transition-all duration-300 inline-block">
                         Ver mais avaliações no Google
                     </a>
                 </div>
@@ -508,6 +515,37 @@
                 yearSpan.textContent = new Date().getFullYear();
             }
 
+            // --- FUNÇÃO PARA RENDERIZAR ESTRELAS ---
+            function renderStars(rating) {
+                let starsHTML = '';
+                const totalStars = 5;
+                const fullStars = Math.floor(rating);
+                const halfStar = rating % 1 !== 0;
+                
+                for (let i = 0; i < fullStars; i++) {
+                    starsHTML += '<i class="fas fa-star"></i>';
+                }
+                if (halfStar) {
+                    starsHTML += '<i class="fas fa-star-half-alt"></i>';
+                }
+                const emptyStars = totalStars - Math.ceil(rating);
+                for (let i = 0; i < emptyStars; i++) {
+                    starsHTML += '<i class="far fa-star"></i>'; // 'far' para estrela vazia
+                }
+                return starsHTML;
+            }
+
+            // --- DEPOIMENTOS PADRÃO ---
+            const defaultTestimonials = [
+                { name: "Jady Muller J.", text: "Clínica maravilhosa! Ambiente perfeito, material de uma qualidade excelente, sem contar os profissionais 100% atenciosos e delicados, meu procedimento ficou maravilhoso, sem dúvidas virei cliente fiel!", rating: 5 },
+                { name: "Luís de Melo", text: "Iniciei minha avaliação estética com Dr Édson Depieri, pois precisava melhorar minha autoimagem, não para embelezamento e vaidade, mas para o aumento da autoestima, bem estar e melhoria da apresentação profissional.", rating: 5 },
+                { name: "Juliane Lobato", text: "Dr Edson e dr Italo os melhores que poderiam existir!!! Sempre impecáveis e acolhedores.", rating: 5 },
+                { name: "Bianca Depieri", text: "Um consultório de extrema elegância e profissionalismo. Dois profissionais de qualidade que senti estarem prontamente à postos para me ouvir e realizarem exatamente o que eu imaginava.", rating: 5 },
+                { name: "Vitória Rottoli", text: "Sem palavras pra agradecer essa clínica. Mudaram minha forma de me ver. Só gratidão a esses dois profissionais que tão bem me fizeram. Obrigada ao Dr Édson e ao Dr Ítalo ❤️", rating: 5 },
+                { name: "Suzy Tavares", text: "A experiência foi do princípio ao fim extraordinária! Se nota quando o profissional entende e ama o que faz.", rating: 5 },
+                { name: "Elisandra Machado", text: "Dr Ítalo Rottoli transformou minha autoestima, me fez uma nova mulher, sou grata por tanto! Minha indicação de olhos fechados.", rating: 5 }
+            ];
+
             // --- CARREGAMENTO DE CONTEÚDO DINÂMICO DO FIREBASE ---
             async function loadDynamicContent() {
                 try {
@@ -535,8 +573,11 @@
                     const testimonialTrack = document.querySelector('#testimonial-slider .slider-track');
                     const testimonialsSnapshot = await db.collection("testimonials").get();
                     testimonialTrack.innerHTML = ''; // Limpa placeholders
-                    if (testimonialsSnapshot.empty) {
-                        testimonialTrack.innerHTML = `
+
+                    const testimonialsToRender = testimonialsSnapshot.empty ? defaultTestimonials : testimonialsSnapshot.docs.map(doc => doc.data());
+
+                    if (testimonialsToRender.length === 0) {
+                         testimonialTrack.innerHTML = `
                             <div class="slider-item min-w-full px-8">
                                 <div class="bg-white p-8 rounded-lg shadow-md">
                                     <p class="italic text-lg mb-6">"Seja o primeiro a deixar um depoimento sobre sua experiência incrível na Clínica Lazúli!"</p>
@@ -544,12 +585,12 @@
                                 </div>
                             </div>`;
                     } else {
-                        testimonialsSnapshot.forEach(doc => {
-                            const data = doc.data();
+                        testimonialsToRender.forEach(data => {
+                            const starsHTML = data.rating ? renderStars(data.rating) : renderStars(5);
                             testimonialTrack.innerHTML += `
                                 <div class="slider-item min-w-full px-8">
                                     <div class="bg-white p-8 rounded-lg shadow-md">
-                                        <div class="text-lazuli-gold mb-4 text-xl"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                        <div class="text-lazuli-gold mb-4 text-xl">${starsHTML}</div>
                                         <p class="italic text-lg mb-6">"${data.text}"</p>
                                         <p class="font-bold font-display text-xl">- ${data.name}</p>
                                     </div>
@@ -565,6 +606,373 @@
 
             loadDynamicContent();
         });
+    </script>
+</body>
+</html>
+```html
+<!-- 
+  Arquivo: public/admin.html 
+  Descrição: Painel administrativo para gerenciar o conteúdo do site.
+  Atualizações:
+  - Adicionado um campo de input numérico para a "Nota (1 a 5 estrelas)" no formulário de adicionar depoimento.
+  - O script agora captura o valor da nota e o salva no Firestore junto com o nome e o texto.
+  - Adicionada validação para garantir que a nota esteja entre 1 e 5.
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Clínica Lazuli</title>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css)">
+    <style>
+        body {
+            background-color: #f7fafc;
+        }
+        .admin-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: #B8860B;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #A0740A;
+        }
+        .btn-danger {
+            background-color: #e53e3e;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            margin-top: 0.5rem;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #B8860B;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none;
+        }
+        .auth-container {
+            max-width: 400px;
+            margin: 5rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TELA DE LOGIN -->
+    <div id="auth-container" class="auth-container">
+        <h1 class="text-2xl font-bold text-center mb-2">Clínica Lazuli</h1>
+        <h2 class="text-xl text-center font-semibold mb-6">Painel Administrativo</h2>
+        <div id="login-form">
+            <input type="email" id="email" placeholder="Seu email" class="input-field mb-4">
+            <input type="password" id="password" placeholder="Sua senha" class="input-field mb-4">
+            <button id="login-button" class="btn btn-primary w-full">Entrar</button>
+            <p id="auth-error" class="text-red-500 text-sm mt-4 text-center"></p>
+        </div>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL DO PAINEL -->
+    <div id="admin-panel" class="hidden container mx-auto p-6">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Painel de Conteúdo</h1>
+            <button id="logout-button" class="btn btn-danger">Sair</button>
+        </div>
+
+        <div id="loading" class="loader"></div>
+        <div id="content-sections" class="hidden">
+            <!-- Seção "Sobre" -->
+            <div class="admin-card">
+                <h3 class="text-2xl font-semibold mb-4">Seção "Sobre"</h3>
+                <div id="about-section">
+                    <label class="font-semibold">Foto do Dr. Ítalo Rottoli:</label>
+                    <img id="about-image-preview" src="[https://placehold.co/400x400?text=Sem+Imagem](https://placehold.co/400x400?text=Sem+Imagem)" alt="Preview da imagem sobre" class="my-4 rounded-lg max-w-xs">
+                    <input type="text" id="about-image-url" placeholder="Cole a URL completa da imagem aqui" class="input-field">
+                    <button id="save-about" class="btn btn-primary mt-4">Salvar Alterações</button>
+                </div>
+            </div>
+
+            <!-- Seção "Galeria de Resultados" -->
+            <div class="admin-card">
+                <h3 class="text-2xl font-semibold mb-4">Galeria "Transformações Reais"</h3>
+                <div id="gallery-section" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- As imagens da galeria serão carregadas aqui -->
+                </div>
+                <div class="mt-6">
+                    <h4 class="text-xl font-semibold">Adicionar Nova Imagem</h4>
+                    <input type="text" id="gallery-image-url" placeholder="Cole a URL da nova imagem aqui" class="input-field mt-2">
+                    <button id="add-gallery-image" class="btn btn-primary mt-4">Adicionar à Galeria</button>
+                </div>
+            </div>
+
+             <!-- Seção "Depoimentos" -->
+            <div class="admin-card">
+                <h3 class="text-2xl font-semibold mb-4">Seção "Depoimentos"</h3>
+                <div id="testimonials-section" class="space-y-4">
+                    <!-- Os depoimentos serão carregados aqui -->
+                </div>
+                <div class="mt-6">
+                    <h4 class="text-xl font-semibold">Adicionar Novo Depoimento</h4>
+                    <input type="text" id="testimonial-name" placeholder="Nome (Ex: Mariana S.)" class="input-field">
+                    <textarea id="testimonial-text" placeholder="Texto do depoimento" class="input-field mt-2"></textarea>
+                    <!-- NOVO CAMPO PARA NOTA -->
+                    <input type="number" id="testimonial-rating" placeholder="Nota (1 a 5 estrelas)" class="input-field mt-2" min="1" max="5">
+                    <button id="add-testimonial" class="btn btn-primary mt-4">Adicionar Depoimento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK - Carregamento Corrigido -->
+    <script src="[https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js](https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js)"></script>
+    <script src="[https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js](https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js)"></script>
+    <script src="[https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js](https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js)"></script>
+
+    <!-- Firebase Init -->
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- O seu código personalizado -->
+    <script>
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Elementos da UI
+        const authContainer = document.getElementById('auth-container');
+        const adminPanel = document.getElementById('admin-panel');
+        const loginButton = document.getElementById('login-button');
+        const logoutButton = document.getElementById('logout-button');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const authError = document.getElementById('auth-error');
+        const loading = document.getElementById('loading');
+        const contentSections = document.getElementById('content-sections');
+
+        // --- LÓGICA DE AUTENTICAÇÃO ---
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                authContainer.classList.add('hidden');
+                adminPanel.classList.remove('hidden');
+                loadContent();
+            } else {
+                authContainer.classList.remove('hidden');
+                adminPanel.classList.add('hidden');
+                loading.classList.add('hidden');
+                contentSections.classList.add('hidden');
+            }
+        });
+
+        loginButton.addEventListener('click', () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            authError.textContent = '';
+            auth.signInWithEmailAndPassword(email, password)
+                .catch(error => {
+                    authError.textContent = 'Email ou senha inválidos.';
+                    console.error("Erro de login:", error);
+                });
+        });
+
+        logoutButton.addEventListener('click', () => {
+            auth.signOut();
+        });
+
+        // --- FUNÇÕES DE CARREGAMENTO DE CONTEÚDO ---
+        async function loadContent() {
+            loading.classList.remove('hidden');
+            contentSections.classList.add('hidden');
+            try {
+                await loadAboutSection();
+                await loadGallerySection();
+                await loadTestimonialsSection();
+            } catch (error) {
+                console.error("Erro ao carregar conteúdo:", error);
+                alert("Não foi possível carregar o conteúdo do site.");
+            } finally {
+                loading.classList.add('hidden');
+                contentSections.classList.remove('hidden');
+            }
+        }
+
+        async function loadAboutSection() {
+            const docRef = db.collection("siteContent").doc("sobre");
+            const docSnap = await docRef.get();
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                document.getElementById('about-image-preview').src = data.imageUrl || '[https://placehold.co/400x400?text=Sem+Imagem](https://placehold.co/400x400?text=Sem+Imagem)';
+                document.getElementById('about-image-url').value = data.imageUrl || '';
+            }
+        }
+
+        async function loadGallerySection() {
+            const galleryContainer = document.getElementById('gallery-section');
+            galleryContainer.innerHTML = '';
+            const querySnapshot = await db.collection("gallery").get();
+            if(querySnapshot.empty) {
+                galleryContainer.innerHTML = '<p class="col-span-full">Nenhuma imagem na galeria ainda.</p>';
+            } else {
+                querySnapshot.forEach((doc) => {
+                    const imageData = doc.data();
+                    const imageDiv = document.createElement('div');
+                    imageDiv.className = 'relative group';
+                    imageDiv.innerHTML = `
+                        <img src="${imageData.url}" class="w-full h-32 object-cover rounded-md">
+                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button data-id="${doc.id}" class="btn btn-danger btn-sm delete-gallery-item">Excluir</button>
+                        </div>
+                    `;
+                    galleryContainer.appendChild(imageDiv);
+                });
+            }
+        }
+
+        async function loadTestimonialsSection() {
+            const testimonialsContainer = document.getElementById('testimonials-section');
+            testimonialsContainer.innerHTML = '';
+            const querySnapshot = await db.collection("testimonials").get();
+             if(querySnapshot.empty) {
+                testimonialsContainer.innerHTML = '<p>Nenhum depoimento adicionado.</p>';
+            } else {
+                querySnapshot.forEach((doc) => {
+                    const testimonialData = doc.data();
+                    const testimonialDiv = document.createElement('div');
+                    testimonialDiv.className = 'p-4 border rounded-lg flex justify-between items-start';
+                    testimonialDiv.innerHTML = `
+                        <div>
+                            <p class="font-bold">${testimonialData.name} <span class="text-yellow-500 font-normal">(${testimonialData.rating || 'N/A'} estrelas)</span></p>
+                            <p class="italic">"${testimonialData.text}"</p>
+                        </div>
+                        <button data-id="${doc.id}" class="btn btn-danger btn-sm mt-2 delete-testimonial-item">Excluir</button>
+                    `;
+                    testimonialsContainer.appendChild(testimonialDiv);
+                });
+            }
+        }
+
+        // --- FUNÇÕES DE SALVAMENTO ---
+        document.getElementById('save-about').addEventListener('click', async () => {
+            const imageUrl = document.getElementById('about-image-url').value.trim();
+            if (!imageUrl) {
+                alert("Por favor, cole a URL da imagem.");
+                return;
+            }
+            try {
+                await db.collection("siteContent").doc("sobre").set({ imageUrl });
+                alert("Seção 'Sobre' atualizada com sucesso!");
+                loadAboutSection();
+            } catch (error) {
+                console.error("Erro ao salvar seção sobre:", error);
+                alert("Ocorreu um erro. Tente novamente.");
+            }
+        });
+
+        document.getElementById('add-gallery-image').addEventListener('click', async () => {
+            const url = document.getElementById('gallery-image-url').value.trim();
+            if (!url) {
+                alert("Por favor, cole a URL da imagem.");
+                return;
+            }
+            try {
+                await db.collection("gallery").add({ url });
+                alert("Imagem adicionada à galeria!");
+                loadGallerySection();
+                document.getElementById('gallery-image-url').value = '';
+            } catch (error) {
+                console.error("Erro ao adicionar imagem:", error);
+                alert("Ocorreu um erro. Tente novamente.");
+            }
+        });
+
+        document.getElementById('add-testimonial').addEventListener('click', async () => {
+            const name = document.getElementById('testimonial-name').value;
+            const text = document.getElementById('testimonial-text').value;
+            // NOVO: Captura e valida a nota
+            const ratingInput = document.getElementById('testimonial-rating');
+            const rating = parseFloat(ratingInput.value);
+
+            if (!name || !text) {
+                alert("Por favor, preencha o nome e o texto do depoimento.");
+                return;
+            }
+            if (isNaN(rating) || rating < 1 || rating > 5) {
+                alert("Por favor, insira uma nota válida entre 1 e 5.");
+                return;
+            }
+
+            try {
+                // NOVO: Salva a nota no banco de dados
+                await db.collection("testimonials").add({ name, text, rating });
+                alert("Depoimento adicionado com sucesso!");
+                loadTestimonialsSection();
+                document.getElementById('testimonial-name').value = '';
+                document.getElementById('testimonial-text').value = '';
+                ratingInput.value = '';
+            } catch (error) {
+                console.error("Erro ao adicionar depoimento:", error);
+                alert("Ocorreu um erro. Tente novamente.");
+            }
+        });
+
+        // --- FUNÇÕES DE EXCLUSÃO ---
+        document.addEventListener('click', async (e) => {
+            if (e.target && e.target.classList.contains('delete-gallery-item')) {
+                if (!confirm("Tem certeza que deseja remover esta imagem da galeria?\n\n(A imagem original não será apagada do seu outro site).")) return;
+                const docId = e.target.dataset.id;
+                try {
+                    await db.collection("gallery").doc(docId).delete();
+                    alert("Imagem removida da galeria!");
+                    loadGallerySection();
+                } catch (error) {
+                    console.error("Erro ao remover imagem:", error);
+                    alert("Ocorreu um erro ao remover a imagem.");
+                }
+            }
+            if (e.target && e.target.classList.contains('delete-testimonial-item')) {
+                 if (!confirm("Tem certeza que deseja excluir este depoimento?")) return;
+                 const docId = e.target.dataset.id;
+                 try {
+                    await db.collection("testimonials").doc(docId).delete();
+                    alert("Depoimento excluído com sucesso!");
+                    loadTestimonialsSection();
+                 } catch (error) {
+                    console.error("Erro ao excluir o depoimento:", error);
+                    alert("Ocorreu um erro ao excluir o depoimento.");
+                 }
+            }
+        });
+
     </script>
 </body>
 </html>
