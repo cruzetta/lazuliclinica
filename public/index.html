@@ -1,12 +1,13 @@
 <!-- 
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
-  Atualizações Críticas (Análise e Correção de Bugs Finais):
+  Atualizações Críticas (Correção Layout dos Depoimentos):
+  - [BUGFIX] Layout dos Cards Reestruturado: A estrutura interna dos cards de depoimento foi refeita com flexbox `justify-between` para alinhar o texto ao topo e o nome do autor à base, eliminando a aparência "bagunçada".
+  - [FEAT] Design Robusto: A nova estrutura garante que os cards mantenham um layout consistente e profissional, independentemente do comprimento do texto do depoimento.
+  - [STYLE] Alinhamento do nome do autor ajustado para a direita (`text-right`) para um acabamento mais limpo.
   - [BUGFIX] Quebra de Linha no Texto do Depoimento: Adicionada a classe `whitespace-normal` ao parágrafo do depoimento para forçar a quebra de linha e corrigir o overflow que causava a rolagem horizontal.
-  - [FEAT] Layout dos Depoimentos Aprimorado: Ajustado o padding dos cards para `p-6 md:p-8` e adicionada uma altura mínima (`min-h-[280px]`) para manter a consistência visual entre slides de diferentes tamanhos.
   - [BUGFIX] Rolagem Horizontal Eliminada: Corrigido o posicionamento dos botões do slider de depoimentos que causavam overflow na página. Adicionada regra de `overflow-x: hidden` ao body como salvaguarda.
   - [BUGFIX] Botão do WhatsApp Sempre Visível: Aumentado o z-index do botão flutuante do WhatsApp para z-40, garantindo que ele fique acima de outros elementos na página desde o carregamento inicial.
-  - [FEAT] Gesto de Arrastar (Swipe) Aprimorado: A lógica do swipe nos sliders foi refinada para limitar o "over-drag", criando um efeito mais suave e controlado.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -700,9 +701,9 @@
                     if (testimonialsToRender.length === 0) {
                          testimonialTrack.innerHTML = `
                             <div class="slider-item min-w-full flex-shrink-0 px-4">
-                                <div class="bg-white p-6 md:p-8 rounded-lg shadow-md flex flex-col justify-center min-h-[280px]">
-                                    <p class="italic text-lg mb-6 whitespace-normal">"Seja o primeiro a deixar um depoimento sobre sua experiência incrível na Clínica Lazúli!"</p>
-                                    <p class="font-bold font-display text-xl">- Equipe Lazúli</p>
+                                <div class="bg-white p-6 md:p-8 rounded-lg shadow-md flex flex-col justify-between min-h-[280px] md:min-h-[260px]">
+                                    <p class="italic text-lg text-lazuli-dark/90 whitespace-normal">"Seja o primeiro a deixar um depoimento sobre sua experiência incrível na Clínica Lazúli!"</p>
+                                    <p class="font-bold font-display text-xl text-right mt-4">- Equipe Lazúli</p>
                                 </div>
                             </div>`;
                     } else {
@@ -710,10 +711,12 @@
                             const starsHTML = data.rating ? renderStars(data.rating) : renderStars(5);
                             testimonialTrack.innerHTML += `
                                 <div class="slider-item min-w-full flex-shrink-0 px-4">
-                                    <div class="bg-white p-6 md:p-8 rounded-lg shadow-md flex flex-col justify-center min-h-[280px]">
-                                        <div class="text-lazuli-gold mb-4 text-xl">${starsHTML}</div>
-                                        <p class="italic text-lg mb-6 whitespace-normal">"${data.text}"</p>
-                                        <p class="font-bold font-display text-xl self-end">- ${data.name}</p>
+                                    <div class="bg-white p-6 md:p-8 rounded-lg shadow-md flex flex-col justify-between min-h-[280px] md:min-h-[260px]">
+                                        <div>
+                                            <div class="text-lazuli-gold mb-4 text-xl">${starsHTML}</div>
+                                            <p class="italic text-lg text-lazuli-dark/90 whitespace-normal">"${data.text}"</p>
+                                        </div>
+                                        <p class="font-bold font-display text-xl text-right mt-4">- ${data.name}</p>
                                     </div>
                                 </div>`;
                         });
