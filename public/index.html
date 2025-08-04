@@ -2,10 +2,9 @@
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
   Atualizações Críticas (Carrossel de Resultados):
-  - [BUGFIX] Comportamento do Carrossel Unificado: A lógica do JavaScript foi refeita para que o carrossel de "Resultados" se comporte exatamente como o de "Depoimentos", que o cliente elogiou.
-  - [FEAT] Carrossel de Imagem Única: O carrossel de "Resultados" agora mostra uma imagem de cada vez em todos os dispositivos, conforme solicitado, mantendo a navegação fluida.
-  - [STYLE] Apresentação da Imagem Melhorada: As imagens da galeria são agora apresentadas dentro de um "cartão" com uma proporção fixa, evitando distorções e cortes abruptos, proporcionando um visual mais limpo e profissional.
-  - [FEAT] Navegação por Setas Dinâmica: As setas de navegação agora aparecem e desaparecem de forma inteligente, tal como no carrossel de depoimentos.
+  - [FEAT] Navegação Apenas por Setas (Desktop): A funcionalidade de arrastar com o rato foi desativada para o carrossel de imagens no computador, conforme solicitado. A navegação agora é feita exclusivamente pelas setas.
+  - [FEAT] Manutenção do Swipe (Mobile): A funcionalidade de deslizar com o dedo no carrossel de imagens foi mantida para dispositivos móveis, garantindo uma experiência de utilização intuitiva.
+  - [UX] Cursor Padrão: Removidas as classes de CSS que alteravam o cursor para "agarrar" no carrossel de imagens em desktop, uma vez que a função de arrastar foi desativada.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -261,7 +260,7 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Transformações Reais</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Resultados que refletem nossa dedicação à ética e à naturalidade.</p>
-                <div id="gallery-slider" class="relative slider-container max-w-4xl mx-auto rounded-lg overflow-hidden reveal cursor-grab active:cursor-grabbing" style="transition-delay: 400ms;">
+                <div id="gallery-slider" class="relative slider-container max-w-4xl mx-auto rounded-lg overflow-hidden reveal" style="transition-delay: 400ms;">
                     <div class="overflow-hidden rounded-lg shadow-xl">
                         <div class="slider-track flex">
                             <!-- As imagens da galeria serão inseridas aqui pelo JavaScript -->
@@ -349,7 +348,7 @@
                 <h2 class="text-3xl md:text-4xl font-display mb-12 reveal">Confiança que Inspira</h2>
                 
                 <!-- Container do Carrossel -->
-                <div id="testimonial-slider" class="relative slider-container max-w-6xl mx-auto reveal" style="transition-delay: 200ms;">
+                <div id="testimonial-slider" class="relative slider-container max-w-6xl mx-auto reveal cursor-grab active:cursor-grabbing" style="transition-delay: 200ms;">
                     <div class="overflow-hidden">
                         <div class="slider-track flex -mx-2"> <!-- Margem negativa para compensar padding dos itens -->
                            <!-- Os cards do carrossel serão inseridos aqui -->
@@ -489,7 +488,7 @@
 
             // --- LÓGICA GERAL E UNIFICADA PARA SLIDERS RESPONSIVOS ---
             function initializeSlider(containerId, options = {}) {
-                const { multiItem = false } = options;
+                const { multiItem = false, dragDisabledOnDesktop = false } = options;
 
                 const container = document.getElementById(containerId);
                 if (!container) return;
@@ -543,58 +542,81 @@
                 const resizeObserver = new ResizeObserver(() => updateSlider(false));
                 resizeObserver.observe(container);
 
-                // --- Lógica de Swipe Aprimorada ---
-                let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = 0;
+                // --- Lógica de Swipe/Arrastar Condicional ---
+                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
                 
-                const getPositionX = (event) => event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-                
-                const dragStart = (event) => {
-                    isDragging = true;
-                    startPos = getPositionX(event);
-                    const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(track).transform);
-                    prevTranslate = transformMatrix.m41;
-                    track.style.transition = 'none';
-                    container.classList.add('is-dragging');
+                // Ativa o arraste no desktop apenas se dragDisabledOnDesktop for false
+                const enableDrag = !isTouchDevice && !dragDisabledOnDesktop;
+                // Ativa o swipe em dispositivos de toque
+                const enableSwipe = isTouchDevice;
 
-                    window.addEventListener('mousemove', dragMove);
-                    window.addEventListener('mouseup', dragEnd);
-                    window.addEventListener('touchmove', dragMove, { passive: true });
-                    window.addEventListener('touchend', dragEnd);
-                };
-
-                const dragMove = (event) => {
-                    if (isDragging) {
-                        const currentPosition = getPositionX(event);
-                        currentTranslate = prevTranslate + currentPosition - startPos;
-                        track.style.transform = `translateX(${currentTranslate}px)`;
-                    }
-                };
-
-                const dragEnd = () => {
-                    if (!isDragging) return;
-                    isDragging = false;
+                if (enableDrag || enableSwipe) {
+                    let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = 0;
                     
-                    container.classList.remove('is-dragging');
-                    window.removeEventListener('mousemove', dragMove);
-                    window.removeEventListener('mouseup', dragEnd);
-                    window.removeEventListener('touchmove', dragMove);
-                    window.removeEventListener('touchend', dragEnd);
-
-                    const movedBy = currentTranslate - prevTranslate;
-                    const itemWidth = track.clientWidth / getItemsPerPage();
-                    const threshold = itemWidth / 4;
-
-                    if (movedBy < -threshold) {
-                        currentIndex++;
-                    } else if (movedBy > threshold) {
-                        currentIndex--;
-                    }
+                    const getPositionX = (event) => event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
                     
-                    updateSlider();
-                };
-                
-                container.addEventListener('mousedown', dragStart);
-                container.addEventListener('touchstart', dragStart, { passive: true });
+                    const dragStart = (event) => {
+                        if (event.type === 'mousedown') event.preventDefault();
+                        
+                        isDragging = true;
+                        startPos = getPositionX(event);
+                        const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(track).transform);
+                        prevTranslate = transformMatrix.m41;
+                        track.style.transition = 'none';
+                        container.classList.add('is-dragging');
+
+                        if (enableDrag) {
+                            window.addEventListener('mousemove', dragMove);
+                            window.addEventListener('mouseup', dragEnd);
+                        }
+                        if (enableSwipe) {
+                            window.addEventListener('touchmove', dragMove, { passive: true });
+                            window.addEventListener('touchend', dragEnd);
+                        }
+                    };
+
+                    const dragMove = (event) => {
+                        if (isDragging) {
+                            const currentPosition = getPositionX(event);
+                            currentTranslate = prevTranslate + currentPosition - startPos;
+                            track.style.transform = `translateX(${currentTranslate}px)`;
+                        }
+                    };
+
+                    const dragEnd = () => {
+                        if (!isDragging) return;
+                        isDragging = false;
+                        
+                        container.classList.remove('is-dragging');
+                        if (enableDrag) {
+                            window.removeEventListener('mousemove', dragMove);
+                            window.removeEventListener('mouseup', dragEnd);
+                        }
+                        if (enableSwipe) {
+                            window.removeEventListener('touchmove', dragMove);
+                            window.removeEventListener('touchend', dragEnd);
+                        }
+
+                        const movedBy = currentTranslate - prevTranslate;
+                        const itemWidth = track.clientWidth / getItemsPerPage();
+                        const threshold = itemWidth / 4;
+
+                        if (movedBy < -threshold) {
+                            currentIndex++;
+                        } else if (movedBy > threshold) {
+                            currentIndex--;
+                        }
+                        
+                        updateSlider();
+                    };
+                    
+                    if (enableDrag) {
+                        container.addEventListener('mousedown', dragStart);
+                    }
+                    if (enableSwipe) {
+                        container.addEventListener('touchstart', dragStart, { passive: true });
+                    }
+                }
 
                 const observer = new MutationObserver(() => {
                     items = track.children;
@@ -687,7 +709,7 @@
                                 </div>`;
                         });
                     }
-                    initializeSlider('gallery-slider', { multiItem: false });
+                    initializeSlider('gallery-slider', { multiItem: false, dragDisabledOnDesktop: true });
 
                     // Carregar depoimentos
                     const testimonialTrack = document.querySelector('#testimonial-slider .slider-track');
@@ -732,7 +754,7 @@
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
                     // Fallback para conteúdo padrão em caso de erro
-                    initializeSlider('gallery-slider', { multiItem: false });
+                    initializeSlider('gallery-slider', { multiItem: false, dragDisabledOnDesktop: true });
                     initializeSlider('testimonial-slider', { multiItem: true });
                 }
             }
