@@ -1,13 +1,14 @@
 <!-- 
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
-  Atualizações Críticas (Ajuste de Timer do Carrossel):
+  Atualizações Críticas (Ajuste de Imagens do Carrossel):
   - [FIX] Lógica do Carrossel Refatorada: A função `initializeSlider` foi reescrita para ser mais robusta.
   - [FIX] Correção de Responsividade: O carrossel agora se ajusta corretamente quando a janela do navegador é redimensionada, evitando quebras de layout.
   - [FIX] Lógica de Swipe Aprimorada: O gesto de arrastar (swipe) foi corrigido para ser mais consistente e confiável em todos os dispositivos.
   - [FIX] Navegação Circular: Tanto os botões quanto o swipe agora permitem navegação infinita (circular), melhorando a experiência do usuário.
   - [FEAT] Maior Robustez: Adicionada verificação para garantir que o conteúdo dinâmico (imagens, depoimentos) seja carregado antes de o carrossel ser iniciado.
   - [CHORE] Timer Unificado: O timer de transição automática para o carrossel de depoimentos foi ajustado para 5 segundos, igualando ao da galeria.
+  - [BUGFIX] Imagens Cortadas: Alterada a classe de `object-cover` para `object-contain` nas imagens da galeria para garantir que elas apareçam por inteiro, sem cortes.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -674,10 +675,11 @@
                     const gallerySnapshot = await db.collection("gallery").get();
                     galleryTrack.innerHTML = ''; 
                     if (gallerySnapshot.empty) {
-                        galleryTrack.innerHTML = `<div class="slider-item min-w-full flex-shrink-0"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" class="w-full object-cover"></div>`;
+                        galleryTrack.innerHTML = `<div class="slider-item min-w-full flex-shrink-0"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" class="w-full object-contain h-64 md:h-96"></div>`;
                     } else {
                         gallerySnapshot.forEach(doc => {
-                            galleryTrack.innerHTML += `<div class="slider-item min-w-full flex-shrink-0"><img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full h-64 md:h-96 object-cover" loading="lazy" decoding="async"></div>`;
+                            // [BUGFIX] Alterado para object-contain
+                            galleryTrack.innerHTML += `<div class="slider-item min-w-full flex-shrink-0"><img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full h-64 md:h-96 object-contain" loading="lazy" decoding="async"></div>`;
                         });
                     }
                     initializeSlider('gallery-slider', 5000);
@@ -729,7 +731,6 @@
                         });
                     }
                     
-                    // [CHORE] Alterado o tempo do carrossel de depoimentos para 5 segundos
                     initializeSlider('testimonial-slider', 5000);
 
                 } catch (error) {
