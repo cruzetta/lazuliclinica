@@ -1,14 +1,13 @@
 <!-- 
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
-  Atualizações Críticas (Novo Layout de Depoimentos):
-  - [FEAT] Novo Design de Card de Depoimento: Replicado o estilo visual do exemplo, com inicial do autor em um círculo colorido, texto e nome.
-  - [FEAT] Layout Híbrido (Grid/Carrossel): Em telas grandes, os depoimentos são exibidos em uma grade. Em telas pequenas, o layout se converte em um carrossel de um item por vez, com setas e swipe.
-  - [STYLE] Cores Dinâmicas para Iniciais: As cores dos círculos são aplicadas dinamicamente para criar um visual mais variado e atraente.
-  - [BUGFIX] Layout dos Cards Reestruturado: A estrutura interna dos cards de depoimento foi refeita com flexbox `justify-between` para alinhar o texto ao topo e o nome do autor à base, eliminando a aparência "bagunçada".
-  - [BUGFIX] Quebra de Linha no Texto do Depoimento: Adicionada a classe `whitespace-normal` ao parágrafo do depoimento para forçar a quebra de linha e corrigir o overflow que causava a rolagem horizontal.
-  - [BUGFIX] Rolagem Horizontal Eliminada: Corrigido o posicionamento dos botões do slider de depoimentos que causavam overflow na página. Adicionada regra de `overflow-x: hidden` ao body como salvaguarda.
-  - [BUGFIX] Botão do WhatsApp Sempre Visível: Aumentado o z-index do botão flutuante do WhatsApp para z-40.
+  Atualizações Críticas (Ajuste de Timer do Carrossel):
+  - [FIX] Lógica do Carrossel Refatorada: A função `initializeSlider` foi reescrita para ser mais robusta.
+  - [FIX] Correção de Responsividade: O carrossel agora se ajusta corretamente quando a janela do navegador é redimensionada, evitando quebras de layout.
+  - [FIX] Lógica de Swipe Aprimorada: O gesto de arrastar (swipe) foi corrigido para ser mais consistente e confiável em todos os dispositivos.
+  - [FIX] Navegação Circular: Tanto os botões quanto o swipe agora permitem navegação infinita (circular), melhorando a experiência do usuário.
+  - [FEAT] Maior Robustez: Adicionada verificação para garantir que o conteúdo dinâmico (imagens, depoimentos) seja carregado antes de o carrossel ser iniciado.
+  - [CHORE] Timer Unificado: O timer de transição automática para o carrossel de depoimentos foi ajustado para 5 segundos, igualando ao da galeria.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -58,7 +57,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-      /* CORREÇÃO: Impede a rolagem horizontal em toda a página */
+      /* Impede a rolagem horizontal em toda a página */
       body {
         overflow-x: hidden;
       }
@@ -436,7 +435,7 @@
         </div>
     </footer>
 
-    <!-- CORREÇÃO: Z-index do botão do WhatsApp aumentado para z-40 -->
+    <!-- Botão Flutuante do WhatsApp -->
     <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="fixed bottom-5 right-5 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-40 transform hover:scale-110 transition-transform active:scale-95" aria-label="Fale conosco no WhatsApp">
         <i class="fab fa-whatsapp fa-2x"></i>
     </a>
@@ -494,7 +493,7 @@
                 }
             });
 
-            // --- LÓGICA GERAL PARA SLIDERS (COM SWIPE APRIMORADO) ---
+            // --- [CORREÇÃO] LÓGICA GERAL PARA SLIDERS (COM SWIPE E RESIZE APRIMORADOS) ---
             function initializeSlider(containerId, autoSlideInterval = 0) {
                 const container = document.getElementById(containerId);
                 if (!container) return;
@@ -502,27 +501,26 @@
                 const prevButton = container.querySelector('.slider-button.prev');
                 const nextButton = container.querySelector('.slider-button.next');
                 
-                let items = track.children;
-                if (!track || items.length === 0) return;
+                if (!track || !prevButton || !nextButton) return;
+                if (track.children.length === 0) return;
                 
-                let totalItems = items.length;
+                let totalItems = track.children.length;
                 let currentIndex = 0;
                 let slideInterval;
 
-                if (totalItems <= 1) {
-                    if (prevButton) prevButton.style.display = 'none';
-                    if (nextButton) nextButton.style.display = 'none';
-                    return;
+                function updateButtonsVisibility() {
+                    totalItems = track.children.length;
+                    const showButtons = totalItems > 1;
+                    prevButton.style.display = showButtons ? 'flex' : 'none';
+                    nextButton.style.display = showButtons ? 'flex' : 'none';
                 }
 
                 function goToSlide(index, smooth = true) {
-                    if (smooth) {
-                        track.style.transition = 'transform 0.5s ease-out';
-                    } else {
-                        track.style.transition = 'none';
-                    }
+                    if (totalItems === 0) return;
+                    track.style.transition = smooth ? 'transform 0.5s ease-out' : 'none';
                     currentIndex = (index + totalItems) % totalItems;
-                    const newTranslate = -currentIndex * track.offsetWidth;
+                    const slideWidth = track.offsetWidth;
+                    const newTranslate = -currentIndex * slideWidth;
                     track.style.transform = `translateX(${newTranslate}px)`;
                     prevTranslate = newTranslate;
                 }
@@ -538,13 +536,17 @@
                 prevButton.addEventListener('click', () => { goToSlide(currentIndex - 1); stopAutoSlide(); });
                 nextButton.addEventListener('click', () => { goToSlide(currentIndex + 1); stopAutoSlide(); });
 
-                let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = -currentIndex * track.offsetWidth;
+                let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = 0;
 
                 const dragStart = (event) => {
+                    if (totalItems <= 1) return;
                     isDragging = true;
                     startPos = getPositionX(event);
                     container.classList.add('is-dragging');
                     track.style.transition = 'none';
+                    const transformMatrix = window.getComputedStyle(track).getPropertyValue('transform');
+                    prevTranslate = transformMatrix !== 'none' ? parseInt(transformMatrix.split(',')[4], 10) : 0;
+                    currentTranslate = prevTranslate;
                     stopAutoSlide();
                 };
 
@@ -562,13 +564,13 @@
                     container.classList.remove('is-dragging');
                     const movedBy = currentTranslate - prevTranslate;
 
-                    if (movedBy < -50 && currentIndex < totalItems - 1) {
-                        currentIndex++;
-                    } else if (movedBy > 50 && currentIndex > 0) {
-                        currentIndex--;
+                    if (movedBy < -50) {
+                        goToSlide(currentIndex + 1);
+                    } else if (movedBy > 50) {
+                        goToSlide(currentIndex - 1);
+                    } else {
+                        goToSlide(currentIndex);
                     }
-                    
-                    goToSlide(currentIndex, true);
                     startAutoSlide();
                 };
                 
@@ -587,20 +589,17 @@
                 container.addEventListener('mouseenter', stopAutoSlide);
                 container.addEventListener('mouseleave', startAutoSlide);
                 
-                startAutoSlide();
+                window.addEventListener('resize', () => goToSlide(currentIndex, false));
 
                 const observer = new MutationObserver(() => {
-                    items = track.children;
-                    totalItems = items.length;
-                    if (totalItems <= 1) {
-                        if (prevButton) prevButton.style.display = 'none';
-                        if (nextButton) nextButton.style.display = 'none';
-                    } else {
-                        if (prevButton) prevButton.style.display = 'flex';
-                        if (nextButton) nextButton.style.display = 'flex';
-                    }
+                    updateButtonsVisibility();
+                    goToSlide(currentIndex, false);
                 });
                 observer.observe(track, { childList: true });
+
+                updateButtonsVisibility();
+                goToSlide(0, false);
+                startAutoSlide();
             }
 
 
@@ -693,7 +692,6 @@
 
                     const testimonialsToRender = testimonialsSnapshot.empty ? defaultTestimonials : testimonialsSnapshot.docs.map(doc => doc.data());
 
-                    // Cores para os círculos das iniciais
                     const bgColors = ['bg-blue-400', 'bg-green-400', 'bg-indigo-400', 'bg-pink-400', 'bg-yellow-500'];
 
                     function createTestimonialCard(data, index) {
@@ -726,18 +724,16 @@
                     } else {
                         testimonialsToRender.forEach((data, index) => {
                             const cardHTML = createTestimonialCard(data, index);
-                            // Adiciona ao grid
                             testimonialGrid.innerHTML += cardHTML;
-                            // Adiciona ao slider
                             testimonialSliderTrack.innerHTML += `<div class="slider-item min-w-full flex-shrink-0 px-4">${cardHTML}</div>`;
                         });
                     }
                     
-                    initializeSlider('testimonial-slider', 7000);
+                    // [CHORE] Alterado o tempo do carrossel de depoimentos para 5 segundos
+                    initializeSlider('testimonial-slider', 5000);
 
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
-                    // Fallback para conteúdo padrão em caso de erro
                     initializeSlider('gallery-slider');
                     initializeSlider('testimonial-slider');
                 }
