@@ -2,9 +2,10 @@
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
   Atualizações Críticas (Carrossel de Resultados):
-  - [BUGFIX] Corte de Imagem em Desktop: O carrossel da galeria agora usa uma altura baseada na viewport (tela) e a propriedade 'object-contain'. Isso garante que a imagem inteira seja sempre visível sem cortes, tanto no desktop quanto no mobile, mantendo uma ótima experiência.
-  - [FEAT] Navegação por Arraste Aprimorada: A lógica de arrastar o carrossel com o mouse foi refeita para ser mais robusta e intuitiva em desktops. O movimento agora continua mesmo que o cursor saia da área do carrossel, tornando a navegação muito mais fluida.
-  - [STYLE] Estilo do Carrossel de Imagens: Adicionado um fundo sutil aos slides da galeria para um acabamento mais profissional caso as imagens não preencham todo o espaço.
+  - [BUGFIX] Comportamento do Carrossel Unificado: A lógica do JavaScript foi refeita para que o carrossel de "Resultados" se comporte exatamente como o de "Depoimentos", que o cliente elogiou.
+  - [FEAT] Carrossel de Imagem Única: O carrossel de "Resultados" agora mostra uma imagem de cada vez em todos os dispositivos, conforme solicitado, mantendo a navegação fluida.
+  - [STYLE] Apresentação da Imagem Melhorada: As imagens da galeria são agora apresentadas dentro de um "cartão" com uma proporção fixa, evitando distorções e cortes abruptos, proporcionando um visual mais limpo e profissional.
+  - [FEAT] Navegação por Setas Dinâmica: As setas de navegação agora aparecem e desaparecem de forma inteligente, tal como no carrossel de depoimentos.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -260,12 +261,14 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Transformações Reais</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Resultados que refletem nossa dedicação à ética e à naturalidade.</p>
-                <div id="gallery-slider" class="relative slider-container max-w-4xl mx-auto rounded-lg shadow-xl overflow-hidden reveal cursor-grab active:cursor-grabbing" style="transition-delay: 400ms;">
-                    <div class="slider-track flex">
-                        <!-- As imagens da galeria serão inseridas aqui pelo JavaScript -->
+                <div id="gallery-slider" class="relative slider-container max-w-4xl mx-auto rounded-lg overflow-hidden reveal cursor-grab active:cursor-grabbing" style="transition-delay: 400ms;">
+                    <div class="overflow-hidden rounded-lg shadow-xl">
+                        <div class="slider-track flex">
+                            <!-- As imagens da galeria serão inseridas aqui pelo JavaScript -->
+                        </div>
                     </div>
-                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 left-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition" aria-label="Slide anterior"><i class="fas fa-chevron-left"></i></button>
-                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 right-4 bg-white/70 hover:bg-white rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition" aria-label="Próximo slide"><i class="fas fa-chevron-right"></i></button>
+                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 -left-4 md:-left-5 bg-white/90 hover:bg-white shadow-lg rounded-full w-12 h-12 items-center justify-center transition z-10 hidden" aria-label="Slide anterior"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 -right-4 md:-right-5 bg-white/90 hover:bg-white shadow-lg rounded-full w-12 h-12 items-center justify-center transition z-10 hidden" aria-label="Próximo slide"><i class="fas fa-chevron-right"></i></button>
                 </div>
                 <p class="text-sm text-gray-500 mt-4 px-4">*Imagens de pacientes reais com autorização de uso. Os resultados podem variar.</p>
             </div>
@@ -484,8 +487,10 @@
                 }
             });
 
-            // --- LÓGICA GERAL PARA SLIDERS RESPONSIVOS ---
-            function initializeSlider(containerId) {
+            // --- LÓGICA GERAL E UNIFICADA PARA SLIDERS RESPONSIVOS ---
+            function initializeSlider(containerId, options = {}) {
+                const { multiItem = false } = options;
+
                 const container = document.getElementById(containerId);
                 if (!container) return;
                 const track = container.querySelector('.slider-track');
@@ -498,6 +503,7 @@
                 let currentIndex = 0;
 
                 const getItemsPerPage = () => {
+                    if (!multiItem) return 1;
                     if (window.innerWidth >= 1024) return 3;
                     if (window.innerWidth >= 768) return 2;
                     return 1;
@@ -516,7 +522,6 @@
                     
                     currentIndex = Math.max(0, Math.min(currentIndex, maxIndex));
 
-                    // Recalcula a largura do item em cada atualização para responsividade
                     const itemWidth = track.clientWidth / itemsPerPage;
                     const newTranslate = -currentIndex * itemWidth;
                     track.style.transform = `translateX(${newTranslate}px)`;
@@ -528,19 +533,17 @@
                 };
 
                 const slide = (direction) => {
-                    const itemsPerPage = getItemsPerPage();
-                    currentIndex += direction * itemsPerPage;
+                    currentIndex += direction;
                     updateSlider();
                 };
 
                 if (nextButton) nextButton.addEventListener('click', () => slide(1));
                 if (prevButton) prevButton.addEventListener('click', () => slide(-1));
                 
-                // Atualiza o slider quando a janela é redimensionada
                 const resizeObserver = new ResizeObserver(() => updateSlider(false));
                 resizeObserver.observe(container);
 
-                // --- LÓGICA DE SWIPE APRIMORADA (MOUSE E TOUCH) ---
+                // --- Lógica de Swipe Aprimorada ---
                 let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = 0;
                 
                 const getPositionX = (event) => event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
@@ -548,12 +551,11 @@
                 const dragStart = (event) => {
                     isDragging = true;
                     startPos = getPositionX(event);
-                    // Pega a transformação atual para continuar o movimento a partir dela
                     const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(track).transform);
                     prevTranslate = transformMatrix.m41;
-                    track.style.transition = 'none'; // Desativa a transição durante o arraste
-                    
-                    // Adiciona listeners globais para um arraste mais suave
+                    track.style.transition = 'none';
+                    container.classList.add('is-dragging');
+
                     window.addEventListener('mousemove', dragMove);
                     window.addEventListener('mouseup', dragEnd);
                     window.addEventListener('touchmove', dragMove, { passive: true });
@@ -572,7 +574,7 @@
                     if (!isDragging) return;
                     isDragging = false;
                     
-                    // Remove os listeners globais
+                    container.classList.remove('is-dragging');
                     window.removeEventListener('mousemove', dragMove);
                     window.removeEventListener('mouseup', dragEnd);
                     window.removeEventListener('touchmove', dragMove);
@@ -580,21 +582,20 @@
 
                     const movedBy = currentTranslate - prevTranslate;
                     const itemWidth = track.clientWidth / getItemsPerPage();
+                    const threshold = itemWidth / 4;
 
-                    // Se moveu mais de um certo limiar, muda de slide
-                    if (movedBy < -itemWidth / 4) {
-                        slide(1);
-                    } else if (movedBy > itemWidth / 4) {
-                        slide(-1);
-                    } else {
-                        updateSlider(); // Volta para a posição original se o arraste for pequeno
+                    if (movedBy < -threshold) {
+                        currentIndex++;
+                    } else if (movedBy > threshold) {
+                        currentIndex--;
                     }
+                    
+                    updateSlider();
                 };
                 
                 container.addEventListener('mousedown', dragStart);
                 container.addEventListener('touchstart', dragStart, { passive: true });
 
-                // Observa se os itens do carrossel foram carregados para iniciar
                 const observer = new MutationObserver(() => {
                     items = track.children;
                     if (items.length > 0) {
@@ -677,17 +678,16 @@
                     const gallerySnapshot = await db.collection("gallery").get();
                     galleryTrack.innerHTML = ''; 
                     if (gallerySnapshot.empty) {
-                        galleryTrack.innerHTML = `<div class="slider-item min-w-full flex-shrink-0"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" class="w-full object-cover"></div>`;
+                        galleryTrack.innerHTML = `<div class="slider-item w-full flex-shrink-0 p-2"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" class="w-full rounded-lg shadow-md"></div>`;
                     } else {
                         gallerySnapshot.forEach(doc => {
-                            // [NOVO] - Estrutura do slide da galeria modificada para evitar cortes.
                             galleryTrack.innerHTML += `
-                                <div class="slider-item min-w-full flex-shrink-0 h-[50vh] md:h-[70vh] bg-black/5 flex items-center justify-center">
-                                    <img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full h-full object-contain" loading="lazy" decoding="async">
+                                <div class="slider-item w-full flex-shrink-0 p-2">
+                                    <img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full h-auto object-cover rounded-lg shadow-md" style="aspect-ratio: 16/10;" loading="lazy" decoding="async">
                                 </div>`;
                         });
                     }
-                    initializeSlider('gallery-slider');
+                    initializeSlider('gallery-slider', { multiItem: false });
 
                     // Carregar depoimentos
                     const testimonialTrack = document.querySelector('#testimonial-slider .slider-track');
@@ -727,13 +727,13 @@
                         });
                     }
                     
-                    initializeSlider('testimonial-slider');
+                    initializeSlider('testimonial-slider', { multiItem: true });
 
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
                     // Fallback para conteúdo padrão em caso de erro
-                    initializeSlider('gallery-slider');
-                    initializeSlider('testimonial-slider');
+                    initializeSlider('gallery-slider', { multiItem: false });
+                    initializeSlider('testimonial-slider', { multiItem: true });
                 }
             }
 
