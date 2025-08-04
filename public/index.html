@@ -1,14 +1,11 @@
 <!-- 
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
-  Atualizações Críticas (Novo Layout de Depoimentos):
-  - [FEAT] Novo Design de Card de Depoimento: Replicado o estilo visual do exemplo, com inicial do autor em um círculo colorido, texto e nome.
-  - [FEAT] Layout Híbrido (Grid/Carrossel): Em telas grandes, os depoimentos são exibidos em uma grade. Em telas pequenas, o layout se converte em um carrossel de um item por vez, com setas e swipe.
-  - [STYLE] Cores Dinâmicas para Iniciais: As cores dos círculos são aplicadas dinamicamente para criar um visual mais variado e atraente.
-  - [BUGFIX] Layout dos Cards Reestruturado: A estrutura interna dos cards de depoimento foi refeita com flexbox `justify-between` para alinhar o texto ao topo e o nome do autor à base, eliminando a aparência "bagunçada".
-  - [BUGFIX] Quebra de Linha no Texto do Depoimento: Adicionada a classe `whitespace-normal` ao parágrafo do depoimento para forçar a quebra de linha e corrigir o overflow que causava a rolagem horizontal.
-  - [BUGFIX] Rolagem Horizontal Eliminada: Corrigido o posicionamento dos botões do slider de depoimentos que causavam overflow na página. Adicionada regra de `overflow-x: hidden` ao body como salvaguarda.
-  - [BUGFIX] Botão do WhatsApp Sempre Visível: Aumentado o z-index do botão flutuante do WhatsApp para z-40.
+  Atualizações Críticas (Carrossel de Depoimentos Responsivo):
+  - [BUGFIX] Layout de Grade Removido: A seção de depoimentos agora é um carrossel em todas as resoluções de tela, eliminando a grade estática em desktops.
+  - [FEAT] Carrossel Responsivo Multi-Item: O carrossel agora exibe 3 itens em telas grandes (lg), 2 em telas médias (md), e 1 em telas pequenas (sm), com navegação por setas (desktop) e swipe (mobile).
+  - [FEAT] Navegação Inteligente: As setas de navegação do carrossel agora são ocultadas dinamicamente no início e no fim da lista para uma melhor UX.
+  - [PERF] Lógica do Slider Otimizada: O código JavaScript do carrossel foi reescrito para ser mais robusto, eficiente e responsivo a mudanças no tamanho da tela.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -58,7 +55,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-      /* CORREÇÃO: Impede a rolagem horizontal em toda a página */
+      /* Impede a rolagem horizontal em toda a página */
       body {
         overflow-x: hidden;
       }
@@ -349,21 +346,15 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-display mb-12 reveal">Confiança que Inspira</h2>
                 
-                <!-- Container para o Layout Híbrido -->
-                <div id="testimonial-container" class="relative reveal" style="transition-delay: 200ms;">
-                    <!-- Layout em Grade para Telas Maiores -->
-                    <div id="testimonial-grid" class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                        <!-- Os cards da grade serão inseridos aqui -->
-                    </div>
-
-                    <!-- Layout em Carrossel para Telas Pequenas -->
-                    <div id="testimonial-slider" class="md:hidden relative slider-container max-w-3xl mx-auto cursor-grab active:cursor-grabbing">
-                        <div class="slider-track flex">
+                <!-- Container do Carrossel -->
+                <div id="testimonial-slider" class="relative slider-container max-w-6xl mx-auto reveal" style="transition-delay: 200ms;">
+                    <div class="overflow-hidden">
+                        <div class="slider-track flex -mx-2"> <!-- Margem negativa para compensar padding dos itens -->
                            <!-- Os cards do carrossel serão inseridos aqui -->
                         </div>
-                        <button class="slider-button prev absolute top-1/2 -translate-y-1/2 -left-2 bg-white/80 hover:bg-white shadow-md rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
-                        <button class="slider-button next absolute top-1/2 -translate-y-1/2 -right-2 bg-white/80 hover:bg-white shadow-md rounded-full w-10 h-10 flex items-center justify-center transition z-10" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
                     </div>
+                    <button class="slider-button prev absolute top-1/2 -translate-y-1/2 -left-4 bg-white/90 hover:bg-white shadow-lg rounded-full w-12 h-12 items-center justify-center transition z-10 hidden" aria-label="Depoimento anterior"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-button next absolute top-1/2 -translate-y-1/2 -right-4 bg-white/90 hover:bg-white shadow-lg rounded-full w-12 h-12 items-center justify-center transition z-10 hidden" aria-label="Próximo depoimento"><i class="fas fa-chevron-right"></i></button>
                 </div>
 
                 <div class="mt-12 reveal">
@@ -407,7 +398,7 @@
                     <div>
                         <h4 class="font-semibold text-white text-lg mb-4">Entre em Contato</h4>
                         <p class="mb-2"><strong>Endereço:</strong><br>Avenida Getúlio Vargas, 4831<br>Consultório 402, Torre Medical<br>Centro, Canoas - RS, CEP 92020-333</p>
-                        <p class="mb-2"><strong>Email:</strong><br><a href="mailto:italobondan@outlook.com" class="hover:text-lazuli-gold">italobondan@outlook.com</a></p>
+                        <p class="mb-2"><strong>Email:</strong><br><a href="mailto:italobondan@outlook.com" class="hover:text-lazuli-gold">contato@clinicalazuli.com.br</a></p>
                         <p><strong>Telefone:</strong><br><a href="tel:+555499041660" class="hover:text-lazuli-gold">(54) 9904-1660</a></p>
                     </div>
 
@@ -436,7 +427,7 @@
         </div>
     </footer>
 
-    <!-- CORREÇÃO: Z-index do botão do WhatsApp aumentado para z-40 -->
+    <!-- Z-index do botão do WhatsApp aumentado para z-40 -->
     <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="fixed bottom-5 right-5 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-40 transform hover:scale-110 transition-transform active:scale-95" aria-label="Fale conosco no WhatsApp">
         <i class="fab fa-whatsapp fa-2x"></i>
     </a>
@@ -494,8 +485,8 @@
                 }
             });
 
-            // --- LÓGICA GERAL PARA SLIDERS (COM SWIPE APRIMORADO) ---
-            function initializeSlider(containerId, autoSlideInterval = 0) {
+            // --- LÓGICA GERAL PARA SLIDERS RESPONSIVOS ---
+            function initializeSlider(containerId) {
                 const container = document.getElementById(containerId);
                 if (!container) return;
                 const track = container.querySelector('.slider-track');
@@ -504,48 +495,58 @@
                 
                 let items = track.children;
                 if (!track || items.length === 0) return;
-                
-                let totalItems = items.length;
+
                 let currentIndex = 0;
-                let slideInterval;
 
-                if (totalItems <= 1) {
-                    if (prevButton) prevButton.style.display = 'none';
-                    if (nextButton) nextButton.style.display = 'none';
-                    return;
-                }
+                const getItemsPerPage = () => {
+                    if (window.innerWidth >= 1024) return 3;
+                    if (window.innerWidth >= 768) return 2;
+                    return 1;
+                };
 
-                function goToSlide(index, smooth = true) {
+                const updateSlider = (smooth = true) => {
                     if (smooth) {
                         track.style.transition = 'transform 0.5s ease-out';
                     } else {
                         track.style.transition = 'none';
                     }
-                    currentIndex = (index + totalItems) % totalItems;
-                    const newTranslate = -currentIndex * track.offsetWidth;
+
+                    const itemsPerPage = getItemsPerPage();
+                    const totalItems = items.length;
+                    const maxIndex = Math.max(0, totalItems - itemsPerPage);
+                    
+                    currentIndex = Math.max(0, Math.min(currentIndex, maxIndex));
+
+                    const itemWidth = items[0].getBoundingClientRect().width;
+                    const newTranslate = -currentIndex * itemWidth;
                     track.style.transform = `translateX(${newTranslate}px)`;
-                    prevTranslate = newTranslate;
-                }
-
-                function startAutoSlide() {
-                    if (autoSlideInterval > 0 && totalItems > 1) {
-                        stopAutoSlide();
-                        slideInterval = setInterval(() => goToSlide(currentIndex + 1), autoSlideInterval);
+                    
+                    if (prevButton && nextButton) {
+                        prevButton.style.display = currentIndex === 0 ? 'none' : 'flex';
+                        nextButton.style.display = currentIndex >= maxIndex ? 'none' : 'flex';
                     }
-                }
-                function stopAutoSlide() { clearInterval(slideInterval); }
+                };
 
-                prevButton.addEventListener('click', () => { goToSlide(currentIndex - 1); stopAutoSlide(); });
-                nextButton.addEventListener('click', () => { goToSlide(currentIndex + 1); stopAutoSlide(); });
+                const slide = (direction) => {
+                    currentIndex += direction;
+                    updateSlider();
+                };
 
-                let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = -currentIndex * track.offsetWidth;
+                if (nextButton) nextButton.addEventListener('click', () => slide(1));
+                if (prevButton) prevButton.addEventListener('click', () => slide(-1));
+                
+                const resizeObserver = new ResizeObserver(() => updateSlider(false));
+                resizeObserver.observe(container);
 
+                // --- Lógica de Swipe ---
+                let isDragging = false, startPos = 0, prevTranslate = 0, currentTranslate = 0;
+                
                 const dragStart = (event) => {
                     isDragging = true;
                     startPos = getPositionX(event);
-                    container.classList.add('is-dragging');
+                    const itemWidth = items[0].getBoundingClientRect().width;
+                    prevTranslate = -currentIndex * itemWidth;
                     track.style.transition = 'none';
-                    stopAutoSlide();
                 };
 
                 const dragMove = (event) => {
@@ -559,23 +560,19 @@
                 const dragEnd = () => {
                     if (!isDragging) return;
                     isDragging = false;
-                    container.classList.remove('is-dragging');
                     const movedBy = currentTranslate - prevTranslate;
 
-                    if (movedBy < -50 && currentIndex < totalItems - 1) {
-                        currentIndex++;
-                    } else if (movedBy > 50 && currentIndex > 0) {
-                        currentIndex--;
+                    if (movedBy < -50) {
+                        slide(1);
+                    } else if (movedBy > 50) {
+                        slide(-1);
+                    } else {
+                        updateSlider(); // Snap back
                     }
-                    
-                    goToSlide(currentIndex, true);
-                    startAutoSlide();
                 };
                 
-                function getPositionX(event) {
-                    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-                }
-
+                const getPositionX = (event) => event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+                
                 container.addEventListener('mousedown', dragStart);
                 container.addEventListener('touchstart', dragStart, { passive: true });
                 container.addEventListener('mousemove', dragMove);
@@ -584,20 +581,11 @@
                 container.addEventListener('mouseleave', dragEnd);
                 container.addEventListener('touchend', dragEnd);
 
-                container.addEventListener('mouseenter', stopAutoSlide);
-                container.addEventListener('mouseleave', startAutoSlide);
-                
-                startAutoSlide();
-
                 const observer = new MutationObserver(() => {
                     items = track.children;
-                    totalItems = items.length;
-                    if (totalItems <= 1) {
-                        if (prevButton) prevButton.style.display = 'none';
-                        if (nextButton) nextButton.style.display = 'none';
-                    } else {
-                        if (prevButton) prevButton.style.display = 'flex';
-                        if (nextButton) nextButton.style.display = 'flex';
+                    if (items.length > 0) {
+                        updateSlider(false);
+                        observer.disconnect();
                     }
                 });
                 observer.observe(track, { childList: true });
@@ -681,29 +669,26 @@
                             galleryTrack.innerHTML += `<div class="slider-item min-w-full flex-shrink-0"><img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full h-64 md:h-96 object-cover" loading="lazy" decoding="async"></div>`;
                         });
                     }
-                    initializeSlider('gallery-slider', 5000);
+                    initializeSlider('gallery-slider');
 
                     // Carregar depoimentos
-                    const testimonialSliderTrack = document.querySelector('#testimonial-slider .slider-track');
-                    const testimonialGrid = document.getElementById('testimonial-grid');
+                    const testimonialTrack = document.querySelector('#testimonial-slider .slider-track');
                     const testimonialsSnapshot = await db.collection("testimonials").get();
                     
-                    testimonialSliderTrack.innerHTML = '';
-                    testimonialGrid.innerHTML = '';
+                    testimonialTrack.innerHTML = '';
 
                     const testimonialsToRender = testimonialsSnapshot.empty ? defaultTestimonials : testimonialsSnapshot.docs.map(doc => doc.data());
 
-                    // Cores para os círculos das iniciais
-                    const bgColors = ['bg-blue-400', 'bg-green-400', 'bg-indigo-400', 'bg-pink-400', 'bg-yellow-500'];
+                    const bgColors = ['bg-blue-400', 'bg-green-400', 'bg-indigo-400', 'bg-pink-400', 'bg-yellow-500', 'bg-teal-400', 'bg-purple-400'];
 
                     function createTestimonialCard(data, index) {
                         const initial = data.name.charAt(0).toUpperCase();
                         const colorClass = bgColors[index % bgColors.length];
                         
                         return `
-                            <div class="bg-white p-6 rounded-lg shadow-md flex flex-col text-left h-full">
+                            <div class="bg-white p-8 rounded-lg shadow-md flex flex-col text-left h-full">
                                 <div class="flex-grow">
-                                    <div class="w-16 h-16 ${colorClass} rounded-full flex items-center justify-center text-white text-3xl font-display mb-5">
+                                    <div class="w-16 h-16 ${colorClass} rounded-full flex items-center justify-center text-white text-3xl font-display mb-6">
                                         ${initial}
                                     </div>
                                     <p class="italic text-lazuli-dark/80 whitespace-normal mb-4">"${data.text}"</p>
@@ -714,26 +699,17 @@
                     }
 
                     if (testimonialsToRender.length === 0) {
-                        const emptyCardHTML = `
-                            <div class="bg-white p-6 rounded-lg shadow-md flex flex-col text-left h-full">
-                                <p class="italic text-lazuli-dark/80 whitespace-normal">"Seja o primeiro a deixar um depoimento!"</p>
-                                <p class="font-bold mt-4">- Equipe Lazúli</p>
-                            </div>
-                        `;
-                        testimonialGrid.innerHTML = emptyCardHTML;
-                        testimonialSliderTrack.innerHTML = `<div class="slider-item min-w-full flex-shrink-0 px-4">${emptyCardHTML}</div>`;
+                        const emptyCardHTML = createTestimonialCard({name: "Equipe Lazúli", text: "Seja o primeiro a deixar um depoimento!"}, 0);
+                        testimonialTrack.innerHTML = `<div class="slider-item w-full flex-shrink-0 p-2">${emptyCardHTML}</div>`;
 
                     } else {
                         testimonialsToRender.forEach((data, index) => {
                             const cardHTML = createTestimonialCard(data, index);
-                            // Adiciona ao grid
-                            testimonialGrid.innerHTML += cardHTML;
-                            // Adiciona ao slider
-                            testimonialSliderTrack.innerHTML += `<div class="slider-item min-w-full flex-shrink-0 px-4">${cardHTML}</div>`;
+                            testimonialTrack.innerHTML += `<div class="slider-item w-full md:w-1/2 lg:w-1/3 flex-shrink-0 p-2">${cardHTML}</div>`;
                         });
                     }
                     
-                    initializeSlider('testimonial-slider', 7000);
+                    initializeSlider('testimonial-slider');
 
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
