@@ -2,8 +2,7 @@
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
   Atualizações Críticas (Carrossel de Resultados):
-  - [BUGFIX] Imagens Cortadas: Substituída a propriedade 'object-cover' por 'object-contain'. Esta alteração garante que a imagem inteira seja sempre visível dentro do contentor do carrossel, eliminando qualquer corte e respeitando a proporção original da foto.
-  - [STYLE] Consistência Visual: Adicionado um contentor com fundo branco e proporção fixa para cada imagem. Isto cria uma moldura consistente e elegante para todas as fotos, mesmo que tenham dimensões diferentes.
+  - [BUGFIX] Botões do Carrossel Cortados: Removida a propriedade 'overflow-hidden' do contentor principal do carrossel de imagens. Isto impedia que os botões de navegação, posicionados nas laterais, fossem visíveis e clicáveis em ecrãs pequenos. A estrutura agora corresponde à do carrossel de depoimentos, que funciona corretamente.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -259,7 +258,7 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Transformações Reais</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Resultados que refletem nossa dedicação à ética e à naturalidade.</p>
-                <div id="gallery-slider" class="relative slider-container max-w-4xl mx-auto rounded-lg overflow-hidden reveal" style="transition-delay: 400ms;">
+                <div id="gallery-slider" class="relative slider-container max-w-4xl mx-auto reveal" style="transition-delay: 400ms;">
                     <div class="overflow-hidden rounded-lg shadow-xl">
                         <div class="slider-track flex">
                             <!-- As imagens da galeria serão inseridas aqui pelo JavaScript -->
