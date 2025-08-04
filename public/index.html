@@ -2,9 +2,8 @@
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
   Atualizações Críticas (Carrossel de Resultados):
-  - [FEAT] Navegação Apenas por Setas (Desktop): A funcionalidade de arrastar com o rato foi desativada para o carrossel de imagens no computador, conforme solicitado. A navegação agora é feita exclusivamente pelas setas.
-  - [FEAT] Manutenção do Swipe (Mobile): A funcionalidade de deslizar com o dedo no carrossel de imagens foi mantida para dispositivos móveis, garantindo uma experiência de utilização intuitiva.
-  - [UX] Cursor Padrão: Removidas as classes de CSS que alteravam o cursor para "agarrar" no carrossel de imagens em desktop, uma vez que a função de arrastar foi desativada.
+  - [BUGFIX] Imagens Cortadas: Substituída a propriedade 'object-cover' por 'object-contain'. Esta alteração garante que a imagem inteira seja sempre visível dentro do contentor do carrossel, eliminando qualquer corte e respeitando a proporção original da foto.
+  - [STYLE] Consistência Visual: Adicionado um contentor com fundo branco e proporção fixa para cada imagem. Isto cria uma moldura consistente e elegante para todas as fotos, mesmo que tenham dimensões diferentes.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -545,9 +544,7 @@
                 // --- Lógica de Swipe/Arrastar Condicional ---
                 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
                 
-                // Ativa o arraste no desktop apenas se dragDisabledOnDesktop for false
                 const enableDrag = !isTouchDevice && !dragDisabledOnDesktop;
-                // Ativa o swipe em dispositivos de toque
                 const enableSwipe = isTouchDevice;
 
                 if (enableDrag || enableSwipe) {
@@ -705,7 +702,9 @@
                         gallerySnapshot.forEach(doc => {
                             galleryTrack.innerHTML += `
                                 <div class="slider-item w-full flex-shrink-0 p-2">
-                                    <img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full h-auto object-cover rounded-lg shadow-md" style="aspect-ratio: 16/10;" loading="lazy" decoding="async">
+                                    <div class="w-full bg-white rounded-lg shadow-md" style="aspect-ratio: 16/10;">
+                                        <img src="${doc.data().url}" alt="Resultado de tratamento" class="w-full h-full object-contain rounded-lg" loading="lazy" decoding="async">
+                                    </div>
                                 </div>`;
                         });
                     }
