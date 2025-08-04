@@ -6,6 +6,7 @@
   - [BUGFIX] Setas no Celular: O Swiper.js gerencia eventos de toque de forma nativa. A inicialização foi refatorada e opções como 'observer' e 'watchOverflow' foram adicionadas para corrigir o problema das setas que paravam de funcionar no modo loop.
   - [BUGFIX] Imagens Cortadas: Utilizada a propriedade 'object-fit: contain' e um fundo consistente para garantir que a imagem inteira seja sempre visível, sem cortes e mantendo a proporção.
   - [FEAT] Adicionada paginação (bolinhas) para melhor usabilidade.
+  - [BUGFIX-FINAL] Lógica de Inicialização: Movida a criação da instância do Swiper para DEPOIS do carregamento das imagens do Firebase, garantindo que as setas funcionem imediatamente ao carregar a página, sem a necessidade de uma interação prévia.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -535,8 +536,6 @@
         const db = firebase.firestore();
 
         document.addEventListener('DOMContentLoaded', () => {
-            let gallerySwiper; // Variável para guardar a instância do Swiper da galeria
-
             // --- LÓGICA DO MENU MOBILE APRIMORADO ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -580,7 +579,6 @@
 
             // --- LÓGICA DO SLIDER DE DEPOIMENTOS (ANTIGO) ---
             function initializeSlider(containerId, options = {}) {
-                // ... (código do slider de depoimentos permanece o mesmo)
                 const { multiItem = false, dragDisabledOnDesktop = false } = options;
 
                 const container = document.getElementById(containerId);
@@ -740,26 +738,6 @@
                 { name: "Elisandra Machado", text: "Dr Ítalo Rottoli transformou minha autoestima, me fez uma nova mulher, sou grata por tanto! Minha indicação de olhos fechados.", rating: 5 }
             ];
 
-            // --- INICIALIZAÇÃO DO SWIPER DA GALERIA (ROBUSTO) ---
-            gallerySwiper = new Swiper('.gallery-swiper', {
-                loop: true,
-                watchOverflow: true, // Desativa a navegação se não houver slides suficientes
-                observer: true, // Re-inicializa ao detectar mudanças no DOM
-                observeParents: true, // O mesmo para os elementos pais
-                navigation: {
-                    nextEl: '.gallery-swiper-button-next',
-                    prevEl: '.gallery-swiper-button-prev',
-                },
-                pagination: {
-                    el: '.gallery-swiper-pagination',
-                    clickable: true,
-                },
-                slidesPerView: 1,
-                spaceBetween: 0,
-                grabCursor: true,
-            });
-
-
             // --- CARREGAMENTO DE CONTEÚDO DINÂMICO DO FIREBASE ---
             async function loadDynamicContent() {
                 try {
@@ -787,11 +765,22 @@
                         });
                     }
                     
-                    // Apenas atualiza o Swiper, não o recria.
-                    // O 'observer:true' já ajuda, mas uma atualização manual garante o estado correto.
-                    if(gallerySwiper) {
-                        gallerySwiper.update();
-                    }
+                    // INICIALIZA O SWIPER DA GALERIA APENAS DEPOIS QUE O CONTEÚDO FOI CARREGADO
+                    new Swiper('.gallery-swiper', {
+                        loop: true,
+                        watchOverflow: true,
+                        navigation: {
+                            nextEl: '.gallery-swiper-button-next',
+                            prevEl: '.gallery-swiper-button-prev',
+                        },
+                        pagination: {
+                            el: '.gallery-swiper-pagination',
+                            clickable: true,
+                        },
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                        grabCursor: true,
+                    });
 
                     // Carregar depoimentos
                     const testimonialTrack = document.querySelector('#testimonial-slider .slider-track');
@@ -835,9 +824,7 @@
 
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
-                    if(gallerySwiper) {
-                        gallerySwiper.update(); // Tenta atualizar mesmo em caso de erro em outra parte
-                    }
+                    // Fallback para o slider de depoimentos em caso de erro
                     initializeSlider('testimonial-slider', { multiItem: true });
                 }
             }
