@@ -3,8 +3,9 @@
   Descrição: Página principal do site da Clínica Lazúli.
   Atualizações Críticas (Carrossel de Resultados com Swiper.js):
   - [FEAT] Migração para Swiper.js: Substituído o carrossel de resultados customizado pela biblioteca Swiper.js para maior robustez, performance e compatibilidade mobile.
-  - [BUGFIX] Setas no Celular: O Swiper.js gerencia eventos de toque de forma nativa, e o CSS adicionado aumenta a área de toque das setas, resolvendo problemas de clique em telas pequenas.
+  - [BUGFIX] Setas no Celular: O Swiper.js gerencia eventos de toque de forma nativa. A inicialização foi refatorada e opções como 'observer' e 'watchOverflow' foram adicionadas para corrigir o problema das setas que paravam de funcionar no modo loop.
   - [BUGFIX] Imagens Cortadas: Utilizada a propriedade 'object-fit: contain' e um fundo consistente para garantir que a imagem inteira seja sempre visível, sem cortes e mantendo a proporção.
+  - [FEAT] Adicionada paginação (bolinhas) para melhor usabilidade.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -138,23 +139,21 @@
       /* 1. Container do Carrossel */
       .gallery-swiper {
         width: 100%;
-        /* Defina uma altura para o carrossel. Ajuste conforme a necessidade do seu layout. */
         height: 60vh; 
-        max-height: 500px; /* Limite máximo para telas grandes */
+        max-height: 500px;
         position: relative;
         overflow: hidden;
         margin: 0;
-        border-radius: 0.5rem; /* rounded-lg */
-        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-xl */
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
       }
 
-      /* 2. Slides e Imagens (Sem cortes e com fundo consistente) */
+      /* 2. Slides e Imagens */
       .gallery-swiper .swiper-slide {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100%;
-        /* Cor de fundo para preencher espaços vazios (importante para o object-fit: contain) */
         background-color: #ffffff; 
       }
 
@@ -162,30 +161,21 @@
         width: 100%;
         height: 100%;
         display: block;
-        /* Solução para "Sem Cortes": object-fit: contain */
-        /* Isso garante que a foto inteira seja visível, mantendo a proporção. */
         object-fit: contain;
       }
 
-      /* 3. Solução Definitiva para as Setas no Mobile e Desktop */
+      /* 3. Setas de Navegação */
       .gallery-swiper .swiper-button-next,
       .gallery-swiper .swiper-button-prev {
-        /* Garante que as setas estejam acima das imagens */
         z-index: 10; 
-        
-        /* Aumentando a área de toque (Crucial para Mobile): */
-        /* Adicionamos um padding invisível para tornar o botão mais fácil de apertar... */
         padding: 20px;
-        /* ... e compensamos com margem negativa para manter a posição visual da seta. */
         margin: -10px; 
-        
-        /* Estilo visual (Ajuste como preferir) */
         background-color: rgba(255, 255, 255, 0.9);
         color: #3A3A3A;
-        width: 48px; /* w-12 */
-        height: 48px; /* h-12 */
-        border-radius: 9999px; /* rounded-full */
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-lg */
+        width: 48px;
+        height: 48px;
+        border-radius: 9999px;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         transition: background-color 0.3s;
       }
 
@@ -196,9 +186,29 @@
 
       .gallery-swiper .swiper-button-next:after, 
       .gallery-swiper .swiper-button-prev:after {
-          /* Tamanho do ícone da seta */
           font-size: 18px; 
           font-weight: bold;
+      }
+      
+      /* 4. Estilos da Paginação (Bolinhas) */
+      .gallery-swiper .swiper-pagination {
+        position: absolute;
+        bottom: 15px !important;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+      .gallery-swiper .swiper-pagination-bullet {
+        background-color: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        width: 10px;
+        height: 10px;
+        opacity: 0.8;
+        transition: background-color 0.3s, opacity 0.3s;
+      }
+      .gallery-swiper .swiper-pagination-bullet-active {
+        background-color: #B8860B; /* lazuli-gold */
+        opacity: 1;
       }
 
     </style>
@@ -332,15 +342,17 @@
                 <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Transformações Reais</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Resultados que refletem nossa dedicação à ética e à naturalidade.</p>
                 
-                <!-- NOVA ESTRUTURA DO CARROSSEL COM SWIPER.JS -->
+                <!-- ESTRUTURA DO CARROSSEL COM SWIPER.JS ATUALIZADA -->
                 <div class="max-w-4xl mx-auto reveal" style="transition-delay: 400ms;">
                     <div class="swiper-container gallery-swiper">
                         <div class="swiper-wrapper">
                             <!-- Slides serão inseridos aqui pelo JavaScript -->
                         </div>
-                        <!-- Setas de Navegação -->
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
+                        <!-- Setas de Navegação com classes específicas -->
+                        <div class="swiper-button-next gallery-swiper-button-next"></div>
+                        <div class="swiper-button-prev gallery-swiper-button-prev"></div>
+                        <!-- Paginação (bolinhas) -->
+                        <div class="swiper-pagination gallery-swiper-pagination"></div>
                     </div>
                 </div>
 
@@ -523,6 +535,8 @@
         const db = firebase.firestore();
 
         document.addEventListener('DOMContentLoaded', () => {
+            let gallerySwiper; // Variável para guardar a instância do Swiper da galeria
+
             // --- LÓGICA DO MENU MOBILE APRIMORADO ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -564,8 +578,9 @@
                 }
             });
 
-            // --- LÓGICA GERAL E UNIFICADA PARA SLIDERS RESPONSIVOS (USADO APENAS PARA DEPOIMENTOS AGORA) ---
+            // --- LÓGICA DO SLIDER DE DEPOIMENTOS (ANTIGO) ---
             function initializeSlider(containerId, options = {}) {
+                // ... (código do slider de depoimentos permanece o mesmo)
                 const { multiItem = false, dragDisabledOnDesktop = false } = options;
 
                 const container = document.getElementById(containerId);
@@ -620,37 +635,24 @@
                 const resizeObserver = new ResizeObserver(() => updateSlider(false));
                 resizeObserver.observe(container);
 
-                // --- Lógica de Swipe/Arrastar Condicional ---
                 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-                
                 const enableDrag = !isTouchDevice && !dragDisabledOnDesktop;
                 const enableSwipe = isTouchDevice;
 
                 if (enableDrag || enableSwipe) {
                     let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = 0;
-                    
                     const getPositionX = (event) => event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-                    
                     const dragStart = (event) => {
                         if (event.type === 'mousedown') event.preventDefault();
-                        
                         isDragging = true;
                         startPos = getPositionX(event);
                         const transformMatrix = new WebKitCSSMatrix(window.getComputedStyle(track).transform);
                         prevTranslate = transformMatrix.m41;
                         track.style.transition = 'none';
                         container.classList.add('is-dragging');
-
-                        if (enableDrag) {
-                            window.addEventListener('mousemove', dragMove);
-                            window.addEventListener('mouseup', dragEnd);
-                        }
-                        if (enableSwipe) {
-                            window.addEventListener('touchmove', dragMove, { passive: true });
-                            window.addEventListener('touchend', dragEnd);
-                        }
+                        if (enableDrag) { window.addEventListener('mousemove', dragMove); window.addEventListener('mouseup', dragEnd); }
+                        if (enableSwipe) { window.addEventListener('touchmove', dragMove, { passive: true }); window.addEventListener('touchend', dragEnd); }
                     };
-
                     const dragMove = (event) => {
                         if (isDragging) {
                             const currentPosition = getPositionX(event);
@@ -658,42 +660,21 @@
                             track.style.transform = `translateX(${currentTranslate}px)`;
                         }
                     };
-
                     const dragEnd = () => {
                         if (!isDragging) return;
                         isDragging = false;
-                        
                         container.classList.remove('is-dragging');
-                        if (enableDrag) {
-                            window.removeEventListener('mousemove', dragMove);
-                            window.removeEventListener('mouseup', dragEnd);
-                        }
-                        if (enableSwipe) {
-                            window.removeEventListener('touchmove', dragMove);
-                            window.removeEventListener('touchend', dragEnd);
-                        }
-
+                        if (enableDrag) { window.removeEventListener('mousemove', dragMove); window.removeEventListener('mouseup', dragEnd); }
+                        if (enableSwipe) { window.removeEventListener('touchmove', dragMove); window.removeEventListener('touchend', dragEnd); }
                         const movedBy = currentTranslate - prevTranslate;
                         const itemWidth = track.clientWidth / getItemsPerPage();
                         const threshold = itemWidth / 4;
-
-                        if (movedBy < -threshold) {
-                            currentIndex++;
-                        } else if (movedBy > threshold) {
-                            currentIndex--;
-                        }
-                        
+                        if (movedBy < -threshold) { currentIndex++; } else if (movedBy > threshold) { currentIndex--; }
                         updateSlider();
                     };
-                    
-                    if (enableDrag) {
-                        container.addEventListener('mousedown', dragStart);
-                    }
-                    if (enableSwipe) {
-                        container.addEventListener('touchstart', dragStart, { passive: true });
-                    }
+                    if (enableDrag) { container.addEventListener('mousedown', dragStart); }
+                    if (enableSwipe) { container.addEventListener('touchstart', dragStart, { passive: true }); }
                 }
-
                 const observer = new MutationObserver(() => {
                     items = track.children;
                     if (items.length > 0) {
@@ -759,6 +740,26 @@
                 { name: "Elisandra Machado", text: "Dr Ítalo Rottoli transformou minha autoestima, me fez uma nova mulher, sou grata por tanto! Minha indicação de olhos fechados.", rating: 5 }
             ];
 
+            // --- INICIALIZAÇÃO DO SWIPER DA GALERIA (ROBUSTO) ---
+            gallerySwiper = new Swiper('.gallery-swiper', {
+                loop: true,
+                watchOverflow: true, // Desativa a navegação se não houver slides suficientes
+                observer: true, // Re-inicializa ao detectar mudanças no DOM
+                observeParents: true, // O mesmo para os elementos pais
+                navigation: {
+                    nextEl: '.gallery-swiper-button-next',
+                    prevEl: '.gallery-swiper-button-prev',
+                },
+                pagination: {
+                    el: '.gallery-swiper-pagination',
+                    clickable: true,
+                },
+                slidesPerView: 1,
+                spaceBetween: 0,
+                grabCursor: true,
+            });
+
+
             // --- CARREGAMENTO DE CONTEÚDO DINÂMICO DO FIREBASE ---
             async function loadDynamicContent() {
                 try {
@@ -771,7 +772,7 @@
                          document.getElementById('about-dr-photo').src = 'https://placehold.co/600x800/F5EBE0/3A3A3A?text=Dr.+Italo';
                     }
 
-                    // Carregar galeria com Swiper.js
+                    // Carregar galeria
                     const galleryWrapper = document.querySelector('#galeria .swiper-wrapper');
                     const gallerySnapshot = await db.collection("gallery").get();
                     galleryWrapper.innerHTML = ''; 
@@ -785,20 +786,14 @@
                                 </div>`;
                         });
                     }
-                    // INICIALIZAÇÃO DO SWIPER APÓS CARREGAR AS IMAGENS
-                    new Swiper('.gallery-swiper', {
-                        loop: true,
-                        navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        },
-                        slidesPerView: 1,
-                        spaceBetween: 0,
-                        grabCursor: true,
-                    });
+                    
+                    // Apenas atualiza o Swiper, não o recria.
+                    // O 'observer:true' já ajuda, mas uma atualização manual garante o estado correto.
+                    if(gallerySwiper) {
+                        gallerySwiper.update();
+                    }
 
-
-                    // Carregar depoimentos (usando o slider antigo)
+                    // Carregar depoimentos
                     const testimonialTrack = document.querySelector('#testimonial-slider .slider-track');
                     const testimonialsSnapshot = await db.collection("testimonials").get();
                     
@@ -840,8 +835,9 @@
 
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
-                    // Fallback para conteúdo padrão em caso de erro
-                    new Swiper('.gallery-swiper', { loop: true });
+                    if(gallerySwiper) {
+                        gallerySwiper.update(); // Tenta atualizar mesmo em caso de erro em outra parte
+                    }
                     initializeSlider('testimonial-slider', { multiItem: true });
                 }
             }
