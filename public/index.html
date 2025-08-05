@@ -7,7 +7,7 @@
   - [FEAT] O texto da seção muda para branco quando um fundo escuro é aplicado.
   - [REFACTOR] As classes de cor de fundo (bg-white, etc.) foram removidas das seções para permitir que a imagem de fundo apareça.
   - [REFACTOR] Adicionada a classe 'section-bg-wrapper' a cada seção para aplicar os novos estilos de fundo.
-  - [BUGFIX-FINAL] Lógica JavaScript original 100% restaurada para garantir funcionamento dos sliders e todas as outras interações. A contagem de linhas foi preservada.
+  - [BUGFIX-FINAL] Adicionada uma altura mínima (`min-height`) para seções com imagem de fundo, garantindo que a imagem sempre preencha um espaço visível e adequado, corrigindo o problema de espaçamento.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -207,15 +207,14 @@
           position: relative;
           z-index: 1;
           background-color: var(--bg-color, transparent);
+          display: flex; /* Adicionado para centralizar conteúdo verticalmente */
+          align-items: center; /* Adicionado para centralizar conteúdo verticalmente */
       }
       .section-bg-wrapper::before { /* Camada da Imagem */
           content: '';
           position: absolute;
           top: 0; left: 0; right: 0; bottom: 0;
-          /* A propriedade 'cover' garante que a imagem cubra todo o espaço,
-             mesmo que precise cortar as bordas para manter a proporção. */
           background-size: cover;
-          /* A propriedade 'center center' garante que a imagem fique sempre centralizada. */
           background-position: center center;
           background-repeat: no-repeat;
           background-image: var(--bg-image);
@@ -231,6 +230,9 @@
           opacity: 0;
           transition: opacity 0.6s ease-in-out;
           background-color: rgba(25, 25, 25, 0.65); /* Overlay escuro padrão */
+      }
+      .section-bg-wrapper.has-bg {
+          min-height: 80vh; /* [CORREÇÃO] Garante uma altura mínima para a seção */
       }
       .section-bg-wrapper.has-bg::before,
       .section-bg-wrapper.has-bg::after {
