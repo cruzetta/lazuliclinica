@@ -122,6 +122,68 @@
                 </div>
             </div>
 
+            <!-- NOVA Seção "Tratamentos" -->
+            <div class="admin-card">
+                <h3 class="text-2xl font-semibold mb-4">Seção "Tratamentos"</h3>
+                <p class="text-sm text-gray-600 mb-6">Gerencie os ícones, títulos e textos da seção de tratamentos.</p>
+                
+                <div id="treatments-section-admin" class="space-y-8">
+                    <!-- Gerenciador para Harmonização Facial -->
+                    <div class="border-t pt-6 space-y-4">
+                        <h4 class="text-xl font-semibold">Card 1: Harmonização Facial</h4>
+                        <div>
+                            <label for="harmonizacao-icon-url" class="font-semibold">URL do Ícone/Imagem (com prévia):</label>
+                            <div class="flex items-center gap-4 mt-2">
+                                <input type="text" id="harmonizacao-icon-url" placeholder="Cole a URL da imagem aqui para ver a prévia" class="input-field flex-grow">
+                                <div class="w-20 h-20 bg-lazuli-nude rounded-full flex items-center justify-center overflow-hidden shadow-inner flex-shrink-0">
+                                    <img id="harmonizacao-icon-preview" src="https://placehold.co/80x80?text=Prévia" alt="Preview" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="harmonizacao-title" class="font-semibold">Título:</label>
+                            <input type="text" id="harmonizacao-title" class="input-field">
+                        </div>
+                        <div>
+                            <label for="harmonizacao-description" class="font-semibold">Descrição:</label>
+                            <textarea id="harmonizacao-description" class="input-field h-24"></textarea>
+                        </div>
+                         <div>
+                            <label for="harmonizacao-features" class="font-semibold">Itens da Lista (um por linha):</label>
+                            <textarea id="harmonizacao-features" class="input-field h-24"></textarea>
+                        </div>
+                    </div>
+            
+                    <!-- Gerenciador para Lentes de Contato -->
+                    <div class="border-t pt-6 space-y-4">
+                        <h4 class="text-xl font-semibold">Card 2: Lentes de Contato Dental</h4>
+                        <div>
+                            <label for="lentes-icon-url" class="font-semibold">URL do Ícone/Imagem (com prévia):</label>
+                            <div class="flex items-center gap-4 mt-2">
+                                <input type="text" id="lentes-icon-url" placeholder="Cole a URL da imagem aqui para ver a prévia" class="input-field flex-grow">
+                                <div class="w-20 h-20 bg-lazuli-nude rounded-full flex items-center justify-center overflow-hidden shadow-inner flex-shrink-0">
+                                    <img id="lentes-icon-preview" src="https://placehold.co/80x80?text=Prévia" alt="Preview" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                        </div>
+                         <div>
+                            <label for="lentes-title" class="font-semibold">Título:</label>
+                            <input type="text" id="lentes-title" class="input-field">
+                        </div>
+                        <div>
+                            <label for="lentes-description" class="font-semibold">Descrição:</label>
+                            <textarea id="lentes-description" class="input-field h-24"></textarea>
+                        </div>
+                         <div>
+                            <label for="lentes-features" class="font-semibold">Itens da Lista (um por linha):</label>
+                            <textarea id="lentes-features" class="input-field h-24"></textarea>
+                        </div>
+                    </div>
+                    
+                    <button id="save-treatments" class="btn btn-primary mt-6 w-full">Salvar Alterações dos Tratamentos</button>
+                </div>
+            </div>
+
             <!-- Seção "Galeria de Resultados" -->
             <div class="admin-card">
                 <h3 class="text-2xl font-semibold mb-4">Galeria "Transformações Reais"</h3>
@@ -217,6 +279,7 @@
             try {
                 await loadHomeSection();
                 await loadAboutSection();
+                await loadTreatmentsSection(); // Carrega a nova seção
                 await loadGallerySection();
                 await loadTestimonialsSection();
                 await loadBackgroundsSection();
@@ -247,6 +310,31 @@
                 const data = docSnap.data();
                 document.getElementById('about-image-preview').src = data.imageUrl || 'https://placehold.co/400x400?text=Sem+Imagem';
                 document.getElementById('about-image-url').value = data.imageUrl || '';
+            }
+        }
+
+        // NOVA FUNÇÃO para carregar dados dos tratamentos
+        async function loadTreatmentsSection() {
+            const docRef = db.collection("siteContent").doc("treatments");
+            const docSnap = await docRef.get();
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                if (data.harmonizacao) {
+                    const hData = data.harmonizacao;
+                    document.getElementById('harmonizacao-icon-url').value = hData.iconUrl || '';
+                    document.getElementById('harmonizacao-icon-preview').src = hData.iconUrl || 'https://placehold.co/80x80?text=Prévia';
+                    document.getElementById('harmonizacao-title').value = hData.title || '';
+                    document.getElementById('harmonizacao-description').value = hData.description || '';
+                    document.getElementById('harmonizacao-features').value = (hData.features || []).join('\n');
+                }
+                if (data.lentes) {
+                    const lData = data.lentes;
+                    document.getElementById('lentes-icon-url').value = lData.iconUrl || '';
+                    document.getElementById('lentes-icon-preview').src = lData.iconUrl || 'https://placehold.co/80x80?text=Prévia';
+                    document.getElementById('lentes-title').value = lData.title || '';
+                    document.getElementById('lentes-description').value = lData.description || '';
+                    document.getElementById('lentes-features').value = (lData.features || []).join('\n');
+                }
             }
         }
 
@@ -298,21 +386,10 @@
         async function loadBackgroundsSection() {
             const container = document.getElementById('backgrounds-section');
             container.innerHTML = ''; 
-
-            const sections = [
-                { id: 'sobre', name: 'Sobre' },
-                { id: 'filosofia', name: 'Filosofia' },
-                { id: 'tratamentos', name: 'Tratamentos' },
-                { id: 'galeria', name: 'Resultados (Galeria)' },
-                { id: 'faq', name: 'Dúvidas Frequentes' },
-                { id: 'depoimentos', name: 'Depoimentos' },
-                { id: 'agendamento', name: 'Agendamento' }
-            ];
-
+            const sections = [ { id: 'sobre', name: 'Sobre' }, { id: 'filosofia', name: 'Filosofia' }, { id: 'tratamentos', name: 'Tratamentos' }, { id: 'galeria', name: 'Resultados (Galeria)' }, { id: 'faq', name: 'Dúvidas Frequentes' }, { id: 'depoimentos', name: 'Depoimentos' }, { id: 'agendamento', name: 'Agendamento' }];
             const docRef = db.collection("siteContent").doc("backgrounds");
             const docSnap = await docRef.get();
             const data = docSnap.exists ? docSnap.data() : {};
-
             sections.forEach(section => {
                 const sectionDiv = document.createElement('div');
                 sectionDiv.innerHTML = `
@@ -326,81 +403,86 @@
             });
         }
 
-
         // --- FUNÇÕES DE SALVAMENTO ---
         document.getElementById('save-home').addEventListener('click', async () => {
             const headline = document.getElementById('home-headline').value.trim();
             const subheadline = document.getElementById('home-subheadline').value.trim();
             const backgroundVideoUrl = document.getElementById('home-bg-video-url').value.trim();
-
-            if (!headline || !subheadline) {
-                alert("Por favor, preencha o título e o subtítulo.");
-                return;
-            }
-
+            if (!headline || !subheadline) { alert("Por favor, preencha o título e o subtítulo."); return; }
             try {
-                await db.collection("siteContent").doc("home").set({ 
-                    headline, 
-                    subheadline, 
-                    backgroundVideoUrl 
-                }, { merge: true });
+                await db.collection("siteContent").doc("home").set({ headline, subheadline, backgroundVideoUrl }, { merge: true });
                 alert("Página Inicial atualizada com sucesso!");
-            } catch (error) {
-                console.error("Erro ao salvar a Página Inicial:", error);
-                alert("Ocorreu um erro. Tente novamente.");
-            }
+            } catch (error) { console.error("Erro ao salvar a Página Inicial:", error); alert("Ocorreu um erro. Tente novamente."); }
         });
 
         document.getElementById('save-about').addEventListener('click', async () => {
             const imageUrl = document.getElementById('about-image-url').value.trim();
-            if (!imageUrl) {
-                alert("Por favor, cole a URL da imagem.");
-                return;
-            }
+            if (!imageUrl) { alert("Por favor, cole a URL da imagem."); return; }
             try {
                 await db.collection("siteContent").doc("sobre").set({ imageUrl });
                 alert("Seção 'Sobre' atualizada com sucesso!");
                 loadAboutSection();
+            } catch (error) { console.error("Erro ao salvar seção sobre:", error); alert("Ocorreu um erro. Tente novamente."); }
+        });
+
+        // NOVA FUNÇÃO para salvar os tratamentos
+        document.getElementById('save-treatments').addEventListener('click', async () => {
+            const newData = {
+                harmonizacao: {
+                    iconUrl: document.getElementById('harmonizacao-icon-url').value.trim(),
+                    title: document.getElementById('harmonizacao-title').value.trim(),
+                    description: document.getElementById('harmonizacao-description').value.trim(),
+                    features: document.getElementById('harmonizacao-features').value.split('\n').map(s => s.trim()).filter(Boolean)
+                },
+                lentes: {
+                    iconUrl: document.getElementById('lentes-icon-url').value.trim(),
+                    title: document.getElementById('lentes-title').value.trim(),
+                    description: document.getElementById('lentes-description').value.trim(),
+                    features: document.getElementById('lentes-features').value.split('\n').map(s => s.trim()).filter(Boolean)
+                }
+            };
+            try {
+                await db.collection("siteContent").doc("treatments").set(newData, { merge: true });
+                alert("Seção 'Tratamentos' atualizada com sucesso!");
             } catch (error) {
-                console.error("Erro ao salvar seção sobre:", error);
+                console.error("Erro ao salvar a seção Tratamentos:", error);
                 alert("Ocorreu um erro. Tente novamente.");
             }
         });
 
         document.getElementById('add-gallery-image').addEventListener('click', async () => {
             const url = document.getElementById('gallery-image-url').value.trim();
-            if (!url) {
-                alert("Por favor, cole a URL da imagem.");
-                return;
-            }
+            if (!url) { alert("Por favor, cole a URL da imagem."); return; }
             try {
                 await db.collection("gallery").add({ url });
                 alert("Imagem adicionada à galeria!");
                 loadGallerySection();
                 document.getElementById('gallery-image-url').value = '';
-            } catch (error) {
-                console.error("Erro ao adicionar imagem:", error);
-                alert("Ocorreu um erro. Tente novamente.");
-            }
+            } catch (error) { console.error("Erro ao adicionar imagem:", error); alert("Ocorreu um erro. Tente novamente."); }
         });
 
         document.getElementById('add-testimonial').addEventListener('click', async () => {
             const name = document.getElementById('testimonial-name').value;
             const text = document.getElementById('testimonial-text').value;
-            if (!name || !text) {
-                alert("Por favor, preencha o nome e o texto do depoimento.");
-                return;
-            }
+            if (!name || !text) { alert("Por favor, preencha o nome e o texto do depoimento."); return; }
             try {
                 await db.collection("testimonials").add({ name, text });
                 alert("Depoimento adicionado com sucesso!");
                 loadTestimonialsSection();
                 document.getElementById('testimonial-name').value = '';
                 document.getElementById('testimonial-text').value = '';
-            } catch (error) {
-                console.error("Erro ao adicionar depoimento:", error);
-                alert("Ocorreu um erro. Tente novamente.");
-            }
+            } catch (error) { console.error("Erro ao adicionar depoimento:", error); alert("Ocorreu um erro. Tente novamente."); }
+        });
+
+        // --- PRÉVIA EM TEMPO REAL PARA ÍCONES DE TRATAMENTO ---
+        document.getElementById('harmonizacao-icon-url').addEventListener('input', (e) => {
+            const preview = document.getElementById('harmonizacao-icon-preview');
+            preview.src = e.target.value || 'https://placehold.co/80x80?text=Prévia';
+        });
+
+        document.getElementById('lentes-icon-url').addEventListener('input', (e) => {
+            const preview = document.getElementById('lentes-icon-preview');
+            preview.src = e.target.value || 'https://placehold.co/80x80?text=Prévia';
         });
 
         // --- FUNÇÕES DE EXCLUSÃO E AÇÕES DINÂMICAS ---
@@ -408,26 +490,14 @@
             if (e.target && e.target.classList.contains('delete-gallery-item')) {
                 if (!confirm("Tem certeza que deseja remover esta imagem da galeria?\n\n(A imagem original não será apagada do seu outro site).")) return;
                 const docId = e.target.dataset.id;
-                try {
-                    await db.collection("gallery").doc(docId).delete();
-                    alert("Imagem removida da galeria!");
-                    loadGallerySection();
-                } catch (error) {
-                    console.error("Erro ao remover imagem:", error);
-                    alert("Ocorreu um erro ao remover a imagem.");
-                }
+                try { await db.collection("gallery").doc(docId).delete(); alert("Imagem removida da galeria!"); loadGallerySection(); } 
+                catch (error) { console.error("Erro ao remover imagem:", error); alert("Ocorreu um erro ao remover a imagem."); }
             }
             if (e.target && e.target.classList.contains('delete-testimonial-item')) {
                  if (!confirm("Tem certeza que deseja excluir este depoimento?")) return;
                  const docId = e.target.dataset.id;
-                 try {
-                    await db.collection("testimonials").doc(docId).delete();
-                    alert("Depoimento excluído com sucesso!");
-                    loadTestimonialsSection();
-                 } catch (error) {
-                    console.error("Erro ao excluir o depoimento:", error);
-                    alert("Ocorreu um erro ao excluir o depoimento.");
-                 }
+                 try { await db.collection("testimonials").doc(docId).delete(); alert("Depoimento excluído com sucesso!"); loadTestimonialsSection(); } 
+                 catch (error) { console.error("Erro ao excluir o depoimento:", error); alert("Ocorreu um erro ao excluir o depoimento."); }
             }
             if (e.target && e.target.classList.contains('save-background-btn')) {
                 const sectionId = e.target.dataset.sectionId;
@@ -435,13 +505,9 @@
                 try {
                     await db.collection("siteContent").doc("backgrounds").set({ [sectionId]: imageUrl }, { merge: true });
                     alert(`Fundo da seção "${sectionId}" atualizado com sucesso!`);
-                } catch (error) {
-                    console.error("Erro ao salvar fundo:", error);
-                    alert("Ocorreu um erro ao salvar. Tente novamente.");
-                }
+                } catch (error) { console.error("Erro ao salvar fundo:", error); alert("Ocorreu um erro ao salvar. Tente novamente."); }
             }
         });
-
     </script>
 </body>
 </html>
