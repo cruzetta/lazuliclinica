@@ -7,6 +7,7 @@
   - [FEAT] O texto da seção muda para branco quando um fundo escuro é aplicado.
   - [REFACTOR] Adicionada a classe 'section-bg-wrapper' a cada seção para aplicar os novos estilos de fundo.
   - [BUGFIX-FINAL] Corrigido o CSS para que a imagem de fundo cubra a seção sem forçar uma altura mínima, permitindo que o conteúdo defina o tamanho da seção.
+  - [STYLE-ADJUSTMENT] Reforçado o CSS do fundo para garantir que a imagem preencha 100% do espaço da seção em todos os casos.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -201,16 +202,20 @@
         opacity: 1;
       }
 
-      /* [NOVO] Estilos para Fundos de Seção Dinâmicos */
+      /* [NOVO E AJUSTADO] Estilos para Fundos de Seção Dinâmicos */
       .section-bg-wrapper {
           position: relative;
           z-index: 1;
           background-color: var(--bg-color, transparent);
+          overflow: hidden; /* Garante que os pseudo-elementos não 'vazem' */
       }
       .section-bg-wrapper::before { /* Camada da Imagem */
           content: '';
           position: absolute;
-          top: 0; left: 0; right: 0; bottom: 0;
+          top: 0; 
+          left: 0;
+          width: 100%; /* Garante largura total */
+          height: 100%; /* Garante altura total */
           background-size: cover;
           background-position: center center;
           background-repeat: no-repeat;
@@ -222,7 +227,10 @@
       .section-bg-wrapper::after { /* Camada de Overlay */
           content: '';
           position: absolute;
-          top: 0; left: 0; right: 0; bottom: 0;
+          top: 0;
+          left: 0;
+          width: 100%; /* Garante largura total */
+          height: 100%; /* Garante altura total */
           z-index: -1;
           opacity: 0;
           transition: opacity 0.6s ease-in-out;
