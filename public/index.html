@@ -5,9 +5,8 @@
   - [FEAT] Adicionada capacidade de carregar imagens de fundo para cada seção via Firebase.
   - [FEAT] Criado um sistema de overlay (camada de sobreposição) para garantir a legibilidade do texto sobre as imagens.
   - [FEAT] O texto da seção muda para branco quando um fundo escuro é aplicado.
-  - [REFACTOR] As classes de cor de fundo (bg-white, etc.) foram removidas das seções para permitir que a imagem de fundo apareça.
   - [REFACTOR] Adicionada a classe 'section-bg-wrapper' a cada seção para aplicar os novos estilos de fundo.
-  - [BUGFIX-FINAL] Adicionada uma altura mínima (`min-height`) para seções com imagem de fundo, garantindo que a imagem sempre preencha um espaço visível e adequado, corrigindo o problema de espaçamento.
+  - [BUGFIX-FINAL] Corrigido o CSS para que a imagem de fundo cubra a seção sem forçar uma altura mínima, permitindo que o conteúdo defina o tamanho da seção.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -207,8 +206,6 @@
           position: relative;
           z-index: 1;
           background-color: var(--bg-color, transparent);
-          display: flex; /* Adicionado para centralizar conteúdo verticalmente */
-          align-items: center; /* Adicionado para centralizar conteúdo verticalmente */
       }
       .section-bg-wrapper::before { /* Camada da Imagem */
           content: '';
@@ -231,14 +228,15 @@
           transition: opacity 0.6s ease-in-out;
           background-color: rgba(25, 25, 25, 0.65); /* Overlay escuro padrão */
       }
-      .section-bg-wrapper.has-bg {
-          min-height: 80vh; /* [CORREÇÃO] Garante uma altura mínima para a seção */
-      }
       .section-bg-wrapper.has-bg::before,
       .section-bg-wrapper.has-bg::after {
           opacity: 1;
       }
       .section-bg-wrapper.has-bg { color: #f0f0f0; }
+      .section-bg-wrapper.has-bg .container {
+          position: relative;
+          z-index: 2;
+      }
       .section-bg-wrapper.has-bg h1,
       .section-bg-wrapper.has-bg h2,
       .section-bg-wrapper.has-bg h3,
