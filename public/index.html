@@ -212,8 +212,11 @@
           content: '';
           position: absolute;
           top: 0; left: 0; right: 0; bottom: 0;
+          /* A propriedade 'cover' garante que a imagem cubra todo o espaço,
+             mesmo que precise cortar as bordas para manter a proporção. */
           background-size: cover;
-          background-position: center;
+          /* A propriedade 'center center' garante que a imagem fique sempre centralizada. */
+          background-position: center center;
           background-repeat: no-repeat;
           background-image: var(--bg-image);
           z-index: -2;
