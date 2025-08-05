@@ -94,6 +94,23 @@
 
         <div id="loading" class="loader"></div>
         <div id="content-sections" class="hidden">
+            <!-- [NOVO] Seção "Página Inicial (Hero)" -->
+            <div class="admin-card">
+                <h3 class="text-2xl font-semibold mb-4">Página Inicial (Entrada)</h3>
+                <div id="home-section-admin">
+                    <label for="home-headline" class="font-semibold">Título Principal:</label>
+                    <input type="text" id="home-headline" placeholder="Ex: Beleza em equilíbrio, sorriso em harmonia." class="input-field mb-4">
+
+                    <label for="home-subheadline" class="font-semibold">Subtítulo:</label>
+                    <textarea id="home-subheadline" placeholder="Ex: Na Lazúli, unimos ciência e estética..." class="input-field mb-4 h-24"></textarea>
+
+                    <label for="home-bg-url" class="font-semibold">URL da Imagem de Fundo:</label>
+                    <input type="text" id="home-bg-url" placeholder="Cole a URL completa da imagem aqui" class="input-field">
+                    
+                    <button id="save-home" class="btn btn-primary mt-4">Salvar Alterações da Página Inicial</button>
+                </div>
+            </div>
+
             <!-- Seção "Sobre" -->
             <div class="admin-card">
                 <h3 class="text-2xl font-semibold mb-4">Seção "Sobre"</h3>
@@ -118,7 +135,7 @@
                 </div>
             </div>
             
-            <!-- [NOVO] Seção "Fundos de Seção" -->
+            <!-- Seção "Fundos de Seção" -->
             <div class="admin-card">
                 <h3 class="text-2xl font-semibold mb-4">Imagens de Fundo das Seções</h3>
                 <p class="text-sm text-gray-600 mb-6">Cole a URL completa da imagem para cada seção. Deixe o campo em branco para usar a cor padrão do site.</p>
@@ -198,16 +215,29 @@
             loading.classList.remove('hidden');
             contentSections.classList.add('hidden');
             try {
+                await loadHomeSection(); // [NOVO] Carrega a seção de entrada
                 await loadAboutSection();
                 await loadGallerySection();
                 await loadTestimonialsSection();
-                await loadBackgroundsSection(); // [NOVO] Carrega os fundos
+                await loadBackgroundsSection();
             } catch (error) {
                 console.error("Erro ao carregar conteúdo:", error);
                 alert("Não foi possível carregar o conteúdo do site.");
             } finally {
                 loading.classList.add('hidden');
                 contentSections.classList.remove('hidden');
+            }
+        }
+        
+        // [NOVO] Função para carregar a seção de entrada (Hero)
+        async function loadHomeSection() {
+            const docRef = db.collection("siteContent").doc("home");
+            const docSnap = await docRef.get();
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                document.getElementById('home-headline').value = data.headline || '';
+                document.getElementById('home-subheadline').value = data.subheadline || '';
+                document.getElementById('home-bg-url').value = data.backgroundUrl || '';
             }
         }
 
@@ -266,7 +296,6 @@
             }
         }
         
-        // [NOVO] Função para carregar e gerenciar os fundos das seções
         async function loadBackgroundsSection() {
             const container = document.getElementById('backgrounds-section');
             container.innerHTML = ''; 
@@ -300,6 +329,30 @@
 
 
         // --- FUNÇÕES DE SALVAMENTO ---
+        // [NOVO] Salvar dados da Página Inicial
+        document.getElementById('save-home').addEventListener('click', async () => {
+            const headline = document.getElementById('home-headline').value.trim();
+            const subheadline = document.getElementById('home-subheadline').value.trim();
+            const backgroundUrl = document.getElementById('home-bg-url').value.trim();
+
+            if (!headline || !subheadline || !backgroundUrl) {
+                alert("Por favor, preencha todos os campos da Página Inicial.");
+                return;
+            }
+
+            try {
+                await db.collection("siteContent").doc("home").set({ 
+                    headline, 
+                    subheadline, 
+                    backgroundUrl 
+                }, { merge: true });
+                alert("Página Inicial atualizada com sucesso!");
+            } catch (error) {
+                console.error("Erro ao salvar a Página Inicial:", error);
+                alert("Ocorreu um erro. Tente novamente.");
+            }
+        });
+
         document.getElementById('save-about').addEventListener('click', async () => {
             const imageUrl = document.getElementById('about-image-url').value.trim();
             if (!imageUrl) {
@@ -378,12 +431,10 @@
                     alert("Ocorreu um erro ao excluir o depoimento.");
                  }
             }
-            // [NOVO] Salvar imagem de fundo da seção
             if (e.target && e.target.classList.contains('save-background-btn')) {
                 const sectionId = e.target.dataset.sectionId;
                 const imageUrl = document.getElementById(`bg-url-${sectionId}`).value.trim();
                 try {
-                    // Usamos merge: true para atualizar ou criar o campo sem apagar os outros
                     await db.collection("siteContent").doc("backgrounds").set({ [sectionId]: imageUrl }, { merge: true });
                     alert(`Fundo da seção "${sectionId}" atualizado com sucesso!`);
                 } catch (error) {

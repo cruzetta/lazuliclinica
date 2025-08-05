@@ -1,18 +1,10 @@
 <!-- 
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
-  Atualizações Críticas (Fundos de Seção Dinâmicos):
-  - [FEAT] Adicionada capacidade de carregar imagens de fundo para cada seção via Firebase.
-  - [FEAT] Criado um sistema de overlay (camada de sobreposição) para garantir a legibilidade do texto sobre as imagens.
-  - [FEAT] O texto da seção muda para branco quando um fundo escuro é aplicado.
-  - [REFACTOR] Adicionada a classe 'section-bg-wrapper' a cada seção para aplicar os novos estilos de fundo.
-  - [BUGFIX-FINAL] Corrigido o CSS para que a imagem de fundo cubra a seção sem forçar uma altura mínima, permitindo que o conteúdo defina o tamanho da seção.
-  - [STYLE-ADJUSTMENT] Reforçado o CSS do fundo para garantir que a imagem preencha 100% do espaço da seção em todos os casos.
-  - [BUGFIX-BORDER] Removido o padding horizontal (px-6) de todos os elementos .container para eliminar as "bordas" internas e permitir que o conteúdo preencha mais espaço.
-  - [BUGFIX-FULL-BLEED] Removido TODO o padding horizontal das tags <section> e movido para os .container internos para garantir que os fundos ocupem 100% da largura da tela.
-  - [FIX-LEGIBILITY] Ajustado o fundo dos cards de tratamento para melhorar a legibilidade sobre imagens de fundo.
-  - [FIX-PREVIEW] Adicionada configuração manual do Firebase para permitir o funcionamento da pré-visualização.
-  - [FIX-GALLERY-FINAL] Alterado aspect-ratio para 1/1 (quadrado) e posicionado as setas de navegação fora da imagem.
+  Atualizações Críticas (Hero Section Dinâmico):
+  - [FEAT] Adicionada capacidade de carregar o conteúdo da seção de entrada (Hero) via Firebase.
+  - [FEAT] O título, subtítulo e imagem de fundo da seção de entrada agora são editáveis no painel de admin.
+  - [FEAT] Adicionados IDs aos elementos h1 e p da seção Hero para permitir a manipulação via JavaScript.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -217,20 +209,20 @@
         opacity: 1;
       }
 
-      /* [NOVO E AJUSTADO] Estilos para Fundos de Seção Dinâmicos */
+      /* Estilos para Fundos de Seção Dinâmicos */
       .section-bg-wrapper {
           position: relative;
           z-index: 1;
           background-color: var(--bg-color, transparent);
-          overflow: hidden; /* Garante que os pseudo-elementos não 'vazem' */
+          overflow: hidden; 
       }
-      .section-bg-wrapper::before { /* Camada da Imagem */
+      .section-bg-wrapper::before { 
           content: '';
           position: absolute;
           top: 0; 
           left: 0;
-          width: 100%; /* Garante largura total */
-          height: 100%; /* Garante altura total */
+          width: 100%; 
+          height: 100%; 
           background-size: cover;
           background-position: center center;
           background-repeat: no-repeat;
@@ -239,17 +231,17 @@
           opacity: 0;
           transition: opacity 0.6s ease-in-out;
       }
-      .section-bg-wrapper::after { /* Camada de Overlay */
+      .section-bg-wrapper::after { 
           content: '';
           position: absolute;
           top: 0;
           left: 0;
-          width: 100%; /* Garante largura total */
-          height: 100%; /* Garante altura total */
+          width: 100%; 
+          height: 100%; 
           z-index: -1;
           opacity: 0;
           transition: opacity 0.6s ease-in-out;
-          background-color: rgba(25, 25, 25, 0.65); /* Overlay escuro padrão */
+          background-color: rgba(25, 25, 25, 0.65); 
       }
       .section-bg-wrapper.has-bg::before,
       .section-bg-wrapper.has-bg::after {
@@ -275,10 +267,9 @@
       .section-bg-wrapper.has-bg .border-gray-200 { border-color: rgba(255, 255, 255, 0.2); }
       .section-bg-wrapper.has-bg .bg-white { background-color: rgba(255,255,255,0.1) !important; }
       
-      /* [FIX-LEGIBILIDADE] Ajuste no card de tratamento para melhor leitura com fundo de imagem */
       .section-bg-wrapper.has-bg .bg-lazuli-light-blue\/30 {
-          background-color: rgba(30, 41, 59, 0.75) !important; /* Fundo escuro (slate-800) com 75% de opacidade */
-          -webkit-backdrop-filter: blur(8px); /* Efeito de desfoque para o fundo */
+          background-color: rgba(30, 41, 59, 0.75) !important; 
+          -webkit-backdrop-filter: blur(8px); 
           backdrop-filter: blur(8px);
           border-color: rgba(255, 255, 255, 0.2);
       }
@@ -328,8 +319,8 @@
         <section id="home" class="relative min-h-screen flex items-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3');">
             <div class="absolute inset-0 bg-black/60"></div>
             <div class="container mx-auto px-6 text-center text-white relative z-10">
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-display font-medium leading-tight mb-4 reveal">Beleza em equilíbrio, sorriso em harmonia.</h1>
-                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 reveal" style="transition-delay: 200ms;">Na Lazúli, unimos ciência e estética para realçar sua melhor versão.</p>
+                <h1 id="home-headline-text" class="text-4xl md:text-6xl lg:text-7xl font-display font-medium leading-tight mb-4 reveal">Beleza em equilíbrio, sorriso em harmonia.</h1>
+                <p id="home-subheadline-text" class="text-lg md:text-xl max-w-3xl mx-auto mb-8 reveal" style="transition-delay: 200ms;">Na Lazúli, unimos ciência e estética para realçar sua melhor versão.</p>
                 <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="bg-lazuli-gold text-white px-8 py-4 rounded-full hover:bg-lazuli-gold-dark transition-all duration-300 transform hover:scale-105 inline-block reveal active:scale-95" style="transition-delay: 400ms;">
                     Agende sua avaliação personalizada
                 </a>
@@ -600,17 +591,14 @@
     
     <!-- Firebase Init (Manual for Preview) -->
     <script>
-      // Configuração do Firebase para a pré-visualização funcionar.
-      // A chave de API foi a que você forneceu.
       const firebaseConfig = {
         apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY",
         authDomain: "lazuliclinica-ee588.firebaseapp.com",
         projectId: "lazuliclinica-ee588",
         storageBucket: "lazuliclinica-ee588.appspot.com",
-        messagingSenderId: "COLE_SEU_MESSAGING_SENDER_ID_AQUI", // Você pode encontrar isso no seu console do Firebase
-        appId: "COLE_SEU_APP_ID_AQUI" // Você pode encontrar isso no seu console do Firebase
+        messagingSenderId: "COLE_SEU_MESSAGING_SENDER_ID_AQUI", 
+        appId: "COLE_SEU_APP_ID_AQUI" 
       };
-      // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
     </script>
 
@@ -622,7 +610,7 @@
         const db = firebase.firestore();
 
         document.addEventListener('DOMContentLoaded', () => {
-            // --- LÓGICA DO MENU MOBILE APRIMORADO (CÓDIGO ORIGINAL RESTAURADO) ---
+            // --- LÓGICA DO MENU MOBILE ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
@@ -653,7 +641,7 @@
                 link.addEventListener('click', toggleMenu);
             });
 
-            // --- LÓGICA PARA HEADER DINÂMICO (CÓDIGO ORIGINAL RESTAURADO) ---
+            // --- LÓGICA PARA HEADER DINÂMICO ---
             const header = document.getElementById('main-header');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
@@ -663,66 +651,52 @@
                 }
             });
 
-            // --- LÓGICA DO SLIDER DE DEPOIMENTOS (CÓDIGO ORIGINAL RESTAURADO) ---
+            // --- LÓGICA DO SLIDER DE DEPOIMENTOS ---
             function initializeSlider(containerId, options = {}) {
                 const { multiItem = false, dragDisabledOnDesktop = false } = options;
-
                 const container = document.getElementById(containerId);
                 if (!container) return;
                 const track = container.querySelector('.slider-track');
                 const prevButton = container.querySelector('.slider-button.prev');
                 const nextButton = container.querySelector('.slider-button.next');
-                
                 let items = track.children;
                 if (!track || items.length === 0) return;
-
                 let currentIndex = 0;
-
                 const getItemsPerPage = () => {
                     if (!multiItem) return 1;
                     if (window.innerWidth >= 1024) return 3;
                     if (window.innerWidth >= 768) return 2;
                     return 1;
                 };
-
                 const updateSlider = (smooth = true) => {
                     if (smooth) {
                         track.style.transition = 'transform 0.5s ease-out';
                     } else {
                         track.style.transition = 'none';
                     }
-
                     const itemsPerPage = getItemsPerPage();
                     const totalItems = items.length;
                     const maxIndex = Math.max(0, totalItems - itemsPerPage);
-                    
                     currentIndex = Math.max(0, Math.min(currentIndex, maxIndex));
-
                     const itemWidth = track.clientWidth / itemsPerPage;
                     const newTranslate = -currentIndex * itemWidth;
                     track.style.transform = `translateX(${newTranslate}px)`;
-                    
                     if (prevButton && nextButton) {
                         prevButton.style.display = currentIndex === 0 ? 'none' : 'flex';
                         nextButton.style.display = currentIndex >= maxIndex ? 'none' : 'flex';
                     }
                 };
-
                 const slide = (direction) => {
                     currentIndex += direction;
                     updateSlider();
                 };
-
                 if (nextButton) nextButton.addEventListener('click', () => slide(1));
                 if (prevButton) prevButton.addEventListener('click', () => slide(-1));
-                
                 const resizeObserver = new ResizeObserver(() => updateSlider(false));
                 resizeObserver.observe(container);
-
                 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
                 const enableDrag = !isTouchDevice && !dragDisabledOnDesktop;
                 const enableSwipe = isTouchDevice;
-
                 if (enableDrag || enableSwipe) {
                     let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = 0;
                     const getPositionX = (event) => event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
@@ -770,7 +744,7 @@
             }
 
 
-            // --- LÓGICA PARA FAQ (ACCORDION) (CÓDIGO ORIGINAL RESTAURADO) ---
+            // --- LÓGICA PARA FAQ (ACCORDION) ---
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
@@ -794,7 +768,7 @@
                 });
             });
 
-            // --- ANIMAÇÃO DE SCROLL (CÓDIGO ORIGINAL RESTAURADO) ---
+            // --- ANIMAÇÃO DE SCROLL ---
             const revealObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -807,13 +781,13 @@
                 revealObserver.observe(el);
             });
             
-            // --- ATUALIZA O ANO DO RODAPÉ (CÓDIGO ORIGINAL RESTAURADO) ---
+            // --- ATUALIZA O ANO DO RODAPÉ ---
             const yearSpan = document.getElementById('current-year');
             if(yearSpan) {
                 yearSpan.textContent = new Date().getFullYear();
             }
 
-            // --- DEPOIMENTOS PADRÃO (CÓDIGO ORIGINAL RESTAURADO) ---
+            // --- DEPOIMENTOS PADRÃO ---
             const defaultTestimonials = [
                 { name: "Jady Muller J.", text: "Clínica maravilhosa! Ambiente perfeito, material de uma qualidade excelente, sem contar os profissionais 100% atenciosos e delicados, meu procedimento ficou maravilhoso, sem dúvidas virei cliente fiel!", rating: 5 },
                 { name: "Luís de Melo", text: "Iniciei minha avaliação estética com Dr Édson Depieri, pois precisava melhorar minha autoimagem, não para embelezamento e vaidade, mas para o aumento da autoestima, bem estar e melhoria da apresentação profissional.", rating: 5 },
@@ -827,6 +801,26 @@
             // --- CARREGAMENTO DE CONTEÚDO DINÂMICO DO FIREBASE ---
             async function loadDynamicContent() {
                 try {
+                    // [NOVO] Carregar conteúdo da seção Home/Hero
+                    const homeDocRef = db.collection("siteContent").doc("home");
+                    const homeDocSnap = await homeDocRef.get();
+                    if (homeDocSnap.exists && homeDocSnap.data()) {
+                        const homeData = homeDocSnap.data();
+                        const homeSection = document.getElementById('home');
+                        const homeHeadline = document.getElementById('home-headline-text');
+                        const homeSubheadline = document.getElementById('home-subheadline-text');
+
+                        if (homeData.headline) {
+                            homeHeadline.textContent = homeData.headline;
+                        }
+                        if (homeData.subheadline) {
+                            homeSubheadline.textContent = homeData.subheadline;
+                        }
+                        if (homeData.backgroundUrl) {
+                            homeSection.style.backgroundImage = `url('${homeData.backgroundUrl}')`;
+                        }
+                    }
+
                     // Carregar foto da seção "Sobre"
                     const aboutDocRef = db.collection("siteContent").doc("sobre");
                     const aboutDocSnap = await aboutDocRef.get();
@@ -851,7 +845,6 @@
                         });
                     }
                     
-                    // INICIALIZA O SWIPER DA GALERIA APENAS DEPOIS QUE O CONTEÚDO FOI CARREGADO
                     new Swiper('.gallery-swiper', {
                         loop: true,
                         watchOverflow: true,
@@ -908,7 +901,6 @@
                     
                     initializeSlider('testimonial-slider', { multiItem: true });
 
-                    // [LÓGICA ADICIONADA]
                     // Carregar e aplicar fundos das seções
                     const backgroundsDocSnap = await db.collection("siteContent").doc("backgrounds").get();
                     if (backgroundsDocSnap.exists) {
@@ -927,7 +919,6 @@
 
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
-                    // Fallback para o slider de depoimentos em caso de erro
                     initializeSlider('testimonial-slider', { multiItem: true });
                 }
             }
