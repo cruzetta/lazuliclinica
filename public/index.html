@@ -2,6 +2,8 @@
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
   Atualizações Críticas:
+  - [CORREÇÃO] Atualizado o caminho da imagem nas metatags (og:image e twitter:image) para usar o arquivo local que você subiu.
+  - [NOVO] Adicionadas meta tags Open Graph (og:...) e Twitter Cards para melhorar a pré-visualização ao compartilhar em redes sociais como WhatsApp, Facebook e Instagram.
   - [FINAL FIX 2] Restaurada a lista completa de depoimentos padrão (defaultTestimonials) para corresponder ao arquivo original.
   - [FINAL FIX] Restaurado o bloco de inicialização manual do Firebase para garantir que o site funcione em testes locais (abrindo o arquivo diretamente). O método anterior (/__/firebase/init.js) só funciona quando o site está publicado.
   - [MAJOR FIX] A seção "Tratamentos" agora é pré-renderizada com conteúdo padrão diretamente no HTML para garantir que a página nunca pareça incompleta. IDs específicos foram adicionados para permitir a atualização via JavaScript.
@@ -18,6 +20,30 @@
     <meta name="description" content="Clínica Lazúli em Canoas, com Dr. Italo Rottoli. Especialista e Mestre em Harmonização Orofacial e Lentes de Contato Dental. Realce sua beleza com naturalidade e segurança.">
     <meta name="keywords" content="harmonização facial canoas, lentes de contato dental canoas, botox, preenchimento, bioestimuladores, dr italo rottoli, clínica de estética canoas, gerenciamento do envelhecimento, peeling, microagulhamento">
     <meta name="author" content="Dr. Italo Rottoli">
+
+    <!-- 
+      *** METATAGS PARA COMPARTILHAMENTO (OPEN GRAPH) ***
+      Estas tags controlam como o link do seu site aparece no WhatsApp, Facebook, etc.
+    -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Clínica Lazúli">
+    <meta property="og:title" content="Clínica Lazúli – Dr. Italo Rottoli | Harmonização e Estética">
+    <meta property="og:description" content="Especialista em Harmonização Orofacial e Lentes de Contato Dental. Realce sua beleza com naturalidade e segurança em Canoas.">
+    <meta property="og:url" content="https://lazuliclinica-ee588.web.app/">
+    
+    <!-- URL da imagem para a pré-visualização. Usando o caminho absoluto do seu site. -->
+    <meta property="og:image" content="https://lazuliclinica-ee588.web.app/imagen/imagemmetatag.jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Clínica Lazúli – Dr. Italo Rottoli | Harmonização e Estética">
+    <meta name="twitter:description" content="Especialista em Harmonização Orofacial e Lentes de Contato Dental. Realce sua beleza com naturalidade e segurança em Canoas.">
+    <!-- Usando o mesmo caminho absoluto da imagem para o Twitter. -->
+    <meta name="twitter:image" content="https://lazuliclinica-ee588.web.app/imagen/imagemmetatag.jpeg">
+    <!-- Fim das metatags -->
 
     <!-- Favicon -->
     <link rel="icon" href="https://img.icons8.com/ios/50/D4AF37/l.png" type="image/png">
