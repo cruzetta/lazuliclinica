@@ -1,10 +1,11 @@
 <!-- 
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
-  Atualizações Críticas (Hero Section Dinâmico):
-  - [FEAT] Adicionada capacidade de carregar o conteúdo da seção de entrada (Hero) via Firebase.
-  - [FEAT] O título, subtítulo e imagem de fundo da seção de entrada agora são editáveis no painel de admin.
-  - [FEAT] Adicionados IDs aos elementos h1 e p da seção Hero para permitir a manipulação via JavaScript.
+  Atualizações Críticas (Fundo de Vídeo na Seção Hero):
+  - [FEAT] Substituída a imagem de fundo estática da seção de entrada por um elemento <video> para fundo dinâmico.
+  - [FEAT] O JavaScript agora busca a `backgroundVideoUrl` do Firestore para definir a fonte do vídeo.
+  - [STYLE] Adicionados estilos CSS para garantir que o vídeo cubra toda a área da seção, se auto-reproduza, esteja sem som e em loop.
+  - [STRUCTURE] Ajustada a ordem e o z-index dos elementos na seção de entrada para que o vídeo fique no fundo, a camada de sobreposição escura no meio e o texto na frente.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -57,11 +58,9 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
     <style>
-      /* Impede a rolagem horizontal em toda a página */
       body {
         overflow-x: hidden;
       }
-      /* Animações de entrada */
       .reveal {
         opacity: 0;
         transform: translateY(30px);
@@ -71,24 +70,18 @@
         opacity: 1;
         transform: translateY(0);
       }
-      
-      /* Estilos do Slider Customizado (para Depoimentos) */
       .slider-track {
         transition: transform 0.5s ease-out;
       }
       .slider-container.is-dragging .slider-track {
         transition: none;
       }
-
-      /* Estilos do FAQ */
       .faq-question { cursor: pointer; }
       .faq-answer {
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.5s ease-in-out;
       }
-
-      /* Estilos do Header */
       #main-header .nav-link { color: white; position: relative; }
       #main-header .logo-main-text { color: white; }
       #main-header #mobile-menu-button { color: white; }
@@ -117,8 +110,6 @@
       #main-header.header-scrolled .logo-main-text { color: #3A3A3A; }
       #main-header.header-scrolled #mobile-menu-button { color: #3A3A3A; }
       #main-header.header-scrolled .nav-link::after { background: #B8860B; }
-
-      /* Estilos do Menu Mobile Aprimorado */
       #mobile-menu-overlay {
         transition: opacity 0.3s ease-in-out;
       }
@@ -132,11 +123,9 @@
       body.overflow-hidden {
         overflow: hidden;
       }
-
-      /* --- ESTILOS PARA O CARROSSEL DE GALERIA (SWIPER.JS) --- */
       .gallery-swiper {
         width: 100%;
-        aspect-ratio: 1 / 1; /* Formato quadrado 1:1 */
+        aspect-ratio: 1 / 1;
         max-height: 80vh;
         position: relative;
         overflow: hidden;
@@ -157,8 +146,6 @@
         display: block;
         object-fit: cover;
       }
-      
-      /* Setas de navegação posicionadas fora do contêiner da imagem */
       .gallery-swiper-button-next,
       .gallery-swiper-button-prev {
         position: absolute;
@@ -178,7 +165,6 @@
       }
       .gallery-swiper-button-prev { left: 0; }
       .gallery-swiper-button-next { right: 0; }
-
       .gallery-swiper-button-next:hover,
       .gallery-swiper-button-prev:hover {
           background-color: rgba(255, 255, 255, 1);
@@ -188,7 +174,6 @@
           font-size: 18px; 
           font-weight: bold;
       }
-
       .gallery-swiper .swiper-pagination {
         position: absolute;
         bottom: 15px !important;
@@ -205,24 +190,22 @@
         transition: background-color 0.3s, opacity 0.3s;
       }
       .gallery-swiper .swiper-pagination-bullet-active {
-        background-color: #B8860B; /* lazuli-gold */
+        background-color: #B8860B;
         opacity: 1;
       }
-
-      /* Estilos para Fundos de Seção Dinâmicos */
       .section-bg-wrapper {
           position: relative;
           z-index: 1;
           background-color: var(--bg-color, transparent);
-          overflow: hidden; 
+          overflow: hidden;
       }
-      .section-bg-wrapper::before { 
+      .section-bg-wrapper::before {
           content: '';
           position: absolute;
           top: 0; 
           left: 0;
-          width: 100%; 
-          height: 100%; 
+          width: 100%;
+          height: 100%;
           background-size: cover;
           background-position: center center;
           background-repeat: no-repeat;
@@ -231,17 +214,17 @@
           opacity: 0;
           transition: opacity 0.6s ease-in-out;
       }
-      .section-bg-wrapper::after { 
+      .section-bg-wrapper::after {
           content: '';
           position: absolute;
           top: 0;
           left: 0;
-          width: 100%; 
-          height: 100%; 
+          width: 100%;
+          height: 100%;
           z-index: -1;
           opacity: 0;
           transition: opacity 0.6s ease-in-out;
-          background-color: rgba(25, 25, 25, 0.65); 
+          background-color: rgba(25, 25, 25, 0.65);
       }
       .section-bg-wrapper.has-bg::before,
       .section-bg-wrapper.has-bg::after {
@@ -266,17 +249,27 @@
       }
       .section-bg-wrapper.has-bg .border-gray-200 { border-color: rgba(255, 255, 255, 0.2); }
       .section-bg-wrapper.has-bg .bg-white { background-color: rgba(255,255,255,0.1) !important; }
-      
       .section-bg-wrapper.has-bg .bg-lazuli-light-blue\/30 {
-          background-color: rgba(30, 41, 59, 0.75) !important; 
-          -webkit-backdrop-filter: blur(8px); 
+          background-color: rgba(30, 41, 59, 0.75) !important;
+          -webkit-backdrop-filter: blur(8px);
           backdrop-filter: blur(8px);
           border-color: rgba(255, 255, 255, 0.2);
       }
-
       .section-bg-wrapper.has-bg .slider-button { background-color: rgba(255,255,255,0.8); color: #3A3A3A; }
       .section-bg-wrapper.has-bg .text-gray-500 { color: #ccc; }
 
+      /* [NOVO] Estilos para o vídeo de fundo da seção Hero */
+      #home-video-bg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: 0;
+      }
     </style>
 </head>
 <body class="text-lazuli-dark bg-white font-sans">
@@ -315,10 +308,13 @@
 
 
     <main>
-        <!-- Seção Hero -->
-        <section id="home" class="relative min-h-screen flex items-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3');">
-            <div class="absolute inset-0 bg-black/60"></div>
-            <div class="container mx-auto px-6 text-center text-white relative z-10">
+        <!-- Seção Hero com Vídeo -->
+        <section id="home" class="relative min-h-screen flex items-center bg-lazuli-dark overflow-hidden">
+            <video id="home-video-bg" autoplay loop muted playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none">
+                <!-- A fonte do vídeo será adicionada dinamicamente pelo JS -->
+            </video>
+            <div class="absolute inset-0 bg-black/60 z-10"></div>
+            <div class="container mx-auto px-6 text-center text-white relative z-20">
                 <h1 id="home-headline-text" class="text-4xl md:text-6xl lg:text-7xl font-display font-medium leading-tight mb-4 reveal">Beleza em equilíbrio, sorriso em harmonia.</h1>
                 <p id="home-subheadline-text" class="text-lg md:text-xl max-w-3xl mx-auto mb-8 reveal" style="transition-delay: 200ms;">Na Lazúli, unimos ciência e estética para realçar sua melhor versão.</p>
                 <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="bg-lazuli-gold text-white px-8 py-4 rounded-full hover:bg-lazuli-gold-dark transition-all duration-300 transform hover:scale-105 inline-block reveal active:scale-95" style="transition-delay: 400ms;">
@@ -801,14 +797,14 @@
             // --- CARREGAMENTO DE CONTEÚDO DINÂMICO DO FIREBASE ---
             async function loadDynamicContent() {
                 try {
-                    // [NOVO] Carregar conteúdo da seção Home/Hero
+                    // Carregar conteúdo da seção Home/Hero
                     const homeDocRef = db.collection("siteContent").doc("home");
                     const homeDocSnap = await homeDocRef.get();
                     if (homeDocSnap.exists && homeDocSnap.data()) {
                         const homeData = homeDocSnap.data();
-                        const homeSection = document.getElementById('home');
                         const homeHeadline = document.getElementById('home-headline-text');
                         const homeSubheadline = document.getElementById('home-subheadline-text');
+                        const homeVideo = document.getElementById('home-video-bg');
 
                         if (homeData.headline) {
                             homeHeadline.textContent = homeData.headline;
@@ -816,8 +812,8 @@
                         if (homeData.subheadline) {
                             homeSubheadline.textContent = homeData.subheadline;
                         }
-                        if (homeData.backgroundUrl) {
-                            homeSection.style.backgroundImage = `url('${homeData.backgroundUrl}')`;
+                        if (homeData.backgroundVideoUrl) {
+                            homeVideo.src = homeData.backgroundVideoUrl;
                         }
                     }
 
