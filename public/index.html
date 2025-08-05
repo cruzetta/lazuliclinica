@@ -2,12 +2,10 @@
   Arquivo: public/index.html 
   Descrição: Página principal do site da Clínica Lazúli.
   Atualizações Críticas:
-  - [STYLE] Ajustada a transparência dos cards de depoimento para um "meio-termo" com fundo branco semitransparente e efeito de desfoque para melhor legibilidade sobre imagens.
-  - [FIX] Corrigida a transparência excessiva dos cards de depoimento quando a seção possui uma imagem de fundo.
-  - [REFACTOR] Substituído o carrossel de depoimentos personalizado por uma implementação com a biblioteca Swiper.js.
-  - [FIX] Corrigida a instabilidade e bugs de arrastar/clicar no carrossel de depoimentos.
-  - [FEAT] Adicionada navegação por setas e paginação ao carrossel de depoimentos.
-  - [CLEANUP] Removida a função JavaScript obsoleta `initializeSlider`.
+  - [FINAL FIX 2] Restaurada a lista completa de depoimentos padrão (defaultTestimonials) para corresponder ao arquivo original.
+  - [FINAL FIX] Restaurado o bloco de inicialização manual do Firebase para garantir que o site funcione em testes locais (abrindo o arquivo diretamente). O método anterior (/__/firebase/init.js) só funciona quando o site está publicado.
+  - [MAJOR FIX] A seção "Tratamentos" agora é pré-renderizada com conteúdo padrão diretamente no HTML para garantir que a página nunca pareça incompleta. IDs específicos foram adicionados para permitir a atualização via JavaScript.
+  - [REFACTOR] O JavaScript foi modificado para "melhorar" o conteúdo existente com dados do Firebase, em vez de criá-lo do zero. Esta é uma abordagem mais robusta.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -284,15 +282,14 @@
       .section-bg-wrapper.has-bg .swiper-pagination-bullet { background-color: rgba(255, 255, 255, 0.5); }
       .section-bg-wrapper.has-bg .swiper-pagination-bullet-active { background-color: #B8860B; }
 
-      /* [FIX] Override para um meio-termo de transparência nos cards de depoimento sobre imagens de fundo */
       .section-bg-wrapper.has-bg .testimonial-swiper .bg-white {
-          background-color: rgba(255, 255, 255, 0.9) !important; /* Fundo branco semitransparente */
-          -webkit-backdrop-filter: blur(8px); /* Efeito de desfoque para legibilidade */
+          background-color: rgba(255, 255, 255, 0.9) !important;
+          -webkit-backdrop-filter: blur(8px);
           backdrop-filter: blur(8px);
       }
       .section-bg-wrapper.has-bg .testimonial-swiper .text-lazuli-dark,
       .section-bg-wrapper.has-bg .testimonial-swiper .text-lazuli-dark\/80 {
-          color: #3A3A3A !important; /* Garante que o texto permaneça escuro */
+          color: #3A3A3A !important;
       }
 
       #home-video-bg {
@@ -405,31 +402,42 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Tratamentos Exclusivos</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-12 md:mb-16 reveal" style="transition-delay: 200ms;">Soluções personalizadas para uma aparência rejuvenescida e um sorriso radiante.</p>
-                <div class="grid md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
+                
+                <!-- ID adicionado ao grid para ser encontrado pelo JS -->
+                <div id="treatments-grid" class="grid md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
+                    
+                    <!-- Card 1: Harmonização Facial - IDs adicionados para cada elemento a ser atualizado -->
                     <div class="bg-lazuli-light-blue/30 border border-gray-200 p-8 rounded-lg text-left reveal transition-all duration-300 hover:shadow-2xl hover:-translate-y-2" style="transition-delay: 400ms;">
                         <div class="flex items-center mb-4">
-                            <div class="bg-lazuli-nude text-lazuli-gold p-4 rounded-full mr-4"><i class="fas fa-user-check fa-2x"></i></div>
-                            <h3 class="text-2xl font-display">Harmonização Facial</h3>
+                            <div id="harmonizacao-icon-wrapper" class="bg-lazuli-nude text-lazuli-gold w-16 h-16 p-4 rounded-full mr-4 flex items-center justify-center overflow-hidden">
+                                <i class="fas fa-user-check fa-2x"></i>
+                            </div>
+                            <h3 id="harmonizacao-title" class="text-2xl font-display">Harmonização Facial</h3>
                         </div>
-                        <p class="mb-4">Procedimentos minimamente invasivos que equilibram os traços faciais, promovendo um rejuvenescimento sutil e natural.</p>
-                        <ul class="space-y-2 text-lazuli-dark/80">
+                        <p id="harmonizacao-description" class="mb-4">Procedimentos minimamente invasivos que equilibram os traços faciais, promovendo um rejuvenescimento sutil e natural.</p>
+                        <ul id="harmonizacao-features-list" class="space-y-2 text-lazuli-dark/80">
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Gerenciamento do envelhecimento</li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Tecnologias</li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Microagulhamento</li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Peeling</li>
                         </ul>
                     </div>
+                    
+                    <!-- Card 2: Lentes de Contato Dental - IDs adicionados para cada elemento a ser atualizado -->
                     <div class="bg-lazuli-light-blue/30 border border-gray-200 p-8 rounded-lg text-left reveal transition-all duration-300 hover:shadow-2xl hover:-translate-y-2" style="transition-delay: 600ms;">
                         <div class="flex items-center mb-4">
-                            <div class="bg-lazuli-nude text-lazuli-gold p-4 rounded-full mr-4"><i class="fas fa-gem fa-2x"></i></div>
-                            <h3 class="text-2xl font-display">Lentes de Contato Dental</h3>
+                            <div id="lentes-icon-wrapper" class="bg-lazuli-nude text-lazuli-gold w-16 h-16 p-4 rounded-full mr-4 flex items-center justify-center overflow-hidden">
+                                <i class="fas fa-gem fa-2x"></i>
+                            </div>
+                            <h3 id="lentes-title" class="text-2xl font-display">Lentes de Contato Dental</h3>
                         </div>
-                        <p class="mb-4">Lâminas ultrafinas, aplicadas sobre os dentes para corrigir imperfeições de cor, formato e alinhamento.</p>
-                        <ul class="space-y-2 text-lazuli-dark/80">
+                        <p id="lentes-description" class="mb-4">Lâminas ultrafinas, aplicadas sobre os dentes para corrigir imperfeições de cor, formato e alinhamento.</p>
+                        <ul id="lentes-features-list" class="space-y-2 text-lazuli-dark/80">
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Em resina</li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>Em porcelana</li>
                         </ul>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -444,6 +452,7 @@
                     <div class="swiper-container gallery-swiper max-w-lg mx-auto">
                         <div class="swiper-wrapper">
                             <!-- Slides serão inseridos aqui pelo JavaScript -->
+                             <div class="swiper-slide"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Carregando..." alt="Galeria carregando" loading="lazy" decoding="async"></div>
                         </div>
                         <div class="swiper-pagination gallery-swiper-pagination"></div>
                     </div>
@@ -643,7 +652,6 @@
         const db = firebase.firestore();
 
         document.addEventListener('DOMContentLoaded', () => {
-            // --- LÓGICA DO MENU MOBILE ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
@@ -652,7 +660,6 @@
 
             function toggleMenu() {
                 const isMenuOpen = mobileMenu.classList.contains('menu-open');
-                
                 if (isMenuOpen) {
                     mobileMenu.classList.remove('menu-open');
                     mobileMenuOverlay.classList.add('opacity-0', 'pointer-events-none');
@@ -667,30 +674,21 @@
                     menuIcon.classList.add('fa-times');
                 }
             }
-
             mobileMenuButton.addEventListener('click', toggleMenu);
             mobileMenuOverlay.addEventListener('click', toggleMenu);
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', toggleMenu);
-            });
+            mobileNavLinks.forEach(link => { link.addEventListener('click', toggleMenu); });
 
-            // --- LÓGICA PARA HEADER DINÂMICO ---
             const header = document.getElementById('main-header');
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('header-scrolled');
-                } else {
-                    header.classList.remove('header-scrolled');
-                }
+                header.classList.toggle('header-scrolled', window.scrollY > 50);
             });
 
-            // --- LÓGICA PARA FAQ (ACCORDION) ---
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
-                const answer = item.querySelector('.faq-answer');
-                const icon = question.querySelector('i');
                 question.addEventListener('click', () => {
+                    const answer = item.querySelector('.faq-answer');
+                    const icon = question.querySelector('i');
                     const isOpened = answer.style.maxHeight && answer.style.maxHeight !== '0px';
                     faqItems.forEach(otherItem => {
                         if (otherItem !== item) {
@@ -708,7 +706,6 @@
                 });
             });
 
-            // --- ANIMAÇÃO DE SCROLL ---
             const revealObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -717,17 +714,12 @@
                     }
                 });
             }, { root: null, threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-            document.querySelectorAll('.reveal').forEach(el => {
-                revealObserver.observe(el);
-            });
+            document.querySelectorAll('.reveal').forEach(el => { revealObserver.observe(el); });
             
-            // --- ATUALIZA O ANO DO RODAPÉ ---
             const yearSpan = document.getElementById('current-year');
-            if(yearSpan) {
-                yearSpan.textContent = new Date().getFullYear();
-            }
+            if(yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
-            // --- DEPOIMENTOS PADRÃO ---
+            // CORRIGIDO: Lista completa de depoimentos padrão
             const defaultTestimonials = [
                 { name: "Jady Muller J.", text: "Clínica maravilhosa! Ambiente perfeito, material de uma qualidade excelente, sem contar os profissionais 100% atenciosos e delicados, meu procedimento ficou maravilhoso, sem dúvidas virei cliente fiel!", rating: 5 },
                 { name: "Luís de Melo", text: "Iniciei minha avaliação estética com Dr Édson Depieri, pois precisava melhorar minha autoimagem, não para embelezamento e vaidade, mas para o aumento da autoestima, bem estar e melhoria da apresentação profissional.", rating: 5 },
@@ -738,33 +730,67 @@
                 { name: "Elisandra Machado", text: "Dr Ítalo Rottoli transformou minha autoestima, me fez uma nova mulher, sou grata por tanto! Minha indicação de olhos fechados.", rating: 5 }
             ];
 
-            // --- CARREGAMENTO DE CONTEÚDO DINÂMICO DO FIREBASE ---
             async function loadDynamicContent() {
                 try {
-                    // Carregar conteúdo da seção Home/Hero
+                    // Carregar Home
                     const homeDocRef = db.collection("siteContent").doc("home");
                     const homeDocSnap = await homeDocRef.get();
                     if (homeDocSnap.exists && homeDocSnap.data()) {
                         const homeData = homeDocSnap.data();
-                        const homeHeadline = document.getElementById('home-headline-text');
-                        const homeSubheadline = document.getElementById('home-subheadline-text');
-                        const homeVideo = document.getElementById('home-video-bg');
-
-                        if (homeData.headline) homeHeadline.textContent = homeData.headline;
-                        if (homeData.subheadline) homeSubheadline.textContent = homeData.subheadline;
-                        if (homeData.backgroundVideoUrl) homeVideo.src = homeData.backgroundVideoUrl;
+                        if (homeData.headline) document.getElementById('home-headline-text').textContent = homeData.headline;
+                        if (homeData.subheadline) document.getElementById('home-subheadline-text').textContent = homeData.subheadline;
+                        if (homeData.backgroundVideoUrl) document.getElementById('home-video-bg').src = homeData.backgroundVideoUrl;
                     }
 
-                    // Carregar foto da seção "Sobre"
+                    // Carregar Sobre
                     const aboutDocRef = db.collection("siteContent").doc("sobre");
                     const aboutDocSnap = await aboutDocRef.get();
-                    if (aboutDocSnap.exists && aboutDocSnap.data().imageUrl) {
-                        document.getElementById('about-dr-photo').src = aboutDocSnap.data().imageUrl;
-                    } else {
-                         document.getElementById('about-dr-photo').src = 'https://placehold.co/600x800/F5EBE0/3A3A3A?text=Dr.+Italo';
+                    document.getElementById('about-dr-photo').src = (aboutDocSnap.exists && aboutDocSnap.data().imageUrl) ? aboutDocSnap.data().imageUrl : 'https://placehold.co/600x800/F5EBE0/3A3A3A?text=Dr.+Italo';
+
+                    // Carregar e ATUALIZAR Tratamentos
+                    const treatmentsDocRef = db.collection("siteContent").doc("treatments");
+                    const treatmentsDocSnap = await treatmentsDocRef.get();
+                    if (treatmentsDocSnap.exists) {
+                        const data = treatmentsDocSnap.data();
+                        
+                        // Atualiza Card de Harmonização
+                        if (data.harmonizacao) {
+                            const hData = data.harmonizacao;
+                            if(hData.title) document.getElementById('harmonizacao-title').textContent = hData.title;
+                            if(hData.description) document.getElementById('harmonizacao-description').textContent = hData.description;
+                            
+                            const hIconWrapper = document.getElementById('harmonizacao-icon-wrapper');
+                            if (hData.iconUrl) {
+                                hIconWrapper.innerHTML = `<img src="${hData.iconUrl}" alt="Ícone de ${hData.title}" class="w-full h-full object-cover">`;
+                                hIconWrapper.classList.remove('p-4');
+                            }
+                            
+                            if (hData.features && hData.features.length > 0) {
+                                const hFeaturesList = document.getElementById('harmonizacao-features-list');
+                                hFeaturesList.innerHTML = hData.features.map(f => `<li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>${f}</li>`).join('');
+                            }
+                        }
+
+                        // Atualiza Card de Lentes
+                        if (data.lentes) {
+                            const lData = data.lentes;
+                             if(lData.title) document.getElementById('lentes-title').textContent = lData.title;
+                            if(lData.description) document.getElementById('lentes-description').textContent = lData.description;
+                            
+                            const lIconWrapper = document.getElementById('lentes-icon-wrapper');
+                            if (lData.iconUrl) {
+                                lIconWrapper.innerHTML = `<img src="${lData.iconUrl}" alt="Ícone de ${lData.title}" class="w-full h-full object-cover">`;
+                                lIconWrapper.classList.remove('p-4');
+                            }
+                            
+                            if (lData.features && lData.features.length > 0) {
+                                const lFeaturesList = document.getElementById('lentes-features-list');
+                                lFeaturesList.innerHTML = lData.features.map(f => `<li class="flex items-center"><i class="fas fa-check-circle text-lazuli-gold mr-2"></i>${f}</li>`).join('');
+                            }
+                        }
                     }
 
-                    // Carregar galeria
+                    // Carregar Galeria
                     const galleryWrapper = document.querySelector('#galeria .swiper-wrapper');
                     const gallerySnapshot = await db.collection("gallery").get();
                     galleryWrapper.innerHTML = ''; 
@@ -772,91 +798,27 @@
                         galleryWrapper.innerHTML = `<div class="swiper-slide"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" loading="lazy" decoding="async"></div>`;
                     } else {
                         gallerySnapshot.forEach(doc => {
-                            galleryWrapper.innerHTML += `
-                                <div class="swiper-slide">
-                                    <img src="${doc.data().url}" alt="Resultado de tratamento" loading="lazy" decoding="async">
-                                </div>`;
+                            galleryWrapper.innerHTML += `<div class="swiper-slide"><img src="${doc.data().url}" alt="Resultado de tratamento" loading="lazy" decoding="async"></div>`;
                         });
                     }
-                    
-                    new Swiper('.gallery-swiper', {
-                        loop: true,
-                        watchOverflow: true,
-                        navigation: {
-                            nextEl: '.gallery-swiper-button-next',
-                            prevEl: '.gallery-swiper-button-prev',
-                        },
-                        pagination: {
-                            el: '.gallery-swiper-pagination',
-                            clickable: true,
-                        },
-                        slidesPerView: 1,
-                        spaceBetween: 0,
-                        grabCursor: true,
-                    });
+                    new Swiper('.gallery-swiper', { loop: true, watchOverflow: true, navigation: { nextEl: '.gallery-swiper-button-next', prevEl: '.gallery-swiper-button-prev' }, pagination: { el: '.gallery-swiper-pagination', clickable: true }, slidesPerView: 1, spaceBetween: 0, grabCursor: true });
 
-                    // Carregar depoimentos com Swiper
+                    // Carregar Depoimentos
                     const testimonialWrapper = document.querySelector('.testimonial-swiper .swiper-wrapper');
                     const testimonialsSnapshot = await db.collection("testimonials").get();
-                    
                     testimonialWrapper.innerHTML = '';
-
                     const testimonialsToRender = testimonialsSnapshot.empty ? defaultTestimonials : testimonialsSnapshot.docs.map(doc => doc.data());
-
                     const bgColors = ['bg-blue-400', 'bg-green-400', 'bg-indigo-400', 'bg-pink-400', 'bg-yellow-500', 'bg-teal-400', 'bg-purple-400'];
-
-                    function createTestimonialCard(data, index) {
-                        const initial = data.name.charAt(0).toUpperCase();
-                        const colorClass = bgColors[index % bgColors.length];
-                        
-                        return `
-                        <div class="swiper-slide">
-                            <div class="bg-white p-8 rounded-lg shadow-md flex flex-col text-left h-full">
-                                <div class="flex-grow">
-                                    <div class="w-16 h-16 ${colorClass} rounded-full flex items-center justify-center text-white text-3xl font-display mb-6">
-                                        ${initial}
-                                    </div>
-                                    <p class="italic text-lazuli-dark/80 whitespace-normal mb-4">"${data.text}"</p>
-                                </div>
-                                <p class="font-bold text-lazuli-dark mt-4">- ${data.name}</p>
-                            </div>
-                        </div>
-                        `;
-                    }
-
                     if (testimonialsToRender.length > 0) {
                         testimonialsToRender.forEach((data, index) => {
-                            testimonialWrapper.innerHTML += createTestimonialCard(data, index);
+                            const initial = data.name.charAt(0).toUpperCase();
+                            const colorClass = bgColors[index % bgColors.length];
+                            testimonialWrapper.innerHTML += `<div class="swiper-slide"><div class="bg-white p-8 rounded-lg shadow-md flex flex-col text-left h-full"><div class="flex-grow"><div class="w-16 h-16 ${colorClass} rounded-full flex items-center justify-center text-white text-3xl font-display mb-6">${initial}</div><p class="italic text-lazuli-dark/80 whitespace-normal mb-4">"${data.text}"</p></div><p class="font-bold text-lazuli-dark mt-4">- ${data.name}</p></div></div>`;
                         });
                     }
-                    
-                    new Swiper('.testimonial-swiper', {
-                        loop: testimonialsToRender.length > 3, // Loop só se houver itens suficientes
-                        slidesPerView: 1,
-                        spaceBetween: 16,
-                        grabCursor: true,
-                        pagination: {
-                            el: '.testimonial-swiper-pagination',
-                            clickable: true,
-                        },
-                        navigation: {
-                            nextEl: '.testimonial-swiper-button-next',
-                            prevEl: '.testimonial-swiper-button-prev',
-                        },
-                        breakpoints: {
-                            768: {
-                                slidesPerView: 2,
-                                spaceBetween: 24,
-                            },
-                            1024: {
-                                slidesPerView: 3,
-                                spaceBetween: 24,
-                            },
-                        },
-                    });
+                    new Swiper('.testimonial-swiper', { loop: testimonialsToRender.length > 3, slidesPerView: 1, spaceBetween: 16, grabCursor: true, pagination: { el: '.testimonial-swiper-pagination', clickable: true }, navigation: { nextEl: '.testimonial-swiper-button-next', prevEl: '.testimonial-swiper-button-prev' }, breakpoints: { 768: { slidesPerView: 2, spaceBetween: 24 }, 1024: { slidesPerView: 3, spaceBetween: 24 } } });
 
-
-                    // Carregar e aplicar fundos das seções
+                    // Carregar Fundos de Seção
                     const backgroundsDocSnap = await db.collection("siteContent").doc("backgrounds").get();
                     if (backgroundsDocSnap.exists) {
                         const backgroundsData = backgroundsDocSnap.data();
@@ -871,11 +833,8 @@
                             }
                         }
                     }
-
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
-                    // Fallback para o slider de depoimentos em caso de erro
-                    new Swiper('.testimonial-swiper');
                 }
             }
 
