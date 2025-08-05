@@ -10,6 +10,9 @@
   - [STYLE-ADJUSTMENT] Reforçado o CSS do fundo para garantir que a imagem preencha 100% do espaço da seção em todos os casos.
   - [BUGFIX-BORDER] Removido o padding horizontal (px-6) de todos os elementos .container para eliminar as "bordas" internas e permitir que o conteúdo preencha mais espaço.
   - [BUGFIX-FULL-BLEED] Removido TODO o padding horizontal das tags <section> e movido para os .container internos para garantir que os fundos ocupem 100% da largura da tela.
+  - [FIX-LEGIBILITY] Ajustado o fundo dos cards de tratamento para melhorar a legibilidade sobre imagens de fundo.
+  - [FIX-PREVIEW] Adicionada configuração manual do Firebase para permitir o funcionamento da pré-visualização.
+  - [FIX-GALLERY-FINAL] Alterado aspect-ratio para 1/1 (quadrado) e posicionado as setas de navegação fora da imagem.
 -->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
@@ -141,11 +144,11 @@
       /* --- ESTILOS PARA O CARROSSEL DE GALERIA (SWIPER.JS) --- */
       .gallery-swiper {
         width: 100%;
-        height: 60vh; 
-        max-height: 500px;
+        aspect-ratio: 1 / 1; /* Formato quadrado 1:1 */
+        max-height: 80vh;
         position: relative;
         overflow: hidden;
-        margin: 0;
+        margin: 0 auto;
         border-radius: 0.5rem;
         box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
       }
@@ -154,19 +157,22 @@
         justify-content: center;
         align-items: center;
         height: 100%;
-        background-color: #ffffff; 
+        background-color: #f1f5f9;
       }
       .gallery-swiper .swiper-slide img {
         width: 100%;
         height: 100%;
         display: block;
-        object-fit: contain;
+        object-fit: cover;
       }
-      .gallery-swiper .swiper-button-next,
-      .gallery-swiper .swiper-button-prev {
-        z-index: 10; 
-        padding: 20px;
-        margin: -10px; 
+      
+      /* Setas de navegação posicionadas fora do contêiner da imagem */
+      .gallery-swiper-button-next,
+      .gallery-swiper-button-prev {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
         background-color: rgba(255, 255, 255, 0.9);
         color: #3A3A3A;
         width: 48px;
@@ -174,16 +180,23 @@
         border-radius: 9999px;
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         transition: background-color 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-      .gallery-swiper .swiper-button-next:hover,
-      .gallery-swiper .swiper-button-prev:hover {
+      .gallery-swiper-button-prev { left: 0; }
+      .gallery-swiper-button-next { right: 0; }
+
+      .gallery-swiper-button-next:hover,
+      .gallery-swiper-button-prev:hover {
           background-color: rgba(255, 255, 255, 1);
       }
-      .gallery-swiper .swiper-button-next:after, 
-      .gallery-swiper .swiper-button-prev:after {
+      .gallery-swiper-button-next:after, 
+      .gallery-swiper-button-prev:after {
           font-size: 18px; 
           font-weight: bold;
       }
+
       .gallery-swiper .swiper-pagination {
         position: absolute;
         bottom: 15px !important;
@@ -261,7 +274,15 @@
       }
       .section-bg-wrapper.has-bg .border-gray-200 { border-color: rgba(255, 255, 255, 0.2); }
       .section-bg-wrapper.has-bg .bg-white { background-color: rgba(255,255,255,0.1) !important; }
-      .section-bg-wrapper.has-bg .bg-lazuli-light-blue\/30 { background-color: rgba(255,255,255,0.1) !important; }
+      
+      /* [FIX-LEGIBILIDADE] Ajuste no card de tratamento para melhor leitura com fundo de imagem */
+      .section-bg-wrapper.has-bg .bg-lazuli-light-blue\/30 {
+          background-color: rgba(30, 41, 59, 0.75) !important; /* Fundo escuro (slate-800) com 75% de opacidade */
+          -webkit-backdrop-filter: blur(8px); /* Efeito de desfoque para o fundo */
+          backdrop-filter: blur(8px);
+          border-color: rgba(255, 255, 255, 0.2);
+      }
+
       .section-bg-wrapper.has-bg .slider-button { background-color: rgba(255,255,255,0.8); color: #3A3A3A; }
       .section-bg-wrapper.has-bg .text-gray-500 { color: #ccc; }
 
@@ -396,17 +417,17 @@
                 <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Transformações Reais</h2>
                 <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Resultados que refletem nossa dedicação à ética e à naturalidade.</p>
                 
-                <div class="max-w-4xl mx-auto reveal" style="transition-delay: 400ms;">
-                    <div class="swiper-container gallery-swiper">
+                <div class="max-w-2xl mx-auto reveal relative" style="transition-delay: 400ms;">
+                    <div class="swiper-container gallery-swiper max-w-lg mx-auto">
                         <div class="swiper-wrapper">
                             <!-- Slides serão inseridos aqui pelo JavaScript -->
                         </div>
-                        <!-- Setas de Navegação com classes específicas -->
-                        <div class="swiper-button-next gallery-swiper-button-next"></div>
-                        <div class="swiper-button-prev gallery-swiper-button-prev"></div>
                         <!-- Paginação (bolinhas) -->
                         <div class="swiper-pagination gallery-swiper-pagination"></div>
                     </div>
+                    <!-- Setas de Navegação movidas para fora -->
+                    <div class="swiper-button-next gallery-swiper-button-next"></div>
+                    <div class="swiper-button-prev gallery-swiper-button-prev"></div>
                 </div>
 
                 <p class="text-sm text-gray-500 mt-4 px-4">*Imagens de pacientes reais com autorização de uso. Os resultados podem variar.</p>
@@ -577,8 +598,21 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     
-    <!-- Firebase Init -->
-    <script src="/__/firebase/init.js"></script>
+    <!-- Firebase Init (Manual for Preview) -->
+    <script>
+      // Configuração do Firebase para a pré-visualização funcionar.
+      // A chave de API foi a que você forneceu.
+      const firebaseConfig = {
+        apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY",
+        authDomain: "lazuliclinica-ee588.firebaseapp.com",
+        projectId: "lazuliclinica-ee588",
+        storageBucket: "lazuliclinica-ee588.appspot.com",
+        messagingSenderId: "COLE_SEU_MESSAGING_SENDER_ID_AQUI", // Você pode encontrar isso no seu console do Firebase
+        appId: "COLE_SEU_APP_ID_AQUI" // Você pode encontrar isso no seu console do Firebase
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
 
     <!-- Swiper.js SCRIPT -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -715,7 +749,7 @@
                         isDragging = false;
                         container.classList.remove('is-dragging');
                         if (enableDrag) { window.removeEventListener('mousemove', dragMove); window.removeEventListener('mouseup', dragEnd); }
-                        if (enableSwipe) { window.removeEventListener('touchmove', dragMove); window.removeEventListener('touchend', dragEnd); }
+                        if (enableSwipe) { window.removeEventListener('touchend', dragEnd); }
                         const movedBy = currentTranslate - prevTranslate;
                         const itemWidth = track.clientWidth / getItemsPerPage();
                         const threshold = itemWidth / 4;
