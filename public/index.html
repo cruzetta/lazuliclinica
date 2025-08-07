@@ -1,16 +1,3 @@
-<!-- 
-  Arquivo: public/index.html 
-  Descrição: Página principal do site da Clínica Lazúli.
-  Atualizações Críticas:
-  - [NOVA VERSÃO 10] Imagem de fundo da seção "Nossos Pilares" (Parallax) atualizada novamente, conforme solicitado.
-  - [NOVA VERSÃO 9] Imagem de fundo da seção "Nossos Pilares" (Parallax) atualizada conforme solicitado.
-  - [NOVA VERSÃO 8] Adicionado efeito Parallax (fundo fixo) na seção "Nossos Pilares" para um visual mais dinâmico e moderno.
-  - [NOVA VERSÃO 7] Email de contato no rodapé atualizado para italobondan@outlook.com.
-  - [NOVA VERSÃO 6] Removido o item "Tecnologias" da lista de Estética Facial e a lista foi rebalanceada para 3 itens por coluna.
-  - [NOVA VERSÃO 5] Adicionado "Toxina Botulínica" à lista de tratamentos de Estética Facial e a lista foi rebalanceada.
-  - [NOVA VERSÃO 4] Título da seção "Tratamentos" alterado de "Nossos Carros-Chefe" para "Tratamentos em Destaque" para soar mais inclusivo. O título da sub-seção de serviços também foi ajustado.
-  - [NOVA VERSÃO 3] Seção "Sobre" revertida para o layout de duas colunas (imagem à esquerda, texto à direita), conforme solicitado.
--->
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
@@ -70,8 +57,8 @@
               'lazuli-light-blue': '#F0F8FF',
               'lazuli-nude': '#F5EBE0',
               'lazuli-gold': {
-                DEFAULT: '#B8860B',
-                dark: '#A0740A',
+                DEFAULT: '#D4AF37', /* COR ATUALIZADA - Mais brilhante */
+                dark: '#B8860B',    /* Cor antiga movida para 'dark' */
               },
               'lazuli-dark': '#3A3A3A',
             }
@@ -129,10 +116,10 @@
         backdrop-filter: blur(8px);
       }
       #main-header.header-scrolled .nav-link { color: #3A3A3A; }
-      #main-header.header-scrolled .nav-link:hover { color: #B8860B; }
+      #main-header.header-scrolled .nav-link:hover { color: #D4AF37; } /* Cor atualizada */
       #main-header.header-scrolled .logo-main-text { color: #3A3A3A; }
       #main-header.header-scrolled #mobile-menu-button { color: #3A3A3A; }
-      #main-header.header-scrolled .nav-link::after { background: #B8860B; }
+      #main-header.header-scrolled .nav-link::after { background: #D4AF37; } /* Cor atualizada */
       #mobile-menu-overlay {
         transition: opacity 0.3s ease-in-out;
       }
@@ -182,7 +169,7 @@
         transition: background-color 0.3s, opacity 0.3s;
       }
       .swiper-pagination-bullet-active {
-        background-color: #B8860B;
+        background-color: #D4AF37; /* Cor atualizada */
         opacity: 1;
       }
       
@@ -219,7 +206,7 @@
         border: 1px solid rgba(0, 0, 0, 0.2);
       }
       .gallery-swiper .swiper-pagination-bullet-active {
-        background-color: #B8860B;
+        background-color: #D4AF37; /* Cor atualizada */
       }
       
       /* Estilos específicos para os Depoimentos */
@@ -292,7 +279,7 @@
       .section-bg-wrapper.has-bg .faq-question {
           color: white;
       }
-      .section-bg-wrapper.has-bg .text-lazuli-gold { color: #B8860B; }
+      .section-bg-wrapper.has-bg .text-lazuli-gold { color: #D4AF37; } /* Cor atualizada */
       .section-bg-wrapper.has-bg .text-lazuli-dark,
       .section-bg-wrapper.has-bg .text-lazuli-dark\/80 {
           color: #f0f0f0;
@@ -309,7 +296,7 @@
       .section-bg-wrapper.has-bg .swiper-button-next,
       .section-bg-wrapper.has-bg .swiper-button-prev { background-color: rgba(255,255,255,0.8); color: #3A3A3A; }
       .section-bg-wrapper.has-bg .swiper-pagination-bullet { background-color: rgba(255, 255, 255, 0.5); }
-      .section-bg-wrapper.has-bg .swiper-pagination-bullet-active { background-color: #B8860B; }
+      .section-bg-wrapper.has-bg .swiper-pagination-bullet-active { background-color: #D4AF37; } /* Cor atualizada */
 
       .section-bg-wrapper.has-bg .testimonial-swiper .bg-white {
           background-color: rgba(255, 255, 255, 0.9) !important;
@@ -647,8 +634,8 @@
 
                 <div class="mt-12 reveal">
                      <a href="https://www.google.com/maps/place/Cl%C3%ADnica+Laz%C3%BAli+-+Medicina+e+Odontologia+Est%C3%A9tica/@-29.9239435,-51.1797007,17z/data=!4m8!3m7!1s0x951979270c715a7b:0x27a1151fc0641ef!8m2!3d-29.9239482!4d-51.1771258!9m1!1b1!16s%2Fg%2F11tbz8p_78?hl=pt-BR&entry=ttu" target="_blank" class="bg-transparent border-2 border-lazuli-gold text-lazuli-gold px-8 py-3 rounded-full hover:bg-lazuli-gold hover:text-white transition-all duration-300 inline-block active:scale-95">
-                        Ver mais avaliações no Google
-                    </a>
+                         Ver mais avaliações no Google
+                     </a>
                 </div>
             </div>
         </section>
@@ -673,13 +660,13 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-10 text-gray-300 text-center md:text-left">
                 <div class="lg:col-span-1">
                      <a href="#home" class="text-3xl font-display font-bold text-white mb-4 inline-block">
-                        Clínica <span class="text-lazuli-gold">Lazúli</span>
-                    </a>
+                         Clínica <span class="text-lazuli-gold">Lazúli</span>
+                     </a>
                      <p class="text-gray-400">Ciência e arte para realçar a sua beleza com naturalidade e segurança em Canoas.</p>
                       <div class="flex justify-center md:justify-start space-x-4 mt-6">
-                        <a href="https://www.instagram.com/lazuli.clinica?igsh=MTF1cDd1cWU0NHRiNw==" target="_blank" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    </div>
+                         <a href="https://www.instagram.com/lazuli.clinica?igsh=MTF1cDd1cWU0NHRiNw==" target="_blank" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                         <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                     </div>
                 </div>
 
                 <div class="lg:col-span-2 grid md:grid-cols-2 gap-10">
@@ -710,6 +697,16 @@
                 <div class="text-sm text-gray-400">
                     <p>© <span id="current-year"></span> Clínica Lazúli. Todos os direitos reservados.</p>
                     <p class="mt-1">CNPJ: 51.320.929/0001-39</p>
+                    
+                    <!-- SUA ASSINATURA ATUALIZADA -->
+                    <p class="mt-6">
+                        <a href="https://conectawebdigital.com.br/" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="hover:text-lazuli-gold transition-colors duration-300">
+                           Desenvolvido por <span class="font-medium">Conecta Web Digital</span>
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
