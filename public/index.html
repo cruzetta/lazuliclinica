@@ -365,40 +365,8 @@
           color: #3A3A3A !important;
       }
       
-      /* --- Estilo para o Efeito Parallax --- */
-      .parallax-bg {
-        position: relative;
-        /* A imagem de fundo é definida via 'style' no HTML */
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        /* CORREÇÃO PARA iOS: 'fixed' não funciona bem em mobile. Usaremos 'scroll' como padrão. */
-        background-attachment: scroll; 
-      }
-      /* CORREÇÃO PARA iOS: Reativamos o efeito parallax apenas em telas maiores (desktops) */
-      @media (min-width: 1024px) {
-        .parallax-bg {
-          background-attachment: fixed;
-        }
-      }
-
-      /* Overlay para escurecer a imagem e melhorar a legibilidade do texto */
-      .parallax-bg::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Ajuste a opacidade conforme necessário */
-        z-index: 1;
-      }
-      /* Garante que o conteúdo da seção fique por cima do overlay */
-      .parallax-bg .container {
-        position: relative;
-        z-index: 2;
-      }
-      /* --- FIM do Estilo Parallax --- */
+      /* --- Estilo para o Efeito Parallax (REMOVIDO) --- */
+      /* O estilo antigo foi removido pois agora o efeito é controlado por JS */
 
       #home-video-bg {
         position: absolute;
@@ -490,9 +458,17 @@
             </div>
         </section>
 
-        <!-- Seção Nossos Pilares com Efeito Parallax -->
-        <section id="filosofia" class="parallax-bg py-16 md:py-20 lg:py-32" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/platamais.firebasestorage.app/o/clinica%20lazuli%2FDesign%20sem%20nome%20(19).png?alt=media&token=7fbdebfa-24a5-4fea-816d-9c461269bad1');">
-            <div class="container mx-auto px-6 text-center">
+        <!-- Seção Nossos Pilares com Efeito Parallax (ESTRUTURA ATUALIZADA) -->
+        <section id="filosofia" class="relative overflow-hidden py-16 md:py-20 lg:py-32">
+            <!-- Elemento de fundo para o efeito parallax -->
+            <div class="parallax-bg absolute top-0 left-0 w-full h-full bg-cover bg-center -z-10" 
+                 style="background-image: url('https://firebasestorage.googleapis.com/v0/b/platamais.firebasestorage.app/o/clinica%20lazuli%2FDesign%20sem%20nome%20(19).png?alt=media&token=7fbdebfa-24a5-4fea-816d-9c461269bad1');">
+            </div>
+            <!-- Overlay escuro para legibilidade -->
+            <div class="absolute inset-0 bg-black/50 -z-10"></div>
+
+            <!-- Conteúdo da seção -->
+            <div class="container mx-auto px-6 text-center relative">
                 <h2 class="text-3xl md:text-4xl font-display mb-12 reveal text-white">Nossos Pilares</h2>
                 <div class="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
                     <div class="flex flex-col items-center reveal" style="transition-delay: 200ms;">
@@ -874,6 +850,29 @@
             const yearSpan = document.getElementById('current-year');
             if(yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
+            // *** INÍCIO DO CÓDIGO PARALLAX UNIVERSAL ***
+            function handleParallax() {
+                const parallaxBg = document.querySelector('.parallax-bg');
+                if (!parallaxBg) return;
+
+                const parallaxWrapper = parallaxBg.parentElement;
+                const rect = parallaxWrapper.getBoundingClientRect();
+                
+                // Otimização: só processa se o elemento estiver visível na tela
+                if (rect.bottom < 0 || rect.top > window.innerHeight) {
+                    return;
+                }
+                
+                const speed = -0.3; // Velocidade do efeito. Valor negativo move para cima ao rolar para baixo.
+                const yPos = rect.top * speed;
+                
+                // Aplica a transformação no elemento de fundo
+                parallaxBg.style.transform = `translateY(${yPos}px)`;
+            }
+
+            window.addEventListener('scroll', handleParallax, { passive: true }); // passive: true para melhor performance
+            // *** FIM DO CÓDIGO PARALLAX ***
+
             const defaultTestimonials = [
                 { name: "Jady Muller J.", text: "Clínica maravilhosa! Ambiente perfeito, material de uma qualidade excelente, sem contar os profissionais 100% atenciosos e delicados, meu procedimento ficou maravilhoso, sem dúvidas virei cliente fiel!", rating: 5 },
                 { name: "Luís de Melo", text: "Iniciei minha avaliação estética com Dr Édson Depieri, pois precisava melhorar minha autoimagem, não para embelezamento e vaidade, mas para o aumento da autoestima, bem estar e melhoria da apresentação profissional.", rating: 5 },
@@ -895,9 +894,12 @@
                         if (homeData.subheadline) document.getElementById('home-subheadline-text').textContent = homeData.subheadline;
                         if (homeData.backgroundVideoUrl) {
                             const videoElement = document.getElementById('home-video-bg');
-                            // Adiciona uma verificação para não tentar definir src em um elemento nulo
                             if (videoElement) {
                                 videoElement.src = homeData.backgroundVideoUrl;
+                                // *** CORREÇÃO PARA AUTOPLAY NO iOS ***
+                                videoElement.play().catch(error => {
+                                    console.warn("A reprodução automática do vídeo foi impedida pelo navegador:", error);
+                                });
                             }
                         }
                     }
@@ -907,10 +909,8 @@
                     const aboutDocSnap = await aboutDocRef.get();
                     if (aboutDocSnap.exists && aboutDocSnap.data()) {
                         const aboutData = aboutDocSnap.data();
-                        // Agora usa uma única imagem para os dois doutores
                         document.getElementById('about-drs-photo').src = aboutData.imageUrl || 'https://lazuliclinica.com.br/imagen/imagemmetatag.jpeg';
                     }
-
 
                     // Carregar e ATUALIZAR Tratamentos
                     const treatmentsDocRef = db.collection("siteContent").doc("treatments");
@@ -1008,8 +1008,6 @@
                     }
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
-                    // Adicione aqui um tratamento de erro visual para o usuário, se desejar.
-                    // Por exemplo, mostrar uma mensagem de erro em algum lugar da página.
                 }
             }
 
