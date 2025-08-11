@@ -369,11 +369,19 @@
       .parallax-bg {
         position: relative;
         /* A imagem de fundo é definida via 'style' no HTML */
-        background-attachment: fixed;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        /* CORREÇÃO PARA iOS: 'fixed' não funciona bem em mobile. Usaremos 'scroll' como padrão. */
+        background-attachment: scroll; 
       }
+      /* CORREÇÃO PARA iOS: Reativamos o efeito parallax apenas em telas maiores (desktops) */
+      @media (min-width: 1024px) {
+        .parallax-bg {
+          background-attachment: fixed;
+        }
+      }
+
       /* Overlay para escurecer a imagem e melhorar a legibilidade do texto */
       .parallax-bg::before {
         content: '';
@@ -777,16 +785,17 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     
-    <!-- Firebase Init (Manual for Preview) -->
+    <!-- Firebase Init (CORRIGIDO E ATUALIZADO) -->
     <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY",
-        authDomain: "lazuliclinica-ee588.firebaseapp.com",
-        projectId: "lazuliclinica-ee588",
-        storageBucket: "lazuliclinica-ee588.appspot.com",
-        messagingSenderId: "COLE_SEU_MESSAGING_SENDER_ID_AQUI", 
-        appId: "COLE_SEU_APP_ID_AQUI" 
-      };
+       const firebaseConfig = { 
+         apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY", 
+         authDomain: "lazuliclinica-ee588.firebaseapp.com", 
+         projectId: "lazuliclinica-ee588", 
+         storageBucket: "lazuliclinica-ee588.appspot.com", 
+         messagingSenderId: "1001941309426", 
+         appId: "1:1001941309426:web:d966dceb8f6c0425d5bd6b", 
+         measurementId: "G-7HWTLTCGSN" 
+       };
       firebase.initializeApp(firebaseConfig);
     </script>
 
@@ -884,7 +893,13 @@
                         const homeData = homeDocSnap.data();
                         if (homeData.headline) document.getElementById('home-headline-text').textContent = homeData.headline;
                         if (homeData.subheadline) document.getElementById('home-subheadline-text').textContent = homeData.subheadline;
-                        if (homeData.backgroundVideoUrl) document.getElementById('home-video-bg').src = homeData.backgroundVideoUrl;
+                        if (homeData.backgroundVideoUrl) {
+                            const videoElement = document.getElementById('home-video-bg');
+                            // Adiciona uma verificação para não tentar definir src em um elemento nulo
+                            if (videoElement) {
+                                videoElement.src = homeData.backgroundVideoUrl;
+                            }
+                        }
                     }
 
                     // Carregar Sobre
@@ -993,6 +1008,8 @@
                     }
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
+                    // Adicione aqui um tratamento de erro visual para o usuário, se desejar.
+                    // Por exemplo, mostrar uma mensagem de erro em algum lugar da página.
                 }
             }
 
