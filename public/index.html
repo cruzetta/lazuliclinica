@@ -896,10 +896,18 @@
                             const videoElement = document.getElementById('home-video-bg');
                             if (videoElement) {
                                 videoElement.src = homeData.backgroundVideoUrl;
-                                // *** CORREÇÃO PARA AUTOPLAY NO iOS ***
-                                videoElement.play().catch(error => {
-                                    console.warn("A reprodução automática do vídeo foi impedida pelo navegador:", error);
-                                });
+
+                                // *** CORREÇÃO AVANÇADA PARA AUTOPLAY NO iOS ***
+                                const attemptPlay = () => {
+                                    videoElement.play().catch(error => {
+                                        console.warn("Autoplay impedido. Aguardando interação do usuário.", error);
+                                        // Fallback: Tenta tocar no primeiro toque do usuário na tela
+                                        document.body.addEventListener('touchstart', attemptPlay, { once: true });
+                                    });
+                                };
+                                
+                                // Tenta tocar assim que os metadados estiverem prontos
+                                videoElement.addEventListener('loadedmetadata', attemptPlay, { once: true });
                             }
                         }
                     }
