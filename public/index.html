@@ -265,16 +265,14 @@
         /* --- Gallery Swiper Specifics --- */
         .gallery-swiper {
             width: 100%;
-            aspect-ratio: 4 / 3;
-            max-height: 70vh;
+            aspect-ratio: 1 / 1; /* Força o formato quadrado */
             border-radius: 1rem;
             overflow: hidden;
         }
          .gallery-swiper .swiper-slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            /* NOVO: Transição mais suave */
+            object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
             transition: opacity 0.5s ease;
         }
 
@@ -1007,8 +1005,8 @@
 
                     // --- Load Gallery Content ---
                     const galleryWrapper = document.querySelector('#galeria .swiper-wrapper');
-                    // Ordenação adicionada caso exista um campo 'order' no Firebase
-                    const gallerySnapshot = await db.collection("gallery").orderBy("order", "asc").get();
+                    // CORREÇÃO APLICADA AQUI: Removido o .orderBy("order", "asc")
+                    const gallerySnapshot = await db.collection("gallery").get();
                     galleryWrapper.innerHTML = '';
                     if (gallerySnapshot.empty) {
                         galleryWrapper.innerHTML = `<div class="swiper-slide"><img src="https://placehold.co/1024x768/EAE3D9/3A3A3A?text=Em+Breve" alt="Galeria em breve" loading="lazy" decoding="async"></div>`;
