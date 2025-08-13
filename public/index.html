@@ -4,25 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clínica Lazúli – Dr. Italo Rottoli & Dr. Edson Depieri | Medicina e Odontologia Estética em Canoas</title>
-    
+
     <!-- SEO META TAGS OTIMIZADAS -->
     <meta name="description" content="Encontre os melhores tratamentos de harmonização facial, lentes de contato dental e botox em Canoas na Clínica Lazúli. Agende sua avaliação com nossos especialistas!">
     <meta name="keywords" content="harmonização facial canoas, lentes de contato dental canoas, botox, preenchimento, cirurgia geral, estética médica, dr italo rottoli, dr edson depieri, clínica de estética canoas, peeling, microagulhamento, limpeza dental">
     <meta name="author" content="Dr. Italo Rottoli, Dr. Edson Depieri">
 
-    <!-- 
-      *** METATAGS PARA COMPARTILHAMENTO (OPEN GRAPH) ***
-      Estas tags controlam como o link do seu site aparece no WhatsApp, Facebook, etc.
-    -->
+    <!-- Open Graph Tags -->
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Clínica Lazúli">
     <meta property="og:title" content="Clínica Lazúli – Dr. Italo Rottoli & Dr. Edson Depieri | Estética Avançada">
     <meta property="og:description" content="Especialistas em Harmonização Orofacial, Lentes de Contato Dental, Cirurgia Geral e Estética Médica. Realce sua beleza com naturalidade e segurança em Canoas.">
-    <!-- URL principal do seu site (domínio personalizado) -->
     <meta property="og:url" content="https://lazuliclinica.com.br/">
-    
-    <!-- URL da imagem para a pré-visualização, usando seu domínio personalizado. -->
     <meta property="og:image" content="https://lazuliclinica.com.br/imagen/imagemmetatag.jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -31,49 +25,69 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Clínica Lazúli – Dr. Italo Rottoli & Dr. Edson Depieri | Estética Avançada">
     <meta name="twitter:description" content="Especialistas em Harmonização Orofacial, Lentes de Contato Dental, Cirurgia Geral e Estética Médica. Realce sua beleza com naturalidade e segurança em Canoas.">
-    <!-- Usando o mesmo caminho de imagem com seu domínio personalizado para o Twitter. -->
     <meta name="twitter:image" content="https://lazuliclinica.com.br/imagen/imagemmetatag.jpeg">
-    <!-- Fim das metatags -->
 
-    <!-- Favicon -->
-    <link rel="icon" href="https://img.icons8.com/ios/50/D4AF37/l.png" type="image/png">
+    <!-- Favicon - Modernizado -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%23D4AF37%22>L</text></svg>" type="image/svg+xml">
 
-    <!-- Google Fonts -->
+
+    <!-- Google Fonts - Adicionado 'Inter' para um visual moderno -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Lato', 'sans-serif'],
-              display: ['Playfair Display', 'serif'],
-            },
-            colors: {
-              'lazuli-light-blue': '#F0F8FF',
-              'lazuli-nude': '#F5EBE0',
-              'lazuli-gold': {
-                DEFAULT: '#D4AF37', /* COR ATUALIZADA - Mais brilhante */
-                dark: '#B8860B',    /* Cor antiga movida para 'dark' */
-              },
-              'lazuli-dark': '#3A3A3A',
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        // Usando Inter como fonte principal
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'lazuli-light': '#FAF8F6', // Branco/Nude mais suave
+                        'lazuli-accent': '#EAE3D9', // Acento sutil
+                        'lazuli-gold': {
+                            DEFAULT: '#D4AF37',
+                            dark: '#B8860B',
+                        },
+                        'lazuli-dark': '#2C2C2C', // Cinza escuro mais suave
+                    },
+                    // NOVAS Animações personalizadas
+                    keyframes: {
+                        'fade-in-up': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'scale-in': {
+                             '0%': { opacity: '0', transform: 'scale(0.95)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    }
+                }
             }
-          }
         }
-      }
     </script>
-    
+
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Swiper.js CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
-    <!-- INÍCIO DO CÓDIGO SEO "ESCONDIDO" (DADOS ESTRUTURADOS) -->
+    <!-- Structured Data (SEO) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -128,556 +142,465 @@
       ]
     }
     </script>
-    <!-- FIM DO CÓDIGO SEO "ESCONDIDO" -->
 
     <style>
-      body {
-        overflow-x: hidden;
-      }
-      .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-      }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .faq-question { cursor: pointer; }
-      .faq-answer {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s ease-in-out;
-      }
-      #main-header .nav-link { color: white; position: relative; }
-      #main-header .logo-main-text { color: white; }
-      #main-header #mobile-menu-button { color: white; }
-      .nav-link::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 1px;
-        display: block;
-        margin-top: 5px;
-        right: 50%;
-        background: white;
-        transition: width 0.3s ease, right 0.3s ease;
-      }
-      .nav-link:hover::after {
-        width: 100%;
-        right: 0;
-      }
-      #main-header.header-scrolled {
-        background-color: rgba(255, 255, 255, 0.98);
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        backdrop-filter: blur(8px);
-      }
-      #main-header.header-scrolled .nav-link { color: #3A3A3A; }
-      #main-header.header-scrolled .nav-link:hover { color: #D4AF37; } /* Cor atualizada */
-      #main-header.header-scrolled .logo-main-text { color: #3A3A3A; }
-      #main-header.header-scrolled #mobile-menu-button { color: #3A3A3A; }
-      #main-header.header-scrolled .nav-link::after { background: #D4AF37; } /* Cor atualizada */
-      #mobile-menu-overlay {
-        transition: opacity 0.3s ease-in-out;
-      }
-      #mobile-menu {
-        transform: translateX(100%);
-        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      }
-      #mobile-menu.menu-open {
-        transform: translateX(0);
-      }
-      body.overflow-hidden {
-        overflow: hidden;
-      }
-      
-      /* --- Estilos do Swiper (Galeria e Depoimentos) --- */
-      .swiper-button-next,
-      .swiper-button-prev {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 10;
-        background-color: rgba(255, 255, 255, 0.9);
-        color: #3A3A3A;
-        width: 48px;
-        height: 48px;
-        border-radius: 9999px;
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        transition: background-color 0.3s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .swiper-button-next:hover,
-      .swiper-button-prev:hover {
-          background-color: rgba(255, 255, 255, 1);
-      }
-      .swiper-button-next:after, 
-      .swiper-button-prev:after {
-          font-size: 18px; 
-          font-weight: bold;
-      }
-      .swiper-pagination-bullet {
-        background-color: rgba(0, 0, 0, 0.2);
-        width: 10px;
-        height: 10px;
-        opacity: 0.8;
-        transition: background-color 0.3s, opacity 0.3s;
-      }
-      .swiper-pagination-bullet-active {
-        background-color: #D4AF37; /* Cor atualizada */
-        opacity: 1;
-      }
-      
-      /* Estilos específicos para a Galeria */
-      .gallery-swiper {
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        max-height: 80vh;
-        position: relative;
-        overflow: hidden;
-        margin: 0 auto;
-        border-radius: 0.5rem;
-      }
-      .gallery-swiper .swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        background-color: #f1f5f9;
-      }
-      .gallery-swiper .swiper-slide img {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: cover;
-      }
-      .gallery-swiper-button-prev { left: 0; }
-      .gallery-swiper-button-next { right: 0; }
-      .gallery-swiper .swiper-pagination {
-        bottom: 15px !important;
-      }
-      .gallery-swiper .swiper-pagination-bullet {
-        background-color: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(0, 0, 0, 0.2);
-      }
-      .gallery-swiper .swiper-pagination-bullet-active {
-        background-color: #D4AF37; /* Cor atualizada */
-      }
-      
-      /* Estilos específicos para os Depoimentos */
-      .testimonial-swiper {
-        overflow: visible; /* Permite que as sombras dos cards apareçam */
-        padding-bottom: 50px; /* Espaço para a paginação */
-      }
-      .testimonial-swiper .swiper-slide {
-        height: auto; /* Altura automática para se ajustar ao conteúdo */
-        padding: 4px; /* Espaço para a sombra não ser cortada */
-      }
-      .testimonial-swiper-button-prev { left: -25px; }
-      .testimonial-swiper-button-next { right: -25px; }
-      @media (max-width: 767px) {
-        .testimonial-swiper-button-prev, .testimonial-swiper-button-next {
-            display: none; /* Esconde setas em telas pequenas */
+        /* --- Base Styles & Transitions --- */
+        body {
+            overflow-x: hidden;
+            background-color: #FAF8F6; /* Aplica a nova cor de fundo */
         }
-      }
-      .testimonial-swiper .swiper-pagination {
-        bottom: 0px !important;
-      }
-      
-      /* --- Outros Estilos --- */
-      .section-bg-wrapper {
-          position: relative;
-          z-index: 1;
-          background-color: var(--bg-color, transparent);
-          overflow: hidden;
-      }
-      .section-bg-wrapper::before {
-          content: '';
-          position: absolute;
-          top: 0; 
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-size: cover;
-          background-position: center center;
-          background-repeat: no-repeat;
-          background-image: var(--bg-image);
-          z-index: -2;
-          opacity: 0;
-          transition: opacity 0.6s ease-in-out;
-      }
-      .section-bg-wrapper::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: -1;
-          opacity: 0;
-          transition: opacity 0.6s ease-in-out;
-          background-color: rgba(25, 25, 25, 0.65);
-      }
-      .section-bg-wrapper.has-bg::before,
-      .section-bg-wrapper.has-bg::after {
-          opacity: 1;
-      }
-      .section-bg-wrapper.has-bg { color: #f0f0f0; }
-      .section-bg-wrapper.has-bg .container {
-          position: relative;
-          z-index: 2;
-      }
-      .section-bg-wrapper.has-bg h1,
-      .section-bg-wrapper.has-bg h2,
-      .section-bg-wrapper.has-bg h3,
-      .section-bg-wrapper.has-bg h4,
-      .section-bg-wrapper.has-bg .faq-question {
-          color: white;
-      }
-      .section-bg-wrapper.has-bg .text-lazuli-gold { color: #D4AF37; } /* Cor atualizada */
-      .section-bg-wrapper.has-bg .text-lazuli-dark,
-      .section-bg-wrapper.has-bg .text-lazuli-dark\/80 {
-          color: #f0f0f0;
-      }
-      .section-bg-wrapper.has-bg .border-gray-200 { border-color: rgba(255, 255, 255, 0.2); }
-      .section-bg-wrapper.has-bg .bg-white { background-color: rgba(255,255,255,0.1) !important; }
-      .section-bg-wrapper.has-bg .bg-lazuli-light-blue\/30 {
-          background-color: rgba(30, 41, 59, 0.75) !important;
-          -webkit-backdrop-filter: blur(8px);
-          backdrop-filter: blur(8px);
-          border-color: rgba(255, 255, 255, 0.2);
-      }
-      .section-bg-wrapper.has-bg .text-gray-500 { color: #ccc; }
-      .section-bg-wrapper.has-bg .swiper-button-next,
-      .section-bg-wrapper.has-bg .swiper-button-prev { background-color: rgba(255,255,255,0.8); color: #3A3A3A; }
-      .section-bg-wrapper.has-bg .swiper-pagination-bullet { background-color: rgba(255, 255, 255, 0.5); }
-      .section-bg-wrapper.has-bg .swiper-pagination-bullet-active { background-color: #D4AF37; } /* Cor atualizada */
+        /* Animação de revelação refinada usando Tailwind */
+        .reveal {
+            opacity: 0;
+        }
+        .reveal.visible {
+           animation: fade-in-up 0.8s ease-out forwards;
+        }
 
-      .section-bg-wrapper.has-bg .testimonial-swiper .bg-white {
-          background-color: rgba(255, 255, 255, 0.9) !important;
-          -webkit-backdrop-filter: blur(8px);
-          backdrop-filter: blur(8px);
-      }
-      .section-bg-wrapper.has-bg .testimonial-swiper .text-lazuli-dark,
-      .section-bg-wrapper.has-bg .testimonial-swiper .text-lazuli-dark\/80 {
-          color: #3A3A3A !important;
-      }
-      
-      /* --- Estilo para o Efeito Parallax (RESTAURADO) --- */
-      .parallax-bg {
-        position: relative;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: scroll; /* Padrão para mobile */
-      }
-      @media (min-width: 1024px) {
+        /* --- Header & Navigation --- */
+        #main-header {
+            transition: background-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease, padding 0.4s ease;
+        }
+        #main-header .nav-link { color: white; position: relative; transition: color 0.3s ease; }
+        #main-header .logo-main-text { color: white; }
+        #main-header #mobile-menu-button { color: white; }
+
+        /* Efeito de sublinhado moderno ao passar o mouse */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: white;
+            transform-origin: bottom right;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Estado Rolado (Scrolled) */
+        #main-header.header-scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        #main-header.header-scrolled .nav-link { color: #2C2C2C; }
+        #main-header.header-scrolled .nav-link:hover { color: #D4AF37; }
+        #main-header.header-scrolled .logo-main-text { color: #2C2C2C; }
+        #main-header.header-scrolled #mobile-menu-button { color: #2C2C2C; }
+        #main-header.header-scrolled .nav-link::after { background: #D4AF37; }
+
+        /* Menu Mobile */
+        #mobile-menu-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        #mobile-menu.menu-open {
+            transform: translateX(0);
+        }
+        body.overflow-hidden {
+            overflow: hidden;
+        }
+
+        /* --- Hero Video Background - Efeito Ken Burns --- */
+         #home-video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0;
+            /* NOVO: Efeito de escala sutil para dinamismo */
+            transition: transform 10s linear;
+        }
+        #home.video-loaded #home-video-bg {
+             transform: translate(-50%, -50%) scale(1.05);
+        }
+
+
+        /* --- Swiper Styles (Global) --- */
+        .swiper-button-next,
+        .swiper-button-prev {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #2C2C2C;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+             background-color: #fff;
+             transform: scale(1.05);
+        }
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            transition: background-color 0.3s, opacity 0.3s, transform 0.3s;
+        }
+        .swiper-pagination-bullet-active {
+            background-color: #D4AF37;
+            transform: scale(1.1);
+        }
+
+        /* --- Gallery Swiper Specifics --- */
+        .gallery-swiper {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            max-height: 70vh;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+         .gallery-swiper .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* NOVO: Transição mais suave */
+            transition: opacity 0.5s ease;
+        }
+
+        /* --- Testimonial Swiper Specifics --- */
+        .testimonial-swiper {
+            padding-bottom: 60px; /* Espaço para paginação */
+        }
+        .testimonial-swiper .swiper-slide {
+            height: auto;
+            opacity: 0.6;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: scale(0.95);
+        }
+        /* NOVO: Destacar o slide ativo */
+         .testimonial-swiper .swiper-slide-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @media (max-width: 767px) {
+            .testimonial-swiper-button-prev, .testimonial-swiper-button-next {
+                display: none;
+            }
+        }
+
+        /* --- FAQ (Accordion) Styles --- */
+        .faq-question { cursor: pointer; }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            /* Transição mais suave */
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding-top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+         /* --- Treatment Card Hover Effect (3D Tilt) --- */
+        .treatment-card {
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        .treatment-card:hover {
+             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+
+        /* --- Utility: Parallax Background (Melhorado) --- */
         .parallax-bg {
-          background-attachment: fixed; /* Efeito ativado apenas em desktop */
+            position: relative;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: scroll; /* Padrão para mobile */
+            overflow: hidden;
         }
-      }
-      .parallax-bg::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1;
-      }
-      .parallax-bg .container {
-        position: relative;
-        z-index: 2;
-      }
-      /* --- FIM do Estilo Parallax --- */
+        @media (min-width: 1024px) {
+            .parallax-bg {
+                background-attachment: fixed; /* Efeito ativado apenas em desktop */
+            }
+        }
+        .parallax-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Overlay mais sofisticado */
+            background: linear-gradient(to top, rgba(44, 44, 44, 0.8), rgba(44, 44, 44, 0.5));
+            z-index: 1;
+        }
+        .parallax-bg .container {
+            position: relative;
+            z-index: 2;
+        }
 
-      #home-video-bg {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        z-index: 0;
-      }
     </style>
 </head>
-<body class="text-lazuli-dark bg-white font-sans">
+<body class="text-lazuli-dark font-sans antialiased">
 
-    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#home" class="text-2xl font-display font-bold">
+    <!-- Header -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 py-6">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-display font-semibold tracking-wide">
                 <span class="logo-main-text">Clínica</span> <span class="text-lazuli-gold">Lazúli</span>
             </a>
-            <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#sobre" class="nav-link transition-colors">Sobre</a>
-                <a href="#tratamentos" class="nav-link transition-colors">Tratamentos</a>
-                <a href="#galeria" class="nav-link transition-colors">Resultados</a>
-                <a href="#depoimentos" class="nav-link transition-colors">Depoimentos</a>
-                <a href="#faq" class="nav-link transition-colors">Dúvidas</a>
-                <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="bg-lazuli-gold text-white px-5 py-2 rounded-full hover:bg-lazuli-gold-dark transition-all duration-300 active:scale-95">Agendar Avaliação</a>
+            <nav class="hidden lg:flex space-x-10 items-center">
+                <a href="#sobre" class="nav-link text-base">Sobre</a>
+                <a href="#tratamentos" class="nav-link text-base">Tratamentos</a>
+                <a href="#galeria" class="nav-link text-base">Resultados</a>
+                <a href="#depoimentos" class="nav-link text-base">Depoimentos</a>
+                <a href="#faq" class="nav-link text-base">Dúvidas</a>
+                <!-- Estilo de Botão Aprimorado -->
+                <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="bg-lazuli-gold text-white px-6 py-2 rounded-lg shadow-md hover:bg-lazuli-gold-dark transition-all duration-300 transform hover:shadow-xl active:scale-95">
+                    Agendar Avaliação
+                </a>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden text-2xl transition-colors z-50" aria-label="Abrir menu de navegação">
+            <button id="mobile-menu-button" class="lg:hidden text-2xl transition-colors z-50" aria-label="Abrir menu de navegação">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </header>
 
-    <!-- Menu Mobile Aprimorado -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-30 opacity-0 pointer-events-none md:hidden"></div>
-    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white z-40 p-8 pt-20 shadow-2xl md:hidden">
-        <nav class="flex flex-col space-y-6 text-lg">
+    <!-- Mobile Menu -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-30 opacity-0 pointer-events-none lg:hidden"></div>
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white z-40 p-8 pt-24 shadow-2xl lg:hidden">
+        <nav class="flex flex-col space-y-8 text-lg font-medium">
             <a href="#sobre" class="mobile-nav-link text-lazuli-dark hover:text-lazuli-gold transition-colors">Sobre</a>
             <a href="#tratamentos" class="mobile-nav-link text-lazuli-dark hover:text-lazuli-gold transition-colors">Tratamentos</a>
             <a href="#galeria" class="mobile-nav-link text-lazuli-dark hover:text-lazuli-gold transition-colors">Resultados</a>
             <a href="#depoimentos" class="mobile-nav-link text-lazuli-dark hover:text-lazuli-gold transition-colors">Depoimentos</a>
             <a href="#faq" class="mobile-nav-link text-lazuli-dark hover:text-lazuli-gold transition-colors">Dúvidas</a>
-            <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="block mt-6 bg-lazuli-gold text-white text-center px-5 py-3 rounded-full hover:bg-lazuli-gold-dark transition-all duration-300 active:scale-95">Agendar Avaliação</a>
+            <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="block mt-8 bg-lazuli-gold text-white text-center px-5 py-3 rounded-lg hover:bg-lazuli-gold-dark transition-all duration-300">
+                Agendar Avaliação
+            </a>
         </nav>
     </div>
 
-
     <main>
         <!-- Seção Hero com Vídeo -->
-        <section id="home" class="relative min-h-screen flex items-center bg-lazuli-dark overflow-hidden">
-            <video id="home-video-bg" autoplay loop muted playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none">
-                <!-- A fonte do vídeo será adicionada dinamicamente pelo JS -->
+        <section id="home" class="relative h-screen flex items-center bg-lazuli-dark overflow-hidden">
+            <video id="home-video-bg" autoplay loop muted playsinline>
+                <!-- Fonte do vídeo adicionada dinamicamente pelo JS -->
             </video>
-            <div class="absolute inset-0 bg-black/60 z-10"></div>
+            <!-- Overlay melhorado com gradiente sutil -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-black/50 z-10"></div>
+
             <div class="container mx-auto px-6 text-center text-white relative z-20">
-                <h1 id="home-headline-text" class="text-4xl md:text-6xl lg:text-7xl font-display font-medium leading-tight mb-4 reveal">Beleza em equilíbrio, sorriso em harmonia.</h1>
-                <p id="home-subheadline-text" class="text-lg md:text-xl max-w-3xl mx-auto mb-8 reveal" style="transition-delay: 200ms;">Na Lazúli, unimos medicina e odontologia para realçar sua melhor versão, com ciência e estética.</p>
-                <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="bg-lazuli-gold text-white px-8 py-4 rounded-full hover:bg-lazuli-gold-dark transition-all duration-300 transform hover:scale-105 inline-block reveal active:scale-95" style="transition-delay: 400ms;">
+                <!-- Usando animações Tailwind para o conteúdo do hero -->
+                <h1 id="home-headline-text" class="text-4xl md:text-6xl lg:text-7xl font-display font-medium leading-tight mb-6 opacity-0 animate-fade-in-up">
+                    Beleza em equilíbrio, sorriso em harmonia.
+                </h1>
+                <p id="home-subheadline-text" class="text-lg md:text-xl max-w-3xl mx-auto mb-10 opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
+                    Na Lazúli, unimos medicina e odontologia para realçar sua melhor versão, com ciência e estética.
+                </p>
+                <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="bg-lazuli-gold text-white px-10 py-4 rounded-lg font-medium shadow-lg hover:bg-lazuli-gold-dark transition-all duration-300 transform hover:scale-105 inline-block opacity-0 animate-fade-in-up active:scale-95" style="animation-delay: 0.6s;">
                     Agende sua avaliação personalizada
+                </a>
+            </div>
+
+            <!-- NOVO: Indicador de Rolagem (Scroll Down) -->
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 opacity-0 animate-fade-in-up" style="animation-delay: 1.5s;">
+                <a href="#sobre" class="text-white opacity-70 hover:opacity-100 transition-opacity">
+                    <i class="fas fa-chevron-down fa-2x animate-bounce"></i>
                 </a>
             </div>
         </section>
 
-        <!-- Seção Sobre (Layout Revertido para 2 colunas) -->
-        <section id="sobre" class="section-bg-wrapper py-16 md:py-20 lg:py-32" style="--bg-color: #ffffff;">
+        <!-- Seção Sobre (Layout Refinado) -->
+        <section id="sobre" class="py-20 md:py-32 bg-lazuli-light">
             <div class="container mx-auto px-6">
-                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 max-w-5xl mx-auto">
-                    <div class="lg:w-2/5 reveal">
-                        <img id="about-drs-photo" src="https://lazuliclinica.com.br/imagen/imagemmetatag.jpeg" alt="Doutores Italo Rottoli e Edson Depieri, especialistas em estética na Clínica Lazúli em Canoas" class="rounded-lg shadow-2xl object-cover w-full h-auto" loading="lazy" decoding="async">
+                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-24 max-w-6xl mx-auto">
+
+                    <!-- Imagem com Efeito de Moldura Elegante -->
+                    <div class="lg:w-1/2 reveal relative">
+                        <div class="absolute -top-6 -left-6 w-full h-full border-4 border-lazuli-gold/30 rounded-xl z-0 hidden lg:block"></div>
+                        <img id="about-drs-photo" src="https://lazuliclinica.com.br/imagen/imagemmetatag.jpeg" alt="Doutores Italo Rottoli e Edson Depieri, especialistas em estética na Clínica Lazúli em Canoas" class="rounded-xl shadow-2xl object-cover w-full h-auto relative z-10" loading="lazy" decoding="async">
                     </div>
-                    <div class="lg:w-3/5 text-center lg:text-left reveal" style="transition-delay: 200ms;">
-                        <h2 class="text-3xl md:text-4xl font-display mb-6">Nossos Especialistas em Canoas</h2>
-                        
-                        <div class="mb-8">
+
+                    <!-- Texto e Biografias -->
+                    <div class="lg:w-1/2 text-center lg:text-left reveal" style="animation-delay: 0.3s;">
+                        <span class="text-lazuli-gold font-medium uppercase tracking-widest mb-4 block">Nossa Essência</span>
+                        <h2 class="text-3xl md:text-5xl font-display mb-10">Especialistas Dedicados à Sua Autoestima</h2>
+
+                        <!-- Biografia 1 -->
+                        <div class="mb-10 p-6 bg-white rounded-lg shadow-sm">
                             <h3 class="text-2xl font-display mb-2">Dr. Italo Rottoli</h3>
-                            <p class="text-lazuli-gold font-semibold mb-4">Especialista e Mestre em Harmonização Orofacial</p>
-                            <p class="leading-relaxed">Com uma trajetória dedicada à excelência, Dr. Italo é apaixonado por transformar sorrisos e realçar a beleza natural. Sua filosofia une arte e precisão técnica, com foco em resultados elegantes, duradouros e um cuidado humanizado.</p>
+                            <p class="text-lazuli-gold font-semibold mb-4">Mestre em Harmonização Orofacial</p>
+                            <p class="leading-relaxed text-gray-600">Com uma trajetória dedicada à excelência, Dr. Italo une arte e precisão técnica. Seu foco está em resultados elegantes, duradouros e um cuidado genuinamente humanizado.</p>
                         </div>
 
-                        <div>
+                        <!-- Biografia 2 -->
+                         <div class="p-6 bg-white rounded-lg shadow-sm">
                             <h3 class="text-2xl font-display mb-2">Dr. Edson Depieri</h3>
                             <p class="text-lazuli-gold font-semibold mb-4">Médico Cirurgião Geral | Estética Médica</p>
-                            <p class="leading-relaxed">Cirurgião geral e professor acadêmico, Dr. Edson realiza atendimentos clínicos, procedimentos cirúrgicos e tratamentos estéticos faciais e corporais. Seu trabalho une técnica, cuidado humanizado e foco na qualidade de vida.</p>
+                            <p class="leading-relaxed text-gray-600">Cirurgião experiente e professor acadêmico, Dr. Edson realiza procedimentos clínicos, cirúrgicos e estéticos. Seu trabalho foca na técnica apurada e na qualidade de vida do paciente.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Seção Nossos Pilares com Efeito Parallax (ESTRUTURA ORIGINAL RESTAURADA) -->
-        <section id="filosofia" class="parallax-bg py-16 md:py-20 lg:py-32" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/platamais.firebasestorage.app/o/clinica%20lazuli%2FDesign%20sem%20nome%20(19).png?alt=media&token=7fbdebfa-24a5-4fea-816d-9c461269bad1');">
+        <!-- Seção Nossos Pilares com Efeito Parallax (Melhorado) -->
+        <section id="filosofia" class="parallax-bg py-20 md:py-32" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/platamais.firebasestorage.app/o/clinica%20lazuli%2FDesign%20sem%20nome%20(19).png?alt=media&token=7fbdebfa-24a5-4fea-816d-9c461269bad1');">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-display mb-12 reveal text-white">Nossos Pilares</h2>
+                <h2 class="text-3xl md:text-5xl font-display mb-16 reveal text-white">A Filosofia Lazúli</h2>
                 <div class="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
-                    <div class="flex flex-col items-center reveal" style="transition-delay: 200ms;">
-                        <div class="bg-white text-lazuli-gold p-5 rounded-full mb-4 shadow-md"><i class="fas fa-shield-alt fa-2x"></i></div>
-                        <h3 class="text-2xl font-display mb-2 text-white">Segurança</h3>
+
+                    <!-- Pilar 1 -->
+                    <div class="flex flex-col items-center reveal transition-transform duration-500 hover:scale-105" style="animation-delay: 0.2s;">
+                        <!-- Ícone com animação flutuante sutil -->
+                        <div class="bg-white text-lazuli-gold p-6 rounded-full mb-6 shadow-xl animate-float" style="animation-duration: 8s;">
+                            <i class="fas fa-shield-alt fa-3x"></i>
+                        </div>
+                        <h3 class="text-2xl font-display mb-3 text-white">Segurança</h3>
                         <p class="text-gray-200">Protocolos rigorosos e produtos de ponta para sua total tranquilidade.</p>
                     </div>
-                    <div class="flex flex-col items-center reveal" style="transition-delay: 400ms;">
-                        <div class="bg-white text-lazuli-gold p-5 rounded-full mb-4 shadow-md"><i class="fas fa-leaf fa-2x"></i></div>
-                        <h3 class="text-2xl font-display mb-2 text-white">Naturalidade</h3>
+
+                    <!-- Pilar 2 -->
+                    <div class="flex flex-col items-center reveal transition-transform duration-500 hover:scale-105" style="animation-delay: 0.4s;">
+                        <div class="bg-white text-lazuli-gold p-6 rounded-full mb-6 shadow-xl animate-float" style="animation-duration: 9s;">
+                            <i class="fas fa-leaf fa-3x"></i>
+                        </div>
+                        <h3 class="text-2xl font-display mb-3 text-white">Naturalidade</h3>
                         <p class="text-gray-200">Resultados que realçam sua beleza única, sem exageros e com elegância.</p>
                     </div>
-                    <div class="flex flex-col items-center reveal" style="transition-delay: 600ms;">
-                        <div class="bg-white text-lazuli-gold p-5 rounded-full mb-4 shadow-md"><i class="fas fa-microchip fa-2x"></i></div>
-                        <h3 class="text-2xl font-display mb-2 text-white">Tecnologia</h3>
+
+                    <!-- Pilar 3 -->
+                    <div class="flex flex-col items-center reveal transition-transform duration-500 hover:scale-105" style="animation-delay: 0.6s;">
+                        <div class="bg-white text-lazuli-gold p-6 rounded-full mb-6 shadow-xl animate-float" style="animation-duration: 10s;">
+                            <i class="fas fa-microchip fa-3x"></i>
+                        </div>
+                        <h3 class="text-2xl font-display mb-3 text-white">Tecnologia</h3>
                         <p class="text-gray-200">Inovação a serviço da estética, com planejamento digital e técnicas avançadas.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Seção Tratamentos -->
-        <section id="tratamentos" class="section-bg-wrapper py-16 md:py-20 lg:py-32" style="--bg-color: #ffffff;">
+        <!-- Seção Tratamentos (Redesenhada) -->
+        <section id="tratamentos" class="py-20 md:py-32 bg-lazuli-light">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Tratamentos em Destaque em Canoas</h2>
-                <p class="max-w-2xl mx-auto text-lg mb-12 md:mb-16 reveal" style="transition-delay: 200ms;">Soluções personalizadas para uma aparência rejuvenescida e um sorriso radiante.</p>
-                
-                <div id="treatments-grid" class="grid md:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto">
-                    
-                    <!-- Card 1: Estética Facial -->
-                    <div class="bg-lazuli-light-blue/30 border border-gray-200 p-8 rounded-lg text-left reveal transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col" style="transition-delay: 400ms;">
-                        <div class="flex items-center mb-4">
-                            <div id="harmonizacao-icon-wrapper" class="bg-lazuli-nude text-lazuli-gold w-16 h-16 p-4 rounded-full mr-4 flex items-center justify-center overflow-hidden flex-shrink-0">
+                <span class="text-lazuli-gold font-medium uppercase tracking-widest mb-4 block reveal">Nossas Especialidades</span>
+                <h2 class="text-3xl md:text-5xl font-display mb-6 reveal" style="animation-delay: 0.2s;">Tratamentos em Destaque</h2>
+                <p class="max-w-2xl mx-auto text-lg mb-16 reveal text-gray-600" style="animation-delay: 0.4s;">Soluções personalizadas para uma aparência rejuvenescida e um sorriso radiante.</p>
+
+                <div id="treatments-grid" class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+
+                    <!-- Card 1: Estética Facial (Modernizado com Efeito 3D) -->
+                    <div class="treatment-card bg-white p-10 rounded-xl text-left reveal shadow-lg flex flex-col" style="animation-delay: 0.6s;" data-tilt>
+                        <div class="flex items-center mb-6">
+                            <div id="harmonizacao-icon-wrapper" class="bg-lazuli-accent text-lazuli-gold w-16 h-16 p-4 rounded-full mr-5 flex items-center justify-center overflow-hidden flex-shrink-0">
                                 <i class="fas fa-user-check fa-2x"></i>
                             </div>
                             <h3 id="harmonizacao-title" class="text-2xl font-display">Estética Facial e Corporal</h3>
                         </div>
-                        <p id="harmonizacao-description" class="mb-4 flex-grow">Procedimentos que equilibram os traços faciais, promovendo um rejuvenescimento e simetria de forma natural.</p>
-                        <div id="harmonizacao-features-list" class="grid grid-cols-2 gap-x-4 text-lazuli-dark/80">
-                            <ul class="space-y-2">
-                                <li class="flex items-start"><i class="fas fa-check-circle text-lazuli-gold mr-2 mt-1"></i><span>Gerenciamento do envelhecimento</span></li>
-                                <li class="flex items-start"><i class="fas fa-check-circle text-lazuli-gold mr-2 mt-1"></i><span>Toxina Botulínica</span></li>
-                                <li class="flex items-start"><i class="fas fa-check-circle text-lazuli-gold mr-2 mt-1"></i><span>Preenchedores faciais</span></li>
+                        <p id="harmonizacao-description" class="mb-6 flex-grow text-gray-600">Procedimentos que equilibram os traços faciais, promovendo um rejuvenescimento e simetria de forma natural.</p>
+                        <div id="harmonizacao-features-list" class="grid grid-cols-2 gap-x-6 text-gray-700 font-medium">
+                            <!-- Conteúdo gerenciado pelo JS -->
+                            <ul class="space-y-3">
+                                <li class="flex items-start"><i class="fas fa-check text-lazuli-gold mr-3 mt-1"></i><span>Gerenciamento do envelhecimento</span></li>
+                                <li class="flex items-start"><i class="fas fa-check text-lazuli-gold mr-3 mt-1"></i><span>Toxina Botulínica</span></li>
+                                <li class="flex items-start"><i class="fas fa-check text-lazuli-gold mr-3 mt-1"></i><span>Preenchedores faciais</span></li>
                             </ul>
-                            <ul class="space-y-2">
-                                <li class="flex items-start"><i class="fas fa-check-circle text-lazuli-gold mr-2 mt-1"></i><span>Bioestimuladores de colágeno</span></li>
-                                <li class="flex items-start"><i class="fas fa-check-circle text-lazuli-gold mr-2 mt-1"></i><span>Microagulhamento</span></li>
-                                <li class="flex items-start"><i class="fas fa-check-circle text-lazuli-gold mr-2 mt-1"></i><span>Peeling</span></li>
+                            <ul class="space-y-3">
+                                <li class="flex items-start"><i class="fas fa-check text-lazuli-gold mr-3 mt-1"></i><span>Bioestimuladores de colágeno</span></li>
+                                <li class="flex items-start"><i class="fas fa-check text-lazuli-gold mr-3 mt-1"></i><span>Microagulhamento</span></li>
+                                <li class="flex items-start"><i class="fas fa-check text-lazuli-gold mr-3 mt-1"></i><span>Peeling</span></li>
                             </ul>
                         </div>
                     </div>
-                    
-                    <!-- Card 2: Lentes de Contato Dental -->
-                    <div class="bg-lazuli-light-blue/30 border border-gray-200 p-8 rounded-lg text-left reveal transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col" style="transition-delay: 600ms;">
-                        <div class="flex items-center mb-4">
-                            <div id="lentes-icon-wrapper" class="bg-lazuli-nude text-lazuli-gold w-16 h-16 p-4 rounded-full mr-4 flex items-center justify-center overflow-hidden flex-shrink-0">
+
+                    <!-- Card 2: Lentes de Contato Dental (Modernizado com Efeito 3D) -->
+                    <div class="treatment-card bg-white p-10 rounded-xl text-left reveal shadow-lg flex flex-col" style="animation-delay: 0.8s;" data-tilt>
+                        <div class="flex items-center mb-6">
+                            <div id="lentes-icon-wrapper" class="bg-lazuli-accent text-lazuli-gold w-16 h-16 p-4 rounded-full mr-5 flex items-center justify-center overflow-hidden flex-shrink-0">
                                 <i class="fas fa-gem fa-2x"></i>
                             </div>
                             <h3 id="lentes-title" class="text-2xl font-display">Lentes de Contato Dental</h3>
                         </div>
-                        <p id="lentes-description" class="mb-4 flex-grow">Lentes ultrafinas aplicadas sobre os dentes para corrigir imperfeições de cor, formato, tamanho e alinhamento, proporcionando um sorriso mais harmônico, branco e natural.</p>
-                        <div id="lentes-features-list" class="space-y-4 text-lazuli-dark/80">
-                                <div>
-                                    <h4 class="font-semibold text-lazuli-dark flex items-center"><i class="fas fa-star text-lazuli-gold mr-2"></i>Resina</h4>
-                                    <p class="pl-7 text-sm">Resultado imediato, acessível e conservador.</p>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-lazuli-dark flex items-center"><i class="fas fa-crown text-lazuli-gold mr-2"></i>Porcelana</h4>
-                                    <p class="pl-7 text-sm">Alta durabilidade e resistência a manchas.</p>
-                                </div>
+                        <p id="lentes-description" class="mb-6 flex-grow text-gray-600">Lentes ultrafinas para corrigir imperfeições de cor, formato e alinhamento, proporcionando um sorriso mais harmônico e natural.</p>
+
+                        <div id="lentes-features-list" class="space-y-6 text-gray-700">
+                                 <div>
+                                     <h4 class="font-semibold text-lazuli-dark flex items-center text-lg"><i class="fas fa-star text-lazuli-gold mr-3"></i>Resina</h4>
+                                     <p class="pl-10 text-sm text-gray-500">Resultado imediato, acessível e conservador.</p>
+                                 </div>
+                                 <div>
+                                     <h4 class="font-semibold text-lazuli-dark flex items-center text-lg"><i class="fas fa-crown text-lazuli-gold mr-3"></i>Porcelana</h4>
+                                     <p class="pl-10 text-sm text-gray-500">Alta durabilidade e resistência a manchas.</p>
+                                 </div>
                         </div>
-                         <p class="mt-4 text-sm font-semibold text-center pt-4 border-t border-gray-300">Ambas valorizam o sorriso de forma segura e personalizada.</p>
+                         <p class="mt-6 text-sm font-semibold text-center pt-6 border-t border-gray-100 text-lazuli-gold">Ambas valorizam o sorriso de forma segura.</p>
                     </div>
                 </div>
 
-                <!-- SEÇÃO "NOSSOS SERVIÇOS" -->
-                <div class="mt-16 md:mt-24 reveal">
-                    <h3 class="text-2xl md:text-3xl font-display mb-8">Nossos Serviços</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 max-w-4xl mx-auto text-left">
-                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3"><i class="fas fa-stethoscope text-lazuli-gold fa-lg w-6 text-center"></i><span>Consultas Médicas</span></div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3"><i class="fas fa-procedures text-lazuli-gold fa-lg w-6 text-center"></i><span>Cirurgia Geral</span></div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3"><i class="fas fa-tooth text-lazuli-gold fa-lg w-6 text-center"></i><span>Profilaxia Dental</span></div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3"><i class="fas fa-smile-beam text-lazuli-gold fa-lg w-6 text-center"></i><span>Clareamento Dental</span></div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3"><i class="fas fa-fill-drip text-lazuli-gold fa-lg w-6 text-center"></i><span>Restaurações</span></div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3"><i class="fas fa-seedling text-lazuli-gold fa-lg w-6 text-center"></i><span>Endodontia (Canal)</span></div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3"><i class="fas fa-puzzle-piece text-lazuli-gold fa-lg w-6 text-center"></i><span>Implantes</span></div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm flex items-center gap-3"><i class="fas fa-user-cog text-lazuli-gold fa-lg w-6 text-center"></i><span>Próteses Dentais</span></div>
+                <!-- SEÇÃO "NOSSOS SERVIÇOS" (Mais Clean) -->
+                <div class="mt-24 reveal">
+                    <h3 class="text-3xl md:text-4xl font-display mb-12">Serviços Complementares</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 max-w-5xl mx-auto text-left">
+                        <!-- Simplificando os cards para serem mais leves -->
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"><i class="fas fa-stethoscope text-lazuli-gold fa-lg w-6"></i><span>Consultas Médicas</span></div>
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"><i class="fas fa-procedures text-lazuli-gold fa-lg w-6"></i><span>Cirurgia Geral</span></div>
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"><i class="fas fa-tooth text-lazuli-gold fa-lg w-6"></i><span>Profilaxia Dental</span></div>
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"><i class="fas fa-smile-beam text-lazuli-gold fa-lg w-6"></i><span>Clareamento Dental</span></div>
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"><i class="fas fa-fill-drip text-lazuli-gold fa-lg w-6"></i><span>Restaurações</span></div>
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"><i class="fas fa-seedling text-lazuli-gold fa-lg w-6"></i><span>Endodontia (Canal)</span></div>
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"><i class="fas fa-puzzle-piece text-lazuli-gold fa-lg w-6"></i><span>Implantes</span></div>
+                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"><i class="fas fa-user-cog text-lazuli-gold fa-lg w-6"></i><span>Próteses Dentais</span></div>
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- Seção Galeria -->
-        <section id="galeria" class="section-bg-wrapper py-16 md:py-20 lg:py-32" style="--bg-color: #F0F8FF;">
+        <!-- Seção Galeria (Mais Focada) -->
+        <section id="galeria" class="py-20 md:py-32 bg-white">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Transformações Reais</h2>
-                <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Resultados que refletem nossa dedicação à ética e à naturalidade.</p>
-                
-                <div class="max-w-2xl mx-auto reveal relative" style="transition-delay: 400ms;">
-                    <div class="swiper-container gallery-swiper max-w-lg mx-auto">
+                <span class="text-lazuli-gold font-medium uppercase tracking-widest mb-4 block reveal">Resultados</span>
+                <h2 class="text-3xl md:text-5xl font-display mb-6 reveal" style="animation-delay: 0.2s;">Transformações Reais</h2>
+                <p class="max-w-2xl mx-auto text-lg mb-12 reveal text-gray-600" style="animation-delay: 0.4s;">Resultados que refletem nossa dedicação à ética e à naturalidade.</p>
+
+                <!-- Centralizando o Swiper -->
+                <div class="max-w-4xl mx-auto reveal relative" style="animation-delay: 0.6s;">
+                    <div class="swiper-container gallery-swiper shadow-xl">
                         <div class="swiper-wrapper">
-                            <!-- Slides serão inseridos aqui pelo JavaScript -->
-                             <div class="swiper-slide"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Carregando..." alt="Galeria de resultados da Clínica Lazúli" loading="lazy" decoding="async"></div>
+                            <!-- Slides inseridos pelo JavaScript -->
+                             <div class="swiper-slide"><img src="https://placehold.co/1024x768/EAE3D9/3A3A3A?text=Carregando..." alt="Galeria de resultados da Clínica Lazúli" loading="lazy" decoding="async"></div>
                         </div>
-                        <div class="swiper-pagination gallery-swiper-pagination"></div>
+                        <div class="swiper-pagination gallery-swiper-pagination mt-6"></div>
                     </div>
                     <div class="swiper-button-next gallery-swiper-button-next"></div>
                     <div class="swiper-button-prev gallery-swiper-button-prev"></div>
                 </div>
 
-                <p class="text-sm text-gray-500 mt-4 px-4">*Imagens de pacientes reais com autorização de uso. Os resultados podem variar.</p>
-            </div>
-        </section>
-        
-        <!-- Seção FAQ -->
-        <section id="faq" class="section-bg-wrapper py-16 md:py-20 lg:py-32" style="--bg-color: #ffffff;">
-            <div class="container mx-auto px-6 max-w-3xl">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-display mb-4 reveal">Dúvidas Frequentes</h2>
-                    <p class="text-lg reveal" style="transition-delay: 200ms;">Respostas rápidas para as perguntas mais comuns.</p>
-                </div>
-                <div class="space-y-4 reveal" style="transition-delay: 400ms;">
-                    
-                    <div class="faq-item border-b border-gray-200 py-4">
-                        <div class="faq-question flex justify-between items-center text-xl font-semibold">
-                            <span>Harmonização facial deixa o rosto artificial?</span>
-                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
-                        </div>
-                        <div class="faq-answer text-lazuli-dark/80 pt-4">
-                            <p>Pelo contrário. Nossa filosofia é <strong>realçar sua beleza com naturalidade</strong>. Usamos técnicas precisas para um resultado elegante e sutil, sem exageros.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item border-b border-gray-200 py-4">
-                        <div class="faq-question flex justify-between items-center text-xl font-semibold">
-                            <span>Lentes de contato dental exigem muito desgaste dos dentes?</span>
-                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
-                        </div>
-                        <div class="faq-answer text-lazuli-dark/80 pt-4">
-                            <p>Não. Utilizamos uma técnica moderna e <strong>minimamente invasiva</strong>. Na maioria dos casos, o desgaste é mínimo ou até mesmo inexistente, preservando seus dentes naturais.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item border-b border-gray-200 py-4">
-                        <div class="faq-question flex justify-between items-center text-xl font-semibold">
-                            <span>Os procedimentos são seguros?</span>
-                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
-                        </div>
-                        <div class="faq-answer text-lazuli-dark/80 pt-4">
-                            <p>Totalmente. A segurança é nossa prioridade. Usamos apenas produtos aprovados pela ANVISA e seguimos <strong>protocolos de segurança rigorosos</strong> para garantir sua total tranquilidade.</p>
-                        </div>
-                    </div>
-
-                     <div class="faq-item border-b border-gray-200 py-4">
-                        <div class="faq-question flex justify-between items-center text-xl font-semibold">
-                            <span>Qual a durabilidade dos resultados?</span>
-                             <i class="fas fa-chevron-down transition-transform duration-300"></i>
-                        </div>
-                        <div class="faq-answer text-lazuli-dark/80 pt-4">
-                            <p>Varia por tratamento. O efeito do Botox® dura de 4 a 6 meses, enquanto preenchimentos podem durar mais de um ano. As lentes de contato, com os devidos cuidados, <strong>duram mais de 15 anos</strong>.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item border-b border-gray-200 py-4">
-                        <div class="faq-question flex justify-between items-center text-xl font-semibold">
-                            <span>Como sei qual o melhor tratamento para mim?</span>
-                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
-                        </div>
-                        <div class="faq-answer text-lazuli-dark/80 pt-4">
-                           <p>A <strong>avaliação personalizada</strong> é o primeiro passo. Nela, vamos entender seus desejos, analisar suas características e criar um plano de tratamento exclusivo para você.</p>
-                        </div>
-                    </div>
-
-                    <div class="text-center pt-10">
-                        <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="bg-lazuli-gold text-white px-8 py-3 rounded-full hover:bg-lazuli-gold-dark transition-all duration-300 transform hover:scale-105 inline-block active:scale-95">
-                            Agendar uma Avaliação
-                        </a>
-                    </div>
-
-                </div>
+                <p class="text-sm text-gray-500 mt-6 px-4">*Imagens de pacientes reais com autorização de uso. Os resultados podem variar.</p>
             </div>
         </section>
 
-        <!-- Seção Depoimentos -->
-        <section id="depoimentos" class="section-bg-wrapper py-16 md:py-20 lg:py-32" style="--bg-color: #F5EBE0;">
+         <!-- Seção Depoimentos (Mais Elegante - Fundo Escuro) -->
+        <section id="depoimentos" class="py-20 md:py-32 bg-lazuli-dark text-white">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-display mb-12 reveal">Confiança que Inspira</h2>
-                
+                 <span class="text-lazuli-gold font-medium uppercase tracking-widest mb-4 block reveal">O que dizem nossos pacientes</span>
+                <h2 class="text-3xl md:text-5xl font-display mb-16 reveal" style="animation-delay: 0.2s;">Confiança que Inspira</h2>
+
                 <!-- Container do Carrossel com Swiper.js -->
-                <div class="max-w-6xl mx-auto reveal relative" style="transition-delay: 200ms;">
+                <div class="max-w-7xl mx-auto reveal relative" style="animation-delay: 0.4s;">
                     <div class="swiper-container testimonial-swiper">
                         <div class="swiper-wrapper">
                             <!-- Slides dos depoimentos serão inseridos aqui pelo JavaScript -->
@@ -690,21 +613,91 @@
                     <div class="swiper-button-prev testimonial-swiper-button-prev"></div>
                 </div>
 
-                <div class="mt-12 reveal">
-                     <a href="https://www.google.com/maps/place/Cl%C3%ADnica+Laz%C3%BAli+-+Medicina+e+Odontologia+Est%C3%A9tica/@-29.9239435,-51.1797007,17z/data=!4m8!3m7!1s0x951979270c715a7b:0x27a1151fc0641ef!8m2!3d-29.9239482!4d-51.1771258!9m1!1b1!16s%2Fg%2F11tbz8p_78?hl=pt-BR&entry=ttu" target="_blank" class="bg-transparent border-2 border-lazuli-gold text-lazuli-gold px-8 py-3 rounded-full hover:bg-lazuli-gold hover:text-white transition-all duration-300 inline-block active:scale-95">
+                <div class="mt-16 reveal">
+                     <a href="https://www.google.com/maps/place/Cl%C3%ADnica+Laz%C3%BAli+-+Medicina+e+Odontologia+Est%C3%A9tica/@-29.9239435,-51.1797007,17z/data=!4m8!3m7!1s0x951979270c715a7b:0x27a1151fc0641ef!8m2!3d-29.9239482!4d-51.1771258!9m1!1b1!16s%2Fg%2F11tbz8p_78?hl=pt-BR&entry=ttu" target="_blank" class="bg-transparent border-2 border-lazuli-gold text-lazuli-gold px-8 py-3 rounded-lg hover:bg-lazuli-gold hover:text-white transition-all duration-300 inline-block active:scale-95 font-medium">
                          Ver mais avaliações no Google
-                     </a>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- Seção Agendamento -->
-        <section id="agendamento" class="section-bg-wrapper py-16 md:py-20 lg:py-32 text-center" style="--bg-color: #ffffff;">
+        <!-- Seção FAQ (Mais interativa) -->
+        <section id="faq" class="py-20 md:py-32 bg-lazuli-light">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-16">
+                     <span class="text-lazuli-gold font-medium uppercase tracking-widest mb-4 block reveal">Informações</span>
+                    <h2 class="text-3xl md:text-5xl font-display mb-6 reveal" style="animation-delay: 0.2s;">Dúvidas Frequentes</h2>
+                    <p class="text-lg reveal text-gray-600" style="animation-delay: 0.4s;">Respostas rápidas para as perguntas mais comuns.</p>
+                </div>
+                <div class="space-y-4 reveal" style="animation-delay: 0.6s;">
+
+                    <!-- FAQ Item -->
+                    <div class="faq-item bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg">
+                        <div class="faq-question flex justify-between items-center text-lg font-semibold p-6">
+                            <span>Harmonização facial deixa o rosto artificial?</span>
+                            <i class="fas fa-plus transition-transform duration-300 text-lazuli-gold"></i>
+                        </div>
+                        <div class="faq-answer text-gray-600 px-6 pb-6">
+                            <p>Pelo contrário. Nossa filosofia é <strong>realçar sua beleza com naturalidade</strong>. Usamos técnicas precisas para um resultado elegante e sutil, sem exageros.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item -->
+                    <div class="faq-item bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg">
+                        <div class="faq-question flex justify-between items-center text-lg font-semibold p-6">
+                            <span>Lentes de contato dental exigem muito desgaste dos dentes?</span>
+                            <i class="fas fa-plus transition-transform duration-300 text-lazuli-gold"></i>
+                        </div>
+                        <div class="faq-answer text-gray-600 px-6 pb-6">
+                            <p>Não. Utilizamos uma técnica moderna e <strong>minimamente invasiva</strong>. Na maioria dos casos, o desgaste é mínimo ou até mesmo inexistente, preservando seus dentes naturais.</p>
+                        </div>
+                    </div>
+
+                     <!-- FAQ Item -->
+                    <div class="faq-item bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg">
+                        <div class="faq-question flex justify-between items-center text-lg font-semibold p-6">
+                            <span>Os procedimentos são seguros?</span>
+                             <i class="fas fa-plus transition-transform duration-300 text-lazuli-gold"></i>
+                        </div>
+                        <div class="faq-answer text-gray-600 px-6 pb-6">
+                            <p>Totalmente. A segurança é nossa prioridade. Usamos apenas produtos aprovados pela ANVISA e seguimos <strong>protocolos de segurança rigorosos</strong> para garantir sua total tranquilidade.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item -->
+                     <div class="faq-item bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg">
+                        <div class="faq-question flex justify-between items-center text-lg font-semibold p-6">
+                            <span>Qual a durabilidade dos resultados?</span>
+                             <i class="fas fa-plus transition-transform duration-300 text-lazuli-gold"></i>
+                        </div>
+                        <div class="faq-answer text-gray-600 px-6 pb-6">
+                            <p>Varia por tratamento. O efeito do Botox® dura de 4 a 6 meses, enquanto preenchimentos podem durar mais de um ano. As lentes de contato, com os devidos cuidados, <strong>duram mais de 15 anos</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item -->
+                    <div class="faq-item bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg">
+                        <div class="faq-question flex justify-between items-center text-lg font-semibold p-6">
+                            <span>Como sei qual o melhor tratamento para mim?</span>
+                             <i class="fas fa-plus transition-transform duration-300 text-lazuli-gold"></i>
+                        </div>
+                        <div class="faq-answer text-gray-600 px-6 pb-6">
+                           <p>A <strong>avaliação personalizada</strong> é o primeiro passo. Nela, vamos entender seus desejos, analisar suas características e criar um plano de tratamento exclusivo para você.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Agendamento (Call to Action Forte) -->
+        <section id="agendamento" class="py-20 md:py-32 text-center bg-white">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-display mb-4 text-lazuli-dark reveal">Sua transformação começa agora.</h2>
-                <p class="max-w-2xl mx-auto text-lg mb-12 reveal" style="transition-delay: 200ms;">Entre em contato e dê o primeiro passo para revelar a sua melhor versão.</p>
-                <div class="flex flex-col md:flex-row justify-center items-center gap-6 reveal" style="transition-delay: 400ms;">
-                    <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="w-full md:w-auto bg-green-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-600 transition-all duration-300 flex items-center justify-center gap-3 transform hover:scale-105 active:scale-95">
+                <h2 class="text-3xl md:text-5xl font-display mb-6 text-lazuli-dark reveal">Sua transformação começa agora.</h2>
+                <p class="max-w-2xl mx-auto text-xl mb-12 reveal text-gray-600" style="animation-delay: 0.2s;">Entre em contato e dê o primeiro passo para revelar a sua melhor versão.</p>
+                <div class="reveal" style="animation-delay: 0.4s;">
+                    <!-- Botão WhatsApp Grande e Atrativo -->
+                    <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="bg-green-600 text-white px-12 py-5 rounded-lg text-xl font-semibold shadow-xl hover:bg-green-700 transition-all duration-300 flex items-center justify-center gap-4 transform hover:scale-105 active:scale-95 max-w-md mx-auto">
                         <i class="fab fa-whatsapp fa-lg"></i> Agendar pelo WhatsApp
                     </a>
                 </div>
@@ -712,55 +705,67 @@
         </section>
     </main>
 
-    <!-- Rodapé -->
-    <footer class="bg-lazuli-dark text-white pt-16 pb-8">
+    <!-- Rodapé (Elegante e Informativo) -->
+    <footer class="bg-lazuli-dark text-white pt-20 pb-8">
         <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-10 text-gray-300 text-center md:text-left">
-                <div class="lg:col-span-1">
-                     <a href="#home" class="text-3xl font-display font-bold text-white mb-4 inline-block">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12 text-gray-300">
+
+                <!-- Coluna 1: Logo e Missão -->
+                <div>
+                     <a href="#home" class="text-3xl font-display font-semibold text-white mb-6 inline-block">
                          Clínica <span class="text-lazuli-gold">Lazúli</span>
-                     </a>
-                     <p class="text-gray-400">Ciência e arte para realçar a sua beleza com naturalidade e segurança em Canoas.</p>
-                      <div class="flex justify-center md:justify-start space-x-4 mt-6">
-                         <a href="https://www.instagram.com/lazuli.clinica?igsh=MTF1cDd1cWU0NHRiNw==" target="_blank" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                         <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="text-xl hover:text-lazuli-gold transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                     </div>
+                    </a>
+                    <p class="text-gray-400 mb-6">Ciência e arte para realçar a sua beleza com naturalidade e segurança em Canoas.</p>
+                    <div class="flex space-x-6">
+                       <a href="https://www.instagram.com/lazuli.clinica?igsh=MTF1cDd1cWU0NHRiNw==" target="_blank" class="text-2xl hover:text-lazuli-gold transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                       <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="text-2xl hover:text-lazuli-gold transition-colors" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
                 </div>
 
-                <div class="lg:col-span-2 grid md:grid-cols-2 gap-10">
-                    <div>
-                        <h4 class="font-semibold text-white text-lg mb-4">Entre em Contato</h4>
-                        <p class="mb-2"><strong>Endereço:</strong><br>Avenida Getúlio Vargas, 4831<br>Consultório 402, Torre Medical<br>Centro, Canoas - RS, CEP 92020-333</p>
-                        <p class="mb-2"><strong>Email:</strong><br><a href="mailto:italobondan@outlook.com" class="hover:text-lazuli-gold">italobondan@outlook.com</a></p>
-                        <p><strong>Telefone:</strong><br><a href="tel:+555499041660" class="hover:text-lazuli-gold">(54) 9904-1660</a></p>
-                    </div>
+                <!-- Coluna 2: Navegação Rápida -->
+                <div>
+                    <h4 class="font-semibold text-white text-xl mb-6 font-display">Explore</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#sobre" class="hover:text-lazuli-gold transition-colors">Sobre Nós</a></li>
+                        <li><a href="#tratamentos" class="hover:text-lazuli-gold transition-colors">Tratamentos</a></li>
+                        <li><a href="#galeria" class="hover:text-lazuli-gold transition-colors">Resultados</a></li>
+                        <li><a href="#faq" class="hover:text-lazuli-gold transition-colors">Dúvidas</a></li>
+                    </ul>
+                </div>
 
-                    <div>
-                        <h4 class="font-semibold text-white text-lg mb-4">Nossa Localização</h4>
-                        <div class="overflow-hidden rounded-lg shadow-lg border border-gray-700">
-                            <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3457.9290908950356!2d-51.17970072370734!3d-29.923943525700388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951979270c715a7b%3A0x27a1151fc0641ef!2sCl%C3%ADnica%20Laz%C3%BAli%20-%20Medicina%20e%20Odontologia%20Est%C3%A9tica!5e0!3m2!1spt-BR!2sbr!4v1754236089274!5m2!1spt-BR!2sbr" 
-                                class="w-full h-48 border-0" 
-                                allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade"
-                                title="Mapa da localização da Clínica Lazúli em Canoas">
-                            </iframe>
-                        </div>
+                 <!-- Coluna 3: Contato -->
+                <div>
+                    <h4 class="font-semibold text-white text-xl mb-6 font-display">Contato</h4>
+                    <p class="mb-4">Avenida Getúlio Vargas, 4831<br>Consultório 402, Torre Medical<br>Canoas - RS</p>
+                    <p class="mb-4"><a href="mailto:italobondan@outlook.com" class="hover:text-lazuli-gold">italobondan@outlook.com</a></p>
+                    <p><a href="tel:+555499041660" class="hover:text-lazuli-gold">(54) 9904-1660</a></p>
+                </div>
+
+                <!-- Coluna 4: Localização (Mapa) -->
+                <div>
+                    <h4 class="font-semibold text-white text-xl mb-6 font-display">Localização</h4>
+                    <div class="overflow-hidden rounded-lg shadow-lg border border-gray-700">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3457.9290908950356!2d-51.17970072370734!3d-29.923943525700388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951979270c715a7b%3A0x27a1151fc0641ef!2sCl%C3%ADnica%20Laz%C3%BAli%20-%20Medicina%20e%20Odontologia%20Est%C3%A9tica!5e0!3m2!1spt-BR!2sbr!4v1754236089274!5m2!1spt-BR!2sbr"
+                            class="w-full h-40 border-0"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Mapa da localização da Clínica Lazúli em Canoas">
+                        </iframe>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center border-t border-gray-700 pt-8 mt-8">
-                <div class="text-sm text-gray-400">
-                    <p>© <span id="current-year"></span> Clínica Lazúli. Todos os direitos reservados.</p>
-                    <p class="mt-1">CNPJ: 51.320.929/0001-39</p>
-                    
-                    <!-- SUA ASSINATURA ATUALIZADA -->
+            <!-- Copyright e Assinatura -->
+            <div class="text-center border-t border-gray-800 pt-8 mt-8">
+                <div class="text-sm text-gray-500">
+                    <p>© <span id="current-year"></span> Clínica Lazúli. Todos os direitos reservados. CNPJ: 51.320.929/0001-39</p>
+
                     <p class="mt-6">
-                        <a href="https://conectawebdigital.com.br/" 
-                           target="_blank" 
-                           rel="noopener noreferrer" 
+                        <a href="https://conectawebdigital.com.br/"
+                           target="_blank"
+                           rel="noopener noreferrer"
                            class="hover:text-lazuli-gold transition-colors duration-300">
                            Desenvolvido por <span class="font-medium">Conecta Web Digital</span>
                         </a>
@@ -771,36 +776,40 @@
     </footer>
 
     <!-- Botão Flutuante do WhatsApp -->
-    <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="fixed bottom-5 right-5 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-40 transform hover:scale-110 transition-transform active:scale-95" aria-label="Fale conosco no WhatsApp">
+    <a href="https://wa.me/555499041660?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" class="fixed bottom-6 right-6 bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-xl z-40 transform hover:scale-110 transition-transform duration-300 active:scale-95" aria-label="Fale conosco no WhatsApp">
         <i class="fab fa-whatsapp fa-2x"></i>
     </a>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    
-    <!-- Firebase Init (CORRIGIDO E ATUALIZADO) -->
+
+    <!-- Firebase Init -->
     <script>
-       const firebaseConfig = { 
-         apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY", 
-         authDomain: "lazuliclinica-ee588.firebaseapp.com", 
-         projectId: "lazuliclinica-ee588", 
-         storageBucket: "lazuliclinica-ee588.appspot.com", 
-         messagingSenderId: "1001941309426", 
-         appId: "1:1001941309426:web:d966dceb8f6c0425d5bd6b", 
-         measurementId: "G-7HWTLTCGSN" 
-       };
-       firebase.initializeApp(firebaseConfig);
+        const firebaseConfig = {
+         apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY",
+         authDomain: "lazuliclinica-ee588.firebaseapp.com",
+         projectId: "lazuliclinica-ee588",
+         storageBucket: "lazuliclinica-ee588.appspot.com",
+         messagingSenderId: "1001941309426",
+         appId: "1:1001941309426:web:d966dceb8f6c0425d5bd6b",
+         measurementId: "G-7HWTLTCGSN"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
     </script>
 
     <!-- Swiper.js SCRIPT -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-    <!-- Código Personalizado -->
+    <!-- NOVO: Vanilla-Tilt.js para efeitos 3D nos cards -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+    <!-- Código Personalizado (Refatorado e Aprimorado) -->
     <script>
-        const db = firebase.firestore();
 
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Mobile Menu Handler ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
@@ -809,29 +818,25 @@
 
             function toggleMenu() {
                 const isMenuOpen = mobileMenu.classList.contains('menu-open');
-                if (isMenuOpen) {
-                    mobileMenu.classList.remove('menu-open');
-                    mobileMenuOverlay.classList.add('opacity-0', 'pointer-events-none');
-                    document.body.classList.remove('overflow-hidden');
-                    menuIcon.classList.remove('fa-times');
-                    menuIcon.classList.add('fa-bars');
-                } else {
-                    mobileMenu.classList.add('menu-open');
-                    mobileMenuOverlay.classList.remove('opacity-0', 'pointer-events-none');
-                    document.body.classList.add('overflow-hidden');
-                    menuIcon.classList.remove('fa-bars');
-                    menuIcon.classList.add('fa-times');
-                }
+                mobileMenu.classList.toggle('menu-open');
+                mobileMenuOverlay.classList.toggle('opacity-0', isMenuOpen);
+                mobileMenuOverlay.classList.toggle('pointer-events-none', isMenuOpen);
+                document.body.classList.toggle('overflow-hidden', !isMenuOpen);
+                menuIcon.classList.toggle('fa-bars', isMenuOpen);
+                menuIcon.classList.toggle('fa-times', !isMenuOpen);
             }
+
             mobileMenuButton.addEventListener('click', toggleMenu);
             mobileMenuOverlay.addEventListener('click', toggleMenu);
             mobileNavLinks.forEach(link => { link.addEventListener('click', toggleMenu); });
 
+            // --- Sticky Header Handler ---
             const header = document.getElementById('main-header');
             window.addEventListener('scroll', () => {
-                header.classList.toggle('header-scrolled', window.scrollY > 50);
+                header.classList.toggle('header-scrolled', window.scrollY > 10);
             });
 
+            // --- FAQ (Accordion) Handler (Interação Melhorada) ---
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
@@ -839,48 +844,78 @@
                     const answer = item.querySelector('.faq-answer');
                     const icon = question.querySelector('i');
                     const isOpened = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+                    // Fechar outros (opcional, mas boa UX)
                     faqItems.forEach(otherItem => {
                         if (otherItem !== item) {
                             otherItem.querySelector('.faq-answer').style.maxHeight = '0px';
-                            otherItem.querySelector('.faq-question i').classList.remove('rotate-180');
+                            // Mudar ícone de volta para mais (+)
+                            otherItem.querySelector('.faq-question i').classList.remove('fa-minus', 'rotate-180');
+                             otherItem.querySelector('.faq-question i').classList.add('fa-plus');
                         }
                     });
+
                     if (isOpened) {
                         answer.style.maxHeight = '0px';
-                        icon.classList.remove('rotate-180');
+                        icon.classList.remove('fa-minus', 'rotate-180');
+                        icon.classList.add('fa-plus');
                     } else {
-                        answer.style.maxHeight = answer.scrollHeight + 'px';
-                        icon.classList.add('rotate-180');
+                        answer.style.maxHeight = (answer.scrollHeight + 48) + 'px'; // Adiciona altura do padding
+                        icon.classList.remove('fa-plus');
+                        icon.classList.add('fa-minus', 'rotate-180');
                     }
                 });
             });
 
+            // --- Reveal on Scroll (Intersection Observer) ---
             const revealObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        // Aplicar delay de animação se especificado no HTML
+                        if (entry.target.style.animationDelay) {
+                             entry.target.style.setProperty('animation-delay', entry.target.style.animationDelay);
+                        }
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target); 
+                        observer.unobserve(entry.target);
                     }
                 });
             }, { root: null, threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-            document.querySelectorAll('.reveal').forEach(el => { revealObserver.observe(el); });
-            
+
+            // Observar elementos exceto os da seção Hero (que animam imediatamente)
+            document.querySelectorAll('.reveal').forEach(el => {
+                 if (!el.closest('#home')) {
+                    revealObserver.observe(el);
+                 }
+            });
+
+            // --- Inicializar Vanilla Tilt para Cards de Tratamento ---
+            VanillaTilt.init(document.querySelectorAll(".treatment-card"), {
+                max: 10,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.3
+            });
+
+
+            // --- Utilities ---
             const yearSpan = document.getElementById('current-year');
             if(yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
+            // --- Firebase Content Loading ---
+
             const defaultTestimonials = [
-                { name: "Jady Muller J.", text: "Clínica maravilhosa! Ambiente perfeito, material de uma qualidade excelente, sem contar os profissionais 100% atenciosos e delicados, meu procedimento ficou maravilhoso, sem dúvidas virei cliente fiel!", rating: 5 },
-                { name: "Luís de Melo", text: "Iniciei minha avaliação estética com Dr Édson Depieri, pois precisava melhorar minha autoimagem, não para embelezamento e vaidade, mas para o aumento da autoestima, bem estar e melhoria da apresentação profissional.", rating: 5 },
-                { name: "Juliane Lobato", text: "Dr Edson e dr Italo os melhores que poderiam existir!!! Sempre impecáveis e acolhedores.", rating: 5 },
-                { name: "Bianca Depieri", text: "Um consultório de extrema elegância e profissionalismo. Dois profissionais de qualidade que senti estarem prontamente à postos para me ouvir e realizarem exatamente o que eu imaginava.", rating: 5 },
-                { name: "Vitória Rottoli", text: "Sem palavras pra agradecer essa clínica. Mudaram minha forma de me ver. Só gratidão a esses dois profissionais que tão bem me fizeram. Obrigada ao Dr Édson e ao Dr Ítalo ❤️", rating: 5 },
-                { name: "Suzy Tavares", text: "A experiência foi do princípio ao fim extraordinária! Se nota quando o profissional entende e ama o que faz.", rating: 5 },
-                { name: "Elisandra Machado", text: "Dr Ítalo Rottoli transformou minha autoestima, me fez uma nova mulher, sou grata por tanto! Minha indicação de olhos fechados.", rating: 5 }
+                 { name: "Jady Muller J.", text: "Clínica maravilhosa! Ambiente perfeito, material de uma qualidade excelente, sem contar os profissionais 100% atenciosos e delicados, meu procedimento ficou maravilhoso, sem dúvidas virei cliente fiel!", rating: 5 },
+                 { name: "Luís de Melo", text: "Iniciei minha avaliação estética com Dr Édson Depieri, pois precisava melhorar minha autoimagem, não para embelezamento e vaidade, mas para o aumento da autoestima, bem estar e melhoria da apresentação profissional.", rating: 5 },
+                 { name: "Juliane Lobato", text: "Dr Edson e dr Italo os melhores que poderiam existir!!! Sempre impecáveis e acolhedores.", rating: 5 },
+                 { name: "Bianca Depieri", text: "Um consultório de extrema elegância e profissionalismo. Dois profissionais de qualidade que senti estarem prontamente à postos para me ouvir e realizarem exatamente o que eu imaginava.", rating: 5 },
+                 { name: "Vitória Rottoli", text: "Sem palavras pra agradecer essa clínica. Mudaram minha forma de me ver. Só gratidão a esses dois profissionais que tão bem me fizeram. Obrigada ao Dr Édson e ao Dr Ítalo ❤️", rating: 5 },
+                 { name: "Suzy Tavares", text: "A experiência foi do princípio ao fim extraordinária! Se nota quando o profissional entende e ama o que faz.", rating: 5 },
+                 { name: "Elisandra Machado", text: "Dr Ítalo Rottoli transformou minha autoestima, me fez uma nova mulher, sou grata por tanto! Minha indicação de olhos fechados.", rating: 5 }
             ];
 
             async function loadDynamicContent() {
                 try {
-                    // Carregar Home
+                    // --- Load Home Content ---
                     const homeDocRef = db.collection("siteContent").doc("home");
                     const homeDocSnap = await homeDocRef.get();
                     if (homeDocSnap.exists && homeDocSnap.data()) {
@@ -892,22 +927,24 @@
                             if (videoElement) {
                                 videoElement.src = homeData.backgroundVideoUrl;
 
-                                // *** CORREÇÃO AVANÇADA PARA AUTOPLAY NO iOS ***
+                                // Autoplay Handling (Compatibilidade iOS)
                                 const attemptPlay = () => {
-                                    videoElement.play().catch(error => {
+                                    videoElement.play().then(() => {
+                                        // NOVO: Adiciona classe quando o vídeo começa a tocar para o efeito de escala
+                                        document.getElementById('home').classList.add('video-loaded');
+                                    }).catch(error => {
                                         console.warn("Autoplay impedido. Aguardando interação do usuário.", error);
-                                        // Fallback: Tenta tocar no primeiro toque do usuário na tela
                                         document.body.addEventListener('touchstart', attemptPlay, { once: true });
+                                        document.body.addEventListener('click', attemptPlay, { once: true });
                                     });
                                 };
-                                
-                                // Tenta tocar assim que os metadados estiverem prontos
-                                videoElement.addEventListener('loadedmetadata', attemptPlay, { once: true });
+                                // Tenta tocar ao carregar
+                                attemptPlay();
                             }
                         }
                     }
 
-                    // Carregar Sobre
+                    // --- Load About Content ---
                     const aboutDocRef = db.collection("siteContent").doc("sobre");
                     const aboutDocSnap = await aboutDocRef.get();
                     if (aboutDocSnap.exists && aboutDocSnap.data()) {
@@ -915,102 +952,165 @@
                         document.getElementById('about-drs-photo').src = aboutData.imageUrl || 'https://lazuliclinica.com.br/imagen/imagemmetatag.jpeg';
                     }
 
-                    // Carregar e ATUALIZAR Tratamentos
-                    const treatmentsDocRef = db.collection("siteContent").doc("treatments");
-                    const treatmentsDocSnap = await treatmentsDocRef.get();
-                    if (treatmentsDocSnap.exists) {
-                        const data = treatmentsDocSnap.data();
-                        
-                        // Atualiza Card de Estética Facial
-                        if (data.harmonizacao) {
-                            const hData = data.harmonizacao;
-                            if(hData.title) document.getElementById('harmonizacao-title').textContent = hData.title;
-                            if(hData.description) document.getElementById('harmonizacao-description').textContent = hData.description;
-                            
-                            const hIconWrapper = document.getElementById('harmonizacao-icon-wrapper');
-                            if (hData.iconUrl) {
-                                hIconWrapper.innerHTML = `<img src="${hData.iconUrl}" alt="Ícone de ${hData.title}" class="w-full h-full object-cover">`;
-                                hIconWrapper.classList.remove('p-4');
-                            }
-                            
-                            if (hData.features && hData.features.length > 0) {
-                                const hFeaturesList = document.getElementById('harmonizacao-features-list');
-                                const half = Math.ceil(hData.features.length / 2);
-                                const firstHalf = hData.features.slice(0, half);
-                                const secondHalf = hData.features.slice(half);
-                                
-                                let listHtml = '<ul class="space-y-2">';
-                                firstHalf.forEach(f => {
-                                    listHtml += `<li class="flex items-start"><i class="fas fa-check-circle text-lazuli-gold mr-2 mt-1"></i><span>${f}</span></li>`;
-                                });
-                                listHtml += '</ul><ul class="space-y-2">';
-                                secondHalf.forEach(f => {
-                                    listHtml += `<li class="flex items-start"><i class="fas fa-check-circle text-lazuli-gold mr-2 mt-1"></i><span>${f}</span></li>`;
-                                });
-                                listHtml += '</ul>';
-                                hFeaturesList.innerHTML = listHtml;
-                            }
-                        }
+                    // --- Load Treatments Content ---
+                     const treatmentsDocRef = db.collection("siteContent").doc("treatments");
+                     const treatmentsDocSnap = await treatmentsDocRef.get();
+                     if (treatmentsDocSnap.exists) {
+                         const data = treatmentsDocSnap.data();
 
-                        // Atualiza Card de Lentes
-                        if (data.lentes) {
-                            const lData = data.lentes;
-                            if(lData.title) document.getElementById('lentes-title').textContent = lData.title;
-                            if(lData.description) document.getElementById('lentes-description').textContent = lData.description;
-                            
-                            const lIconWrapper = document.getElementById('lentes-icon-wrapper');
-                            if (lData.iconUrl) {
-                                lIconWrapper.innerHTML = `<img src="${lData.iconUrl}" alt="Ícone de ${lData.title}" class="w-full h-full object-cover">`;
-                                lIconWrapper.classList.remove('p-4');
-                            }
-                        }
-                    }
+                         // Atualiza Card de Estética Facial
+                         if (data.harmonizacao) {
+                             const hData = data.harmonizacao;
+                             if(hData.title) document.getElementById('harmonizacao-title').textContent = hData.title;
+                             if(hData.description) document.getElementById('harmonizacao-description').textContent = hData.description;
 
-                    // Carregar Galeria
+                             const hIconWrapper = document.getElementById('harmonizacao-icon-wrapper');
+                             if (hData.iconUrl) {
+                                 hIconWrapper.innerHTML = `<img src="${hData.iconUrl}" alt="Ícone de ${hData.title}" class="w-full h-full object-cover">`;
+                                 hIconWrapper.classList.remove('p-4');
+                             }
+
+                             if (hData.features && hData.features.length > 0) {
+                                 const hFeaturesList = document.getElementById('harmonizacao-features-list');
+                                 const half = Math.ceil(hData.features.length / 2);
+                                 const firstHalf = hData.features.slice(0, half);
+                                 const secondHalf = hData.features.slice(half);
+
+                                 // Ícones atualizados para o novo design
+                                 let listHtml = '<ul class="space-y-3">';
+                                 firstHalf.forEach(f => {
+                                     listHtml += `<li class="flex items-start"><i class="fas fa-check text-lazuli-gold mr-3 mt-1"></i><span>${f}</span></li>`;
+                                 });
+                                 listHtml += '</ul><ul class="space-y-3">';
+                                 secondHalf.forEach(f => {
+                                     listHtml += `<li class="flex items-start"><i class="fas fa-check text-lazuli-gold mr-3 mt-1"></i><span>${f}</span></li>`;
+                                 });
+                                 listHtml += '</ul>';
+                                 hFeaturesList.innerHTML = listHtml;
+                             }
+                         }
+
+                         // Atualiza Card de Lentes
+                         if (data.lentes) {
+                             const lData = data.lentes;
+                             if(lData.title) document.getElementById('lentes-title').textContent = lData.title;
+                             if(lData.description) document.getElementById('lentes-description').textContent = lData.description;
+
+                             const lIconWrapper = document.getElementById('lentes-icon-wrapper');
+                             if (lData.iconUrl) {
+                                 lIconWrapper.innerHTML = `<img src="${lData.iconUrl}" alt="Ícone de ${lData.title}" class="w-full h-full object-cover">`;
+                                 lIconWrapper.classList.remove('p-4');
+                             }
+                         }
+                     }
+
+
+                    // --- Load Gallery Content ---
                     const galleryWrapper = document.querySelector('#galeria .swiper-wrapper');
-                    const gallerySnapshot = await db.collection("gallery").get();
-                    galleryWrapper.innerHTML = ''; 
+                    // Ordenação adicionada caso exista um campo 'order' no Firebase
+                    const gallerySnapshot = await db.collection("gallery").orderBy("order", "asc").get();
+                    galleryWrapper.innerHTML = '';
                     if (gallerySnapshot.empty) {
-                        galleryWrapper.innerHTML = `<div class="swiper-slide"><img src="https://placehold.co/1024x683/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" loading="lazy" decoding="async"></div>`;
+                        galleryWrapper.innerHTML = `<div class="swiper-slide"><img src="https://placehold.co/1024x768/EAE3D9/3A3A3A?text=Em+Breve" alt="Galeria em breve" loading="lazy" decoding="async"></div>`;
                     } else {
                         gallerySnapshot.forEach(doc => {
                             galleryWrapper.innerHTML += `<div class="swiper-slide"><img src="${doc.data().url}" alt="Resultado de tratamento" loading="lazy" decoding="async"></div>`;
                         });
                     }
-                    new Swiper('.gallery-swiper', { loop: true, watchOverflow: true, navigation: { nextEl: '.gallery-swiper-button-next', prevEl: '.gallery-swiper-button-prev' }, pagination: { el: '.gallery-swiper-pagination', clickable: true }, slidesPerView: 1, spaceBetween: 0, grabCursor: true });
+                    // Inicializar Gallery Swiper
+                    new Swiper('.gallery-swiper', {
+                        loop: true,
+                        watchOverflow: true,
+                        effect: 'fade', // NOVO: Efeito fade elegante
+                        fadeEffect: {
+                            crossFade: true
+                        },
+                        autoplay: {
+                            delay: 5000,
+                            disableOnInteraction: false,
+                        },
+                        navigation: { nextEl: '.gallery-swiper-button-next', prevEl: '.gallery-swiper-button-prev' },
+                        pagination: { el: '.gallery-swiper-pagination', clickable: true },
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                        grabCursor: true
+                    });
 
-                    // Carregar Depoimentos
+                    // --- Load Testimonials Content ---
                     const testimonialWrapper = document.querySelector('.testimonial-swiper .swiper-wrapper');
-                    const testimonialsSnapshot = await db.collection("testimonials").get();
+                    const testimonialsSnapshot = await db.collection("testimonials").orderBy("order", "asc").get();
                     testimonialWrapper.innerHTML = '';
                     const testimonialsToRender = testimonialsSnapshot.empty ? defaultTestimonials : testimonialsSnapshot.docs.map(doc => doc.data());
-                    const bgColors = ['bg-blue-400', 'bg-green-400', 'bg-indigo-400', 'bg-pink-400', 'bg-yellow-500', 'bg-teal-400', 'bg-purple-400'];
+
+                    // Redesenho dos Cards de Depoimento (Glassmorphism)
                     if (testimonialsToRender.length > 0) {
                         testimonialsToRender.forEach((data, index) => {
-                            const initial = data.name.charAt(0).toUpperCase();
-                            const colorClass = bgColors[index % bgColors.length];
-                            testimonialWrapper.innerHTML += `<div class="swiper-slide"><div class="bg-white p-8 rounded-lg shadow-md flex flex-col text-left h-full"><div class="flex-grow"><div class="w-16 h-16 ${colorClass} rounded-full flex items-center justify-center text-white text-3xl font-display mb-6">${initial}</div><p class="italic text-lazuli-dark/80 whitespace-normal mb-4">"${data.text}"</p></div><p class="font-bold text-lazuli-dark mt-4">- ${data.name}</p></div></div>`;
+                            testimonialWrapper.innerHTML += `
+                                <div class="swiper-slide">
+                                    <div class="bg-white/10 backdrop-blur-sm p-8 rounded-xl flex flex-col text-left h-full border border-white/20">
+                                        <div class="flex-grow">
+                                            <div class="text-lazuli-gold mb-6 text-4xl">
+                                                <i class="fas fa-quote-left"></i>
+                                            </div>
+                                            <p class="italic text-gray-200 whitespace-normal mb-6 leading-relaxed">"${data.text}"</p>
+                                        </div>
+                                        <p class="font-bold text-white mt-4">- ${data.name}</p>
+                                    </div>
+                                </div>`;
                         });
                     }
-                    new Swiper('.testimonial-swiper', { loop: testimonialsToRender.length > 3, slidesPerView: 1, spaceBetween: 16, grabCursor: true, pagination: { el: '.testimonial-swiper-pagination', clickable: true }, navigation: { nextEl: '.testimonial-swiper-button-next', prevEl: '.testimonial-swiper-button-prev' }, breakpoints: { 768: { slidesPerView: 2, spaceBetween: 24 }, 1024: { slidesPerView: 3, spaceBetween: 24 } } });
-
-                    // Carregar Fundos de Seção
-                    const backgroundsDocSnap = await db.collection("siteContent").doc("backgrounds").get();
-                    if (backgroundsDocSnap.exists) {
-                        const backgroundsData = backgroundsDocSnap.data();
-                        for (const sectionId in backgroundsData) {
-                            const imageUrl = backgroundsData[sectionId];
-                            if (imageUrl && imageUrl.trim() !== '') {
-                                const sectionElement = document.getElementById(sectionId);
-                                if (sectionElement) {
-                                    sectionElement.style.setProperty('--bg-image', `url('${imageUrl}')`);
-                                    sectionElement.classList.add('has-bg');
-                                }
-                            }
+                    // Inicializar Testimonial Swiper
+                    new Swiper('.testimonial-swiper', {
+                        loop: testimonialsToRender.length > 3,
+                        slidesPerView: 1,
+                        spaceBetween: 24,
+                        grabCursor: true,
+                        centeredSlides: true, // NOVO: Centralizar o slide ativo
+                        autoplay: {
+                            delay: 6000,
+                            disableOnInteraction: true,
+                        },
+                        pagination: { el: '.testimonial-swiper-pagination', clickable: true },
+                        navigation: { nextEl: '.testimonial-swiper-button-next', prevEl: '.testimonial-swiper-button-prev' },
+                        breakpoints: {
+                            768: { slidesPerView: 2, spaceBetween: 24, centeredSlides: false },
+                            1024: { slidesPerView: 3, spaceBetween: 30, centeredSlides: true }
                         }
-                    }
+                    });
+
                 } catch (error) {
                     console.error("Erro ao carregar conteúdo do Firebase: ", error);
+                    // Inicializar swipers mesmo se Firebase falhar, usando conteúdo padrão se necessário
+                    if (typeof Swiper !== 'undefined') {
+                        if (!document.querySelector('.gallery-swiper').swiper) {
+                             new Swiper('.gallery-swiper', { loop: true, navigation: { nextEl: '.gallery-swiper-button-next', prevEl: '.gallery-swiper-button-prev' }, pagination: { el: '.gallery-swiper-pagination', clickable: true } });
+                        }
+                         if (!document.querySelector('.testimonial-swiper').swiper) {
+                             // Popular com padrões se o wrapper estiver vazio e inicializar...
+                             const testimonialWrapper = document.querySelector('.testimonial-swiper .swiper-wrapper');
+                             if (testimonialWrapper.innerHTML === '' && defaultTestimonials.length > 0) {
+                                 defaultTestimonials.forEach((data) => {
+                                     testimonialWrapper.innerHTML += `
+                                      <div class="swiper-slide">
+                                          <div class="bg-white/10 backdrop-blur-sm p-8 rounded-xl flex flex-col text-left h-full border border-white/20">
+                                              <p class="italic text-gray-200 mb-6">"${data.text}"</p>
+                                              <p class="font-bold text-white mt-4">- ${data.name}</p>
+                                          </div>
+                                      </div>`;
+                                 });
+                             }
+                             new Swiper('.testimonial-swiper', {
+                                 loop: true,
+                                 slidesPerView: 1,
+                                 spaceBetween: 24,
+                                 pagination: { el: '.testimonial-swiper-pagination', clickable: true },
+                                 breakpoints: {
+                                     768: { slidesPerView: 2 },
+                                     1024: { slidesPerView: 3 }
+                                 }
+                               });
+                         }
+                    }
                 }
             }
 
