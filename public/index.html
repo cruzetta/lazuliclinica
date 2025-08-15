@@ -1049,7 +1049,8 @@
                     // Carregar Galeria
                     const galleryWrapper = document.querySelector('#galeria .swiper-wrapper');
                     // ===== CÓDIGO CORRIGIDO AQUI =====
-                    const gallerySnapshot = await db.collection("gallery").orderBy("createdAt", "desc").get().catch((error) => {
+                    // Removido o .orderBy("createdAt", "desc") para evitar a necessidade de um índice
+                    const gallerySnapshot = await db.collection("gallery").get().catch((error) => {
                         console.error("Erro ao buscar a galeria:", error);
                         return null; // Retorna nulo se houver erro
                     });
