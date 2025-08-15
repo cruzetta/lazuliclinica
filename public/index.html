@@ -142,7 +142,11 @@
     <!-- ESTILOS PERSONALIZADOS (SIGNIFICATIVAMENTE REVISADOS) -->
     <style>
       /* --- Base e Animações --- */
-      body { overflow-x: hidden; }
+      /* CORREÇÃO: Adicionada regra para evitar scroll horizontal */
+      html, body { 
+        overflow-x: hidden; 
+      }
+      
       /* Efeito de granulação sutil para textura de fundo */
       .grain-bg {
           position: relative;
@@ -184,7 +188,6 @@
       }
       #main-header .logo-main-text { color: white; }
       
-      /* MELHORIA: Adicionada sombra de texto para garantir a visibilidade do ícone do menu contra o vídeo */
       #main-header #mobile-menu-button { 
           color: white; 
           text-shadow: 0 1px 4px rgba(0,0,0,0.6);
@@ -215,7 +218,6 @@
       #main-header.header-scrolled .nav-link:hover { color: #D4AF37; }
       #main-header.header-scrolled .logo-main-text { color: #2C2C2C; }
       
-      /* MELHORIA: Remove a sombra do ícone quando o header tem um fundo sólido */
       #main-header.header-scrolled #mobile-menu-button { 
           color: #2C2C2C; 
           text-shadow: none;
@@ -297,14 +299,13 @@
       }
       
       /* --- Seção Hero Vídeo --- */
-      /* MELHORIA: Estilo de vídeo modernizado para melhor responsividade e cobertura */
       #home-video-bg {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Garante que o vídeo cubra toda a área, mantendo a proporção. */
+        object-fit: cover; 
         z-index: 0;
       }
 
@@ -626,7 +627,8 @@
                 <h2 class="text-4xl md:text-5xl font-display mb-16 reveal">Confiança que Inspira</h2>
                 
                 <!-- Container do Carrossel com Swiper.js -->
-                <div class="max-w-6xl mx-auto reveal relative" style="transition-delay: 200ms;">
+                <!-- CORREÇÃO: Adicionada a classe "overflow-hidden" para conter o carrossel -->
+                <div class="max-w-6xl mx-auto reveal relative overflow-hidden" style="transition-delay: 200ms;">
                     <div class="swiper-container testimonial-swiper">
                         <div class="swiper-wrapper">
                             <!-- Slides dos depoimentos serão inseridos aqui pelo JavaScript -->
