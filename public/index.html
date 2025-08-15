@@ -183,7 +183,12 @@
           font-size: 0.875rem; /* 14px */
       }
       #main-header .logo-main-text { color: white; }
-      #main-header #mobile-menu-button { color: white; }
+      
+      /* MELHORIA: Adicionada sombra de texto para garantir a visibilidade do ícone do menu contra o vídeo */
+      #main-header #mobile-menu-button { 
+          color: white; 
+          text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+      }
       
       /* Efeito de sublinhado moderno */
       .nav-link::after {
@@ -209,7 +214,12 @@
       #main-header.header-scrolled .nav-link { color: #2C2C2C; }
       #main-header.header-scrolled .nav-link:hover { color: #D4AF37; }
       #main-header.header-scrolled .logo-main-text { color: #2C2C2C; }
-      #main-header.header-scrolled #mobile-menu-button { color: #2C2C2C; }
+      
+      /* MELHORIA: Remove a sombra do ícone quando o header tem um fundo sólido */
+      #main-header.header-scrolled #mobile-menu-button { 
+          color: #2C2C2C; 
+          text-shadow: none;
+      }
       #main-header.header-scrolled .nav-link::after { background: #D4AF37; }
 
       /* Menu Mobile */
@@ -287,15 +297,14 @@
       }
       
       /* --- Seção Hero Vídeo --- */
+      /* MELHORIA: Estilo de vídeo modernizado para melhor responsividade e cobertura */
       #home-video-bg {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Garante que o vídeo cubra toda a área, mantendo a proporção. */
         z-index: 0;
       }
 
@@ -881,9 +890,9 @@
                 // Atualiza a cor do botão mobile se o menu estiver fechado
                 if (!mobileMenu.classList.contains('menu-open')) {
                     if (isScrolled) {
-                        mobileMenuButton.style.color = '#2C2C2C';
+                        // A cor já é definida pela classe .header-scrolled, então o JS não precisa mais forçar
                     } else {
-                        mobileMenuButton.style.color = 'white';
+                        // A cor já é definida pela regra padrão, então o JS não precisa mais forçar
                     }
                 }
             });
