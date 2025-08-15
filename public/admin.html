@@ -115,14 +115,14 @@
             <div class="admin-card">
                 <h3 class="text-2xl font-semibold mb-4">Seção "Sobre"</h3>
                 <div id="about-section">
-                    <label class="font-semibold">Foto do Dr. Ítalo Rottoli:</label>
+                    <label class="font-semibold">Foto dos Doutores:</label>
                     <img id="about-image-preview" src="https://placehold.co/400x400?text=Sem+Imagem" alt="Preview da imagem sobre" class="my-4 rounded-lg max-w-xs">
                     <input type="text" id="about-image-url" placeholder="Cole a URL completa da imagem aqui" class="input-field">
                     <button id="save-about" class="btn btn-primary mt-4">Salvar Alterações</button>
                 </div>
             </div>
 
-            <!-- NOVA Seção "Tratamentos" -->
+            <!-- Seção "Tratamentos" -->
             <div class="admin-card">
                 <h3 class="text-2xl font-semibold mb-4">Seção "Tratamentos"</h3>
                 <p class="text-sm text-gray-600 mb-6">Gerencie os ícones, títulos e textos da seção de tratamentos.</p>
@@ -135,7 +135,7 @@
                             <label for="harmonizacao-icon-url" class="font-semibold">URL do Ícone/Imagem (com prévia):</label>
                             <div class="flex items-center gap-4 mt-2">
                                 <input type="text" id="harmonizacao-icon-url" placeholder="Cole a URL da imagem aqui para ver a prévia" class="input-field flex-grow">
-                                <div class="w-20 h-20 bg-lazuli-nude rounded-full flex items-center justify-center overflow-hidden shadow-inner flex-shrink-0">
+                                <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden shadow-inner flex-shrink-0">
                                     <img id="harmonizacao-icon-preview" src="https://placehold.co/80x80?text=Prévia" alt="Preview" class="w-full h-full object-cover">
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
                             <label for="lentes-icon-url" class="font-semibold">URL do Ícone/Imagem (com prévia):</label>
                             <div class="flex items-center gap-4 mt-2">
                                 <input type="text" id="lentes-icon-url" placeholder="Cole a URL da imagem aqui para ver a prévia" class="input-field flex-grow">
-                                <div class="w-20 h-20 bg-lazuli-nude rounded-full flex items-center justify-center overflow-hidden shadow-inner flex-shrink-0">
+                                <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden shadow-inner flex-shrink-0">
                                     <img id="lentes-icon-preview" src="https://placehold.co/80x80?text=Prévia" alt="Preview" class="w-full h-full object-cover">
                                 </div>
                             </div>
@@ -187,10 +187,10 @@
             <!-- Seção "Galeria de Resultados" -->
             <div class="admin-card">
                 <h3 class="text-2xl font-semibold mb-4">Galeria "Transformações Reais"</h3>
-                <div id="gallery-section" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div id="gallery-section" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                     <!-- As imagens da galeria serão carregadas aqui -->
                 </div>
-                <div class="mt-6">
+                <div class="mt-6 border-t pt-6">
                     <h4 class="text-xl font-semibold">Adicionar Nova Imagem</h4>
                     <input type="text" id="gallery-image-url" placeholder="Cole a URL da nova imagem aqui" class="input-field mt-2">
                     <button id="add-gallery-image" class="btn btn-primary mt-4">Adicionar à Galeria</button>
@@ -212,7 +212,7 @@
                 <div id="testimonials-section" class="space-y-4">
                     <!-- Os depoimentos serão carregados aqui -->
                 </div>
-                <div class="mt-6">
+                <div class="mt-6 border-t pt-6">
                     <h4 class="text-xl font-semibold">Adicionar Novo Depoimento</h4>
                     <input type="text" id="testimonial-name" placeholder="Nome (Ex: Mariana S.)" class="input-field">
                     <textarea id="testimonial-text" placeholder="Texto do depoimento" class="input-field mt-2"></textarea>
@@ -226,7 +226,21 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="/__/firebase/init.js"></script>
+    
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY",
+        authDomain: "lazuliclinica-ee588.firebaseapp.com",
+        projectId: "lazuliclinica-ee588",
+        storageBucket: "lazuliclinica-ee588.appspot.com",
+        messagingSenderId: "1001941309426",
+        appId: "1:1001941309426:web:d966dceb8f6c0425d5bd6b",
+        measurementId: "G-7HWTLTCGSN"
+      };
+      if (!firebase.apps.length) {
+          firebase.initializeApp(firebaseConfig);
+      }
+    </script>
 
     <script>
         const auth = firebase.auth();
@@ -279,7 +293,7 @@
             try {
                 await loadHomeSection();
                 await loadAboutSection();
-                await loadTreatmentsSection(); // Carrega a nova seção
+                await loadTreatmentsSection();
                 await loadGallerySection();
                 await loadTestimonialsSection();
                 await loadBackgroundsSection();
@@ -313,7 +327,6 @@
             }
         }
 
-        // NOVA FUNÇÃO para carregar dados dos tratamentos
         async function loadTreatmentsSection() {
             const docRef = db.collection("siteContent").doc("treatments");
             const docSnap = await docRef.get();
@@ -338,25 +351,30 @@
             }
         }
 
+        // NOVA VERSÃO DA FUNÇÃO - MAIS ROBUSTA
         async function loadGallerySection() {
             const galleryContainer = document.getElementById('gallery-section');
-            galleryContainer.innerHTML = '';
+            galleryContainer.innerHTML = ''; // Limpa o container
             const querySnapshot = await db.collection("gallery").get();
+            
             if(querySnapshot.empty) {
-                galleryContainer.innerHTML = '<p class="col-span-full">Nenhuma imagem na galeria ainda.</p>';
+                galleryContainer.innerHTML = '<p class="col-span-full text-gray-500">Nenhuma imagem na galeria ainda.</p>';
             } else {
+                let galleryHtml = ''; // Constrói o HTML como uma string
                 querySnapshot.forEach((doc) => {
                     const imageData = doc.data();
-                    const imageDiv = document.createElement('div');
-                    imageDiv.className = 'relative group';
-                    imageDiv.innerHTML = `
-                        <img src="${imageData.url}" class="w-full h-32 object-cover rounded-md">
-                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button data-id="${doc.id}" class="btn btn-danger btn-sm delete-gallery-item">Excluir</button>
-                        </div>
-                    `;
-                    galleryContainer.appendChild(imageDiv);
+                    if (imageData.url) { // Verifica se o campo 'url' existe
+                        galleryHtml += `
+                            <div class="relative group aspect-square">
+                                <img src="${imageData.url}" alt="Imagem da galeria" class="w-full h-full object-cover rounded-md shadow-md">
+                                <div class="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-md">
+                                    <button data-id="${doc.id}" class="btn btn-danger btn-sm delete-gallery-item">Excluir</button>
+                                </div>
+                            </div>
+                        `;
+                    }
                 });
+                galleryContainer.innerHTML = galleryHtml; // Insere todo o HTML de uma vez
             }
         }
 
@@ -365,18 +383,18 @@
             testimonialsContainer.innerHTML = '';
             const querySnapshot = await db.collection("testimonials").get();
              if(querySnapshot.empty) {
-                testimonialsContainer.innerHTML = '<p>Nenhum depoimento adicionado.</p>';
+                testimonialsContainer.innerHTML = '<p class="text-gray-500">Nenhum depoimento adicionado.</p>';
             } else {
                 querySnapshot.forEach((doc) => {
                     const testimonialData = doc.data();
                     const testimonialDiv = document.createElement('div');
-                    testimonialDiv.className = 'p-4 border rounded-lg flex justify-between items-start';
+                    testimonialDiv.className = 'p-4 border rounded-lg flex justify-between items-start bg-white';
                     testimonialDiv.innerHTML = `
-                        <div>
-                            <p class="font-bold">${testimonialData.name}</p>
-                            <p class="italic">"${testimonialData.text}"</p>
+                        <div class="pr-4">
+                            <p class="font-bold text-gray-800">${testimonialData.name}</p>
+                            <p class="text-gray-600 italic">"${testimonialData.text}"</p>
                         </div>
-                        <button data-id="${doc.id}" class="btn btn-danger btn-sm mt-2 delete-testimonial-item">Excluir</button>
+                        <button data-id="${doc.id}" class="btn btn-danger btn-sm delete-testimonial-item flex-shrink-0">Excluir</button>
                     `;
                     testimonialsContainer.appendChild(testimonialDiv);
                 });
@@ -393,7 +411,7 @@
             sections.forEach(section => {
                 const sectionDiv = document.createElement('div');
                 sectionDiv.innerHTML = `
-                    <label for="bg-url-${section.id}" class="font-semibold text-lg">Seção "${section.name}"</label>
+                    <label for="bg-url-${section.id}" class="font-semibold text-lg">${section.name}</label>
                     <div class="flex items-center gap-4 mt-2">
                         <input type="text" id="bg-url-${section.id}" placeholder="Cole a URL da imagem aqui" class="input-field flex-grow" value="${data[section.id] || ''}">
                         <button data-section-id="${section.id}" class="btn btn-primary save-background-btn">Salvar</button>
@@ -419,13 +437,12 @@
             const imageUrl = document.getElementById('about-image-url').value.trim();
             if (!imageUrl) { alert("Por favor, cole a URL da imagem."); return; }
             try {
-                await db.collection("siteContent").doc("sobre").set({ imageUrl });
+                await db.collection("siteContent").doc("sobre").set({ imageUrl }, { merge: true });
                 alert("Seção 'Sobre' atualizada com sucesso!");
                 loadAboutSection();
             } catch (error) { console.error("Erro ao salvar seção sobre:", error); alert("Ocorreu um erro. Tente novamente."); }
         });
 
-        // NOVA FUNÇÃO para salvar os tratamentos
         document.getElementById('save-treatments').addEventListener('click', async () => {
             const newData = {
                 harmonizacao: {
@@ -454,7 +471,7 @@
             const url = document.getElementById('gallery-image-url').value.trim();
             if (!url) { alert("Por favor, cole a URL da imagem."); return; }
             try {
-                await db.collection("gallery").add({ url });
+                await db.collection("gallery").add({ url, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
                 alert("Imagem adicionada à galeria!");
                 loadGallerySection();
                 document.getElementById('gallery-image-url').value = '';
@@ -487,25 +504,39 @@
 
         // --- FUNÇÕES DE EXCLUSÃO E AÇÕES DINÂMICAS ---
         document.addEventListener('click', async (e) => {
-            if (e.target && e.target.classList.contains('delete-gallery-item')) {
-                if (!confirm("Tem certeza que deseja remover esta imagem da galeria?\n\n(A imagem original não será apagada do seu outro site).")) return;
-                const docId = e.target.dataset.id;
-                try { await db.collection("gallery").doc(docId).delete(); alert("Imagem removida da galeria!"); loadGallerySection(); } 
+            const deleteGalleryButton = e.target.closest('.delete-gallery-item');
+            const deleteTestimonialButton = e.target.closest('.delete-testimonial-item');
+            const saveBackgroundButton = e.target.closest('.save-background-btn');
+
+            if (deleteGalleryButton) {
+                if (!confirm("Tem certeza que deseja remover esta imagem da galeria?")) return;
+                const docId = deleteGalleryButton.dataset.id;
+                try { 
+                    await db.collection("gallery").doc(docId).delete(); 
+                    alert("Imagem removida da galeria!"); 
+                    loadGallerySection(); 
+                } 
                 catch (error) { console.error("Erro ao remover imagem:", error); alert("Ocorreu um erro ao remover a imagem."); }
             }
-            if (e.target && e.target.classList.contains('delete-testimonial-item')) {
+            
+            if (deleteTestimonialButton) {
                  if (!confirm("Tem certeza que deseja excluir este depoimento?")) return;
-                 const docId = e.target.dataset.id;
-                 try { await db.collection("testimonials").doc(docId).delete(); alert("Depoimento excluído com sucesso!"); loadTestimonialsSection(); } 
+                 const docId = deleteTestimonialButton.dataset.id;
+                 try { 
+                     await db.collection("testimonials").doc(docId).delete(); 
+                     alert("Depoimento excluído com sucesso!"); 
+                     loadTestimonialsSection(); 
+                 } 
                  catch (error) { console.error("Erro ao excluir o depoimento:", error); alert("Ocorreu um erro ao excluir o depoimento."); }
             }
-            if (e.target && e.target.classList.contains('save-background-btn')) {
-                const sectionId = e.target.dataset.sectionId;
-                const imageUrl = document.getElementById(`bg-url-${sectionId}`).value.trim();
-                try {
-                    await db.collection("siteContent").doc("backgrounds").set({ [sectionId]: imageUrl }, { merge: true });
-                    alert(`Fundo da seção "${sectionId}" atualizado com sucesso!`);
-                } catch (error) { console.error("Erro ao salvar fundo:", error); alert("Ocorreu um erro ao salvar. Tente novamente."); }
+            
+            if (saveBackgroundButton) {
+                 const sectionId = saveBackgroundButton.dataset.sectionId;
+                 const imageUrl = document.getElementById(`bg-url-${sectionId}`).value.trim();
+                 try {
+                     await db.collection("siteContent").doc("backgrounds").set({ [sectionId]: imageUrl }, { merge: true });
+                     alert(`Fundo da seção "${sectionId}" atualizado com sucesso!`);
+                 } catch (error) { console.error("Erro ao salvar fundo:", error); alert("Ocorreu um erro ao salvar. Tente novamente."); }
             }
         });
     </script>
