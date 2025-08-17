@@ -267,9 +267,10 @@
           padding-top: 30px;
           padding-bottom: 60px;
       }
+      /* EDIÇÃO AQUI: Altura e largura ajustadas para 350px (Quadrado) */
       .gallery-swiper .swiper-slide {
           width: 350px;
-          height: 450px;
+          height: 350px;
           border-radius: 12px;
           overflow: hidden;
           box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -607,7 +608,8 @@
                     <div class="swiper-container gallery-swiper">
                         <div class="swiper-wrapper">
                             <!-- Slides serão inseridos aqui pelo JavaScript do Firebase -->
-                            <div class="swiper-slide"><img src="https://placehold.co/350x450/F5EBE0/3A3A3A?text=Carregando..." alt="Carregando resultados" loading="lazy" decoding="async"></div>
+                           <!-- Placeholder atualizado para 350x350 -->
+                            <div class="swiper-slide"><img src="https://placehold.co/350x350/F5EBE0/3A3A3A?text=Carregando..." alt="Carregando resultados" loading="lazy" decoding="async"></div>
                         </div>
                         <!-- Paginação -->
                         <div class="swiper-pagination gallery-swiper-pagination"></div>
@@ -621,7 +623,7 @@
             </div>
         </section>
         
-       <!-- Seção Depoimentos (Fundo Nude e Cards Centrados) -->
+        <!-- Seção Depoimentos (Fundo Nude e Cards Centrados) -->
         <section id="depoimentos" class="py-20 md:py-32 bg-lazuli-nude grain-bg">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-4xl md:text-5xl font-display mb-16 reveal">Confiança que Inspira</h2>
@@ -825,13 +827,13 @@
     <!-- Firebase Init (Mantido) -->
     <script>
         const firebaseConfig = { 
-          apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY", 
-          authDomain: "lazuliclinica-ee588.firebaseapp.com", 
-          projectId: "lazuliclinica-ee588", 
-          storageBucket: "lazuliclinica-ee588.appspot.com", 
-          messagingSenderId: "1001941309426", 
-          appId: "1:1001941309426:web:d966dceb8f6c0425d5bd6b", 
-          measurementId: "G-7HWTLTCGSN" 
+            apiKey: "AIzaSyAtqp_g2NweEhBkUMqL1-0qPvXhfham5TY", 
+            authDomain: "lazuliclinica-ee588.firebaseapp.com", 
+            projectId: "lazuliclinica-ee588", 
+            storageBucket: "lazuliclinica-ee588.appspot.com", 
+            messagingSenderId: "1001941309426", 
+            appId: "1:1001941309426:web:d966dceb8f6c0425d5bd6b", 
+            measurementId: "G-7HWTLTCGSN" 
         };
         // Initialize Firebase only if it hasn't been initialized yet
         if (!firebase.apps.length) {
@@ -1068,8 +1070,8 @@
                     
                     galleryWrapper.innerHTML = ''; 
                     if (!gallerySnapshot || gallerySnapshot.empty) {
-                        // Fallback se não houver imagens ou ocorrer erro
-                        galleryWrapper.innerHTML = `<div class="swiper-slide"><img src="https://placehold.co/350x450/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" loading="lazy" decoding="async"></div>`;
+                        // Fallback se não houver imagens ou ocorrer erro (Ajustado para 350x350)
+                        galleryWrapper.innerHTML = `<div class="swiper-slide"><img src="https://placehold.co/350x350/F5EBE0/3A3A3A?text=Em+Breve" alt="Galeria em breve" loading="lazy" decoding="async"></div>`;
                     } else {
                         gallerySnapshot.forEach(doc => {
                             galleryWrapper.innerHTML += `<div class="swiper-slide"><img src="${doc.data().url}" alt="Resultado de tratamento Clínica Lazúli" loading="lazy" decoding="async"></div>`;
@@ -1169,10 +1171,10 @@
                         // Popula com defaults se falhou a carga mas o wrapper existe e está vazio
                         if (testimonialWrapper && testimonialWrapper.innerHTML === '' && defaultTestimonials.length > 0) {
                              defaultTestimonials.forEach(data => {
-                                  let starsHtml = '<div class="flex justify-center mb-6 text-lazuli-gold">';
-                                   for(let i=0; i<5; i++) { starsHtml += '<i class="fas fa-star mx-1"></i>'; }
-                                   starsHtml += '</div>';
-                                   testimonialWrapper.innerHTML += `<div class="swiper-slide"><div class="bg-white p-10 rounded-xl shadow-lg flex flex-col text-center h-full max-w-lg mx-auto">${starsHtml}<div class="flex-grow mb-6"><p class="italic text-lg text-gray-600 leading-relaxed">"${data.text}"</p></div><p class="font-bold text-lazuli-dark mt-4">- ${data.name}</p></div></div>`;
+                                 let starsHtml = '<div class="flex justify-center mb-6 text-lazuli-gold">';
+                                  for(let i=0; i<5; i++) { starsHtml += '<i class="fas fa-star mx-1"></i>'; }
+                                  starsHtml += '</div>';
+                                  testimonialWrapper.innerHTML += `<div class="swiper-slide"><div class="bg-white p-10 rounded-xl shadow-lg flex flex-col text-center h-full max-w-lg mx-auto">${starsHtml}<div class="flex-grow mb-6"><p class="italic text-lg text-gray-600 leading-relaxed">"${data.text}"</p></div><p class="font-bold text-lazuli-dark mt-4">- ${data.name}</p></div></div>`;
                              });
                         }
                         // Inicializa o swiper após popular o fallback
